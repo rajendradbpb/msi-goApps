@@ -1,0 +1,8 @@
+/node_modules
+/built
+/public/custom.js
+/public/libs.js
+/public/ng-libs.js
+/temp
+server.log
+server.log*
