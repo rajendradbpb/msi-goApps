@@ -1,0 +1,43 @@
+<div class="login-box">
+  <div class="login-logo">
+    <h2>MSI</h2>
+  </div>
+  <div class="login-box-body">
+    <p class="login-box-msg">Sign in to start your session</p>
+    <form name="login" class="m-b-30">
+      <div class="form-group has-feedback" ng-class="{'has-error':login.uname.$touched && login.uname.$invalid}">
+        <input type="text" class="form-control" placeholder="Enter email / Mobile" name="uname" ng-model="user.username" required ng-pattern="
+">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <span class="help-block" ng-show="login.uname.$error.required && login.uname.$touched">User Name is required</span>
+          <span class="help-block" ng-show="login.uname.$error.pattern && login.uname.$touched">Email/Mobile Should be atleast 6 characters and special characters not allowed</span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{'has-error':login.password.$touched && login.password.$invalid}">
+        <input type="password" class="form-control" placeholder="Password" ng-model="user.password" name="password" required ng-pattern="/^(?=.*?[a-zA-Z0-9])(?=.*?[#?!@$%^&*-]).{4,}$/">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <span class="help-block" ng-show="login.password.$error.required && login.password.$touched">Password is required</span>
+          <span class="help-block" ng-show="login.password.$error.pattern && login.password .$touched">Password must be 4 characters long having atleast one special character</span>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <label>
+            <input type="checkbox" ng-model="user.rememberMe"> Remember Me
+          </label>
+        </div>
+        <div class="col-xs-12">
+          <button ng-click="userLogin()" ng-disabled="login.$invalid" class="btn btn-primary btn-block btn-flat">
+            Sign In
+          </button>
+        </div>
+      </div>
+    </form>
+<!--     <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <a href="" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+        Google+</a>
+    </div> -->
+    <!-- <a  ui-sref="forgot-password" href="">I forgot my password</a><br><hr> -->
+    <a ui-sref="sign-up" href="" class="text-center">Register a new membership</a><br>
+     <a ui-sref="forgot-password" href="" class="text-center">Forgot Your Password?</a>
+  </div>
+</div>

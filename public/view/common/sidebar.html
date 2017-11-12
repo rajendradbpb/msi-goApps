@@ -1,0 +1,138 @@
+<aside class="main-sidebar"  ng-init="getUserDetails()" ng-controller="Main_Controller">
+  <section class="sidebar">
+    <div class="user-panel">
+      <div class="pull-left image">
+         <span class="profile-pic-name m-t-6 color-white">{{userDetails.firstname+" "+userDetails.lastname | getShortName}}</span>
+      </div>
+      <div class="pull-left info">
+          <p>{{userDetails.firstname+" "+userDetails.lastname}}</p>
+          <a href="" ui-sref="user-profile" ><i class="fa fa-circle text-success"></i> Online</a>
+      </div>
+    </div>
+    <ul class="sidebar-menu">
+      <li class="header">OPTIONS</li>
+      <li class="treeview" ng-class="{'active':stateName == 'dashboard'}" ng-hide="checkClient()">
+        <a href="" ui-sref="dashboard">
+          <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+        </a>
+		  </li>
+       <li class="treeview" ng-class="{'active':stateName == 'profile-update' || stateName == 'user-profile'}">
+        <a href="" ui-sref="user-profile">
+          <i class="fa fa-user"></i> <span>Profile</span>
+        </a>
+      </li>
+     <!--  <li class="treeview" ng-class="{'active':stateName == 'user-list' || stateName == 'user-details' || stateName == 'admin-returnFile-details' || stateName == 'new-user'}" ng-show="checkAdmin()">
+        <a href="" ui-sref="user-list">
+          <i class="fa fa-cogs"></i> <span>User Management</span>
+        </a>
+      </li> -->
+       <li class="treeview" ng-class="{'active':stateName == 'user-list' || stateName == 'user-details' || stateName == 'previous-return-file-details' || stateName == 'new-user'}" ng-show="checkAdmin()" >
+          <a href="">
+            <i class="fa fa-cogs"></i>
+            <span>User Management</span>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-class="{'active':stateName == 'user-list' || stateName == 'user-details' || stateName == 'previous-return-file-details' || stateName == 'new-user'}"><a href="" ui-sref="user-list({'userType':'in'})"><i class="fa fa-circle-o"></i>Internal Users</a></li>
+            <li ng-class="{'active':stateName == 'user-list' || stateName == 'user-details' || stateName == 'admin-returnFile-details' || stateName == 'new-user'}"><a href="" ui-sref="user-list({'userType':'clients'})"><i class="fa fa-circle-o"></i> Client Users</a></li>
+          </ul>
+        </li>
+      <li class="treeview" ng-class="{'active':stateName == 'return-file-details' || stateName == 'return-file' || stateName == 'previous-return-file-details'}" ng-hide="checkAdmin()" >
+          <a href="">
+            <i class="fa fa-files-o"></i>
+            <span>Return Files</span>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-class="{'active':stateName == 'previous-return-file-details' || stateName == 'admin-returnFile-details'}"><a href="" ui-sref="previous-return-file-details"><i class="fa fa-circle-o"></i>Previous Return Files</a></li>
+            <li ng-class="{'active':stateName == 'return-file'}"><a href="" ui-sref="return-file"><i class="fa fa-circle-o"></i> New return Files</a></li>
+          </ul>
+        </li>
+      <li class="treeview" ng-class="{'active':stateName == 'return-file-list' || stateName == 'returnFile-details'}" ng-show="checkAdmin()">
+        <a href="" ui-sref="return-file-list">
+          <i class="fa fa-files-o"></i> <span>Return Files</span>
+        </a>
+      </li>
+      <li class="treeview" ng-class="{'active':stateName == 'payment'}">
+        <a href="" ui-sref="payment">
+          <i class="fa fa-money"></i> <span>Payment Confirmation</span>
+        </a>
+      </li>
+      <li class="treeview" ng-class="{'active':stateName == 'emailConfig'}" ng-show="checkAdmin()">
+        <a href="" ui-sref="emailConfig">
+          <i class="fa fa-dashboard"></i> <span>Email configuration</span>
+        </a>
+      </li>
+   <!--    <li class="treeview" ng-class="{'active':stateName == 'referral-list'}" >
+        <a href="" ui-sref="referral-list">
+          <i class="fa fa-dashboard"></i> <span>Referral Details</span>
+        </a>
+      </li> -->
+       <li class="treeview" ng-class="{'active':stateName == 'referral-list' || stateName == 'referral-overview'}" >
+          <a href="">
+            <i class="fa fa-files-o"></i>
+            <span>Referral Details</span>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-class="{'active':stateName == 'referral-overview'}" ng-show="checkAdmin()">
+              <a href="" ui-sref="referral-overview"><i class="fa fa-circle-o"></i>Referral Overview</a>
+            </li>
+            <li ng-class="{'active':stateName == 'referral-list'}">
+              <a href="" ui-sref="referral-list"><i class="fa fa-circle-o"></i>Referral list</a>
+            </li>
+            
+          </ul>
+        </li>
+      
+       <li class="treeview" ng-class="{'active':stateName == 'work-assignment' || stateName == 'work-assigned'}" >
+          <a href="">
+            <i class="fa fa-files-o"></i>
+            <span>Job Assignment</span>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-class="{'active':stateName == 'create-task'}" ng-hide="checkInternalUser()">
+              <a href="" ui-sref="create-task"><i class="fa fa-circle-o"></i>Create Job</a>
+            </li>
+             <li ng-class="{'active':stateName == 'work-assigned'}" ng-show="checkClient()">
+              <a href="" ui-sref="work-assigned"><i class="fa fa-circle-o"></i>My Tasks</a>
+            </li>
+            <li ng-class="{'active':stateName == 'work-assignment'}" ng-show="checkAdmin()" >
+              <a href="" ui-sref="work-assignment"><i class="fa fa-circle-o"></i>Assign New Job</a>
+            </li>
+            <li ng-class="{'active':stateName == 'work-assigned'}" ng-hide="checkClient()">
+              <a href="" ui-sref="work-assigned"><i class="fa fa-circle-o"></i>Jobs Assigned</a>
+            </li>
+            <li ng-class="{'active':stateName == 'work-not-assigned'}" ng-show="checkAdmin()" >
+              <a href="" ui-sref="work-not-assigned"><i class="fa fa-circle-o"></i>Jobs Not Assigned</a>
+            </li>
+            
+          </ul>
+        </li>
+      <!--  <li class="treeview" ng-show="checkClient()"  ng-class="{'active':stateName == 'create-task' || stateName == 'task-list'}" >
+          <a href="">
+            <i class="fa fa-files-o"></i>
+            <span>Task management</span>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-class="{'active':stateName == 'create-task'}">
+              <a href="" ui-sref="create-task"><i class="fa fa-circle-o"></i>Create Task</a>
+            </li>
+            <li ng-class="{'active':stateName == 'task-list'}">
+              <a href="" ui-sref="task-list"><i class="fa fa-circle-o"></i>My Tasks</a>
+            </li>
+            
+          </ul>
+        </li> -->
+       <li class="treeview" ng-class="{'active':stateName == 'change-password'}" >
+          <a href="">
+            <i class="fa fa-files-o"></i>
+            <span>Settings</span>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-class="{'active':stateName == 'change-password'}">
+              <a href="" ui-sref="change-password"><i class="fa fa-circle-o"></i>Change Password</a>
+            </li>
+            
+          </ul>
+        </li>
+    </ul>
+  </section>
+</aside>

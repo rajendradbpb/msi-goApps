@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- <html ng-app="return_file" manifest="returnFiling.appcache"> -->
+<html ng-app="msi" >
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MSI</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="dist/css/all.css">
+    <script src="ng-libs.js"></script>
+    <script src="custom.js"></script>
+
+  </head>
+  <body class="hold-transition skin-green sidebar-mini" ng-class="{'login-page':!is_user}" ng-controller="Main_Controller">
+    <div ng-repeat="alert in alerts" class="alert alert-{{alert.type}}">
+    {{alert.msg}}
+  </div>
+    <div id="preloader" ng-if="showPreloader">
+      <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+    </div>
+    <!-- view 1 -->
+    <div class="" ng-if="!is_loggedin">
+      <div class="wrapper1" >
+        <div ng-include="'view/common/header.html'"></div>
+        <div class="content-wrapper" update-height>
+          <div ui-view></div>
+        </div>
+        <div ng-include="'view/common/footer.html'"></div>
+      </div>
+      <!-- <div ui-view></div> -->
+    </div>
+    <!-- view 2 -->
+
+    <div class="" ng-if="is_loggedin">
+      <div class="wrapper" >
+        <div ng-include="'view/common/header.html'"></div>
+        <div ng-include="'view/common/sidebar.html'"></div>
+        <div class="content-wrapper" update-height>
+          <div ui-view></div>
+        </div>
+        <div ng-include="'view/common/footer.html'"></div>
+      </div>
+    </div>
+    <script src="libs.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<div class="register-box">
+  <div class="register-logo">
+    <a href=""><b>Return</b> Filing</a>
+  </div>
+  <div class="register-box-body" ng-init="getRoll(true)">
+    <p class="login-box-msg">Register a new membership</p>
+    <form name="register">
+   		<div class="form-group has-feedback" ng-class="{'has-error':register.user_fname.$touched && register.user_fname.$invalid}">
+	        <input type="text" class="form-control" name="user_fname" ng-model="user.firstname" placeholder="First Name*" required ng-pattern="/^(\D)+$/">
+	        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+	         <span class="help-block" ng-show="register.user_fname.$error.required && register.user_fname.$touched">First Name is required</span>
+	         <span class="help-block" ng-show="register.user_fname.$error.pattern && register.user_fname.$touched">Please Enter Valid First Name(Only Alphabets Allowed)</span>
+		</div>
+		<div class="form-group has-feedback" ng-class="{'has-error':register.user_mname.$touched && register.user_mname.$invalid}">
+	        <input type="text" class="form-control" name="user_mname" ng-model="user.middlename" placeholder="Middle Name"  ng-pattern="/^(\D)+$/">
+	        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+	         <!-- <span class="help-block" ng-show="register.user_fname.$error.required && register.user_fname.$touched">First Name is required</span> -->
+	         <span class="help-block" ng-show="register.user_mname.$error.pattern && register.user_mname.$touched">Please Enter Valid Middle Name(Only Alphabets Allowed)</span>
+		</div>
+     	<div class="form-group has-feedback" ng-class="{'has-error':register.user_lname.$touched && register.user_lname.$invalid}">
+	        <input type="text" class="form-control" name="user_lname" ng-model="user.lastname" placeholder="Last Name*" required ng-pattern="/^(\D)+$/">
+	        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+	         <span class="help-block" ng-show="register.user_lname.$error.required && register.user_lname.$touched">Last Name is required</span>
+	         <span class="help-block" ng-show="register.user_lname.$error.pattern && register.user_lname.$touched">Please Enter Valid Last Name(Only alphabets allowed)</span>
+		</div>
+     	<div class="form-group has-feedback" ng-class="{'has-error':register.user_email.$touched && register.user_email.$invalid}">
+	        <input type="email" class="form-control" name="user_email" ng-model="user.email" placeholder="Email*" required ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,7}$/">
+	        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+	        <span class="help-block" ng-show="register.user_email.$error.required && register.user_email.$touched">Email is required</span>
+	        <span class="help-block" ng-show="register.user_email.$error.pattern && register.user_email.$touched">Please Enter Valid Email</span>
+     	</div>
+     	<div class="form-group has-feedback" ng-class="{'has-error':register.user_mobile.$touched && register.user_mobile.$invalid}">
+	        <input type="text" class="form-control" name="user_mobile" numbers-only ng-model="user.mobile" placeholder="Mobile*" required ng-maxlength="10" ng-minlength="10">
+	        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+	        <span class="help-block" ng-show="register.user_mobile.$error.required && register.user_mobile.$touched">Please Enter Your 10 digit mobile no</span>
+	        <!-- <span class="help-block" ng-show="register.user_mobile.$error.pattern && register.user_mobile.$touched">Please Enter Valid Email</span> -->
+     	</div>
+
+      	<div class="form-group has-feedback" ng-class="{'has-error':register.user_pass.$touched && register.user_pass.$invalid}">
+	        <input type="password" class="form-control" placeholder="Password" name="user_pass" ng-model="user.password" required ng-pattern="/^(?=.*?[a-zA-Z0-9])(?=.*?[#?!@$%^&*-]).{4,}$/">
+	        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+	        <span class="help-block" ng-show="register.user_pass.$error.required && register.user_pass.$touched">Password is required</span>
+	        <span class="help-block" ng-show="register.user_pass.$error.pattern && register.user_pass .$touched">Password must be 4 characters long having atleast one special character</span>
+      	</div>
+      	<div class="form-group has-feedback" ng-class="{'has-error':(register.user_repass.$touched && register.user_repass.$invalid) || (showPasswordMisMatch && register.user_repass.$touched)}">
+	        <input type="password" class="form-control" placeholder="Retype password" name="user_repass" ng-model="user.repass" required ng-change="checkPassword(user.password, user.repass)">
+	        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+	        <span class="help-block" ng-show="register.user_repass.$error.required && register.user_repass.$touched">Please Reenter Your password</span>
+	        <span class="help-block" ng-show="showPasswordMisMatch && register.user_repass.$touched">Password doesn't match</span>
+      	</div>
+      	<div class="row form-group m-l-5">
+	        <div class="col-xs-8">
+	          <div class="checkbox icheck">
+	            <label>
+	              <input type="checkbox" ng-model="is_agree"> I agree to the <a href="">terms</a>
+	            </label>
+	          </div>
+	        </div>
+	        <div class="col-xs-4">
+	          <button ng-disabled="register.$invalid || !is_agree" class="btn btn-primary btn-block btn-flat" ng-click="registerUser()">Register</button>
+	        </div>
+      	</div>
+    </form>
+    <a ui-sref="login" class="text-center">I already have a membership</a>
+  </div>
+</div>

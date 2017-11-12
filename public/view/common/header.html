@@ -1,0 +1,44 @@
+<header class="main-header" ng-controller="Main_Controller" >
+  <a ui-sref="dashboard" class="logo">
+    <span class="logo-mini"><b>M</b><b>S</b><b>I</b></span>
+    <span class="logo-lg">MSI</span>
+  </a>
+  <nav class="navbar navbar-static-top">
+    <a href="" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+         <li class="contact-us pull-left">
+            <span class="">Login</span>
+        </li>
+        <li class="contact-us pull-left">
+           <span class="">VLE Registration</span>
+        </li>
+        <li class="dropdown user user-menu" ng-if="is_loggedin">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="profile-pic-name">{{userDetails.firstname+" "+userDetails.lastname | getShortName}}</span>
+            <span class="hidden-xs">{{userDetails.firstname+" "+userDetails.lastname}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="user-header">
+              <span class="profile-pic-name m-t-6">{{userDetails.firstname+" "+userDetails.lastname | getShortName}}</span>
+                <p>
+                 {{userDetails.firstname+" "+userDetails.lastname}}
+                  <!-- <small>Member since Nov. 2012</small> -->
+                </p>
+            </li>
+            <li class="user-footer">
+              <div class="pull-left">
+                <a href="" class="btn btn-default btn-flat" ui-sref="user-profile">Profile</a>
+              </div>
+              <div class="pull-right">
+                <a href="" class="btn btn-default btn-flat" ng-click="signOut()">Sign out</a>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

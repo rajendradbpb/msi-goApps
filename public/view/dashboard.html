@@ -1,0 +1,203 @@
+<section class="content-header" >
+  <h1>
+    Dashboard
+    <small>Control panel</small>
+  </h1>
+</section>
+<section class="content" ng-show="checkAdmin()">
+  <div class="row"  ng-init="getReturnCount()">
+    <div class="col-md-5 col-sm-6 col-xs-12">
+        <div class="small-box bg-green"  ng-init="getInternalUsers('in')">
+            <div class="inner">
+              <h3>{{internalCount}}</h3>
+
+              <p>Internal Users Registered</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-file"></i>
+            </div>
+            <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+    </div>
+    <div class="col-md-5 col-sm-6 col-xs-12">
+        <div class="small-box bg-green"  ng-init="getClientUsers()">
+            <div class="inner">
+              <h3>{{clientCount}}</h3>
+
+              <p>Client Users Registered</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-file"></i>
+            </div>
+            <a href="" ui-sref="user-list({'userType':'clients'})" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+    </div>
+
+    <div class="col-md-5 col-sm-6 col-xs-12" ng-controller="Referral_Controller">
+        <div class="small-box bg-green" ng-init="getReferralCount()">
+            <div class="inner">
+              <h3>{{dashboard.referralCount}}</h3>
+
+              <p>Referral Count</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-file"></i>
+            </div>
+            <a href="" ui-sref="referral-overview" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+    </div>
+
+
+    <div class="col-md-5 col-sm-6 col-xs-12" ng-if="returnFilesCounts[0].count">
+          <div class="small-box bg-yellow" >
+            <div class="inner">
+              <h3>{{returnFilesCounts[0].count}}</h3>
+
+              <p> Return Files {{returnFilesCounts[0]._id.status}}</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-file"></i>
+            </div>
+            <a href="" ui-sref="return-file-list({'status': returnFilesCounts[0]._id.status})" class="small-box-footer">
+              View List {{returnFilesCounts[0]._id.status}} <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+     </div>
+   <div class="row">
+     <div class="col-md-5 col-sm-6 col-xs-12" ng-if="returnFilesCounts[1].count" >
+           <div class="small-box bg-blue" >
+             <div class="inner">
+               <h3>0{{returnFilesCounts[1].count}}</h3>
+
+               <p>Return Files {{returnFilesCounts[1]._id.status}}</p>
+             </div>
+             <div class="icon">
+               <i class="fa fa-file"></i>
+             </div>
+             <a href="" ui-sref="return-file-list({ 'status': returnFilesCounts[1]._id.status})" class="small-box-footer">
+               More info {{returnFilesCounts[1]._id.status}} <i class="fa fa-arrow-circle-right"></i>
+             </a>
+           </div>
+         </div>
+         <div class="col-md-5 col-sm-6 col-xs-12" ng-if="returnFilesCounts[2].count">
+               <div class="small-box bg-black">
+                 <div class="inner">
+                   <h3>0{{returnFilesCounts[2].count}}</h3>
+
+                   <p>Return Files {{returnFilesCounts[2]._id.status}}</p>
+                 </div>
+                 <div class="icon">
+                   <i class="fa fa-file"></i>
+                 </div>
+                 <a href="" ui-sref="return-file-list({ 'status': returnFilesCounts[2]._id.status})" class="small-box-footer">
+                   More info {{returnFilesCounts[2]._id.status}}<i class="fa fa-arrow-circle-right"></i>
+                 </a>
+               </div>
+             </div>
+    </div>
+    <div class="row">
+    <div class="col-md-5 col-sm-6 col-xs-12" ng-if="returnFilesCounts[3].count">
+               <div class="small-box bg-purple">
+                 <div class="inner">
+                   <h3>0{{returnFilesCounts[3].count}}</h3>
+
+                   <p>Return Files {{returnFilesCounts[3]._id.status}}</p>
+                 </div>
+                 <div class="icon">
+                   <i class="fa fa-file"></i>
+                 </div>
+                 <a href="" ui-sref="return-file-list({ 'status': returnFilesCounts[3]._id.status})" class="small-box-footer">
+                   More info {{returnFilesCounts[3]._id.status}}<i class="fa fa-arrow-circle-right"></i>
+                 </a>
+               </div>
+             </div>
+
+    </div>
+    
+ </section>
+ <section class="content" ng-show="checkInternalUser()" ng-controller="Work_Assignment_Controller">
+  <div class="row">
+    <div class="col-md-5 col-sm-6 col-xs-12" ng-init="getAssignedJobs()">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>{{assignedJobs.length}}</h3>
+          <p>All Jobs Assigned</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-file"></i>
+        </div>
+          <a href="" ui-sref="work-assigned" class="small-box-footer">
+              See More  <i class="fa fa-arrow-circle-right"></i>
+          </a>
+      </div>
+    </div>
+    <div class="col-md-5 col-sm-6 col-xs-12">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>{{completedAssignedJobs.length}}</h3>
+           <p>Jobs Completed</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-file"></i>
+        </div>
+          <a href="" ui-sref="work-assigned({'workStatus':'Completed'})" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+          </a>
+      </div>
+    </div>
+  </div>
+   <div class="row">
+    <div class="col-md-5 col-sm-6 col-xs-12" ng-init="getAssignedJobs()">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>{{processAssignedJobs.length}}</h3>
+          <p>Jobs In Progress</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-file"></i>
+        </div>
+          <a href="" ui-sref="work-assigned({'workStatus':'In_Progress'})" class="small-box-footer">
+              See More  <i class="fa fa-arrow-circle-right"></i>
+          </a>
+      </div>
+    </div>
+    <div class="col-md-5 col-sm-6 col-xs-12">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>{{pendingAssignedJobs.length}}</h3>
+           <p>New Jobs Assigned</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-file"></i>
+        </div>
+          <a href="" ui-sref="work-assigned({'workStatus':'pending'})" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+          </a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-5 col-sm-6 col-xs-12" ng-controller="Referral_Controller">
+        <div class="small-box bg-green" ng-init="getReferralCount()">
+            <div class="inner">
+              <h3>{{dashboard.referralCount}}</h3>
+
+              <p>Referral Count</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-file"></i>
+            </div>
+            <a href="" ui-sref="referral-list" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+    </div>
+  </div>
+</section>

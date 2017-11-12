@@ -1,0 +1,53 @@
+{
+  "name": "msi",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "async-waterfall": "^0.1.5",
+    "body-parser": "^1.18.2",
+    "color": "^2.0.1",
+    "config": "^1.28.1",
+    "connect-mongodb-session": "^1.4.0",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.6.9",
+    "express": "^4.15.5",
+    "express-session": "^1.15.6",
+    "jade": "^1.11.0",
+    "jsonwebtoken": "^8.1.0",
+    "jwt-simple": "^0.5.1",
+    "log4js": "^2.3.11",
+    "make-unique": "^1.0.4",
+    "moment": "^2.19.2",
+    "mongoose": "^4.13.1",
+    "mongoose-dateonly": "^1.0.4",
+    "mongoose-deep-populate": "^3.0.0",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-http": "^0.3.0",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "password-hash-and-salt": "^0.1.4",
+    "q": "^1.5.1",
+    "serve-favicon": "^2.4.5",
+    "validator": "^9.1.1"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cache-breaker": "^2.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^2.2.1",
+    "grunt-contrib-htmlmin": "^2.4.0",
+    "grunt-contrib-uglify": "^3.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-ng-annotate": "^3.0.0",
+    "grunt-nodemon": "^0.4.2",
+    "grunt-notify": "^0.4.5",
+    "grunt-stripcomments": "^0.7.2"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "token":{
+    "secret" : "goApps-Amaresh",
+    "expiry":"24 hours"
+  },
+  "dev":{
+    "baseUrl":"http://localhost",
+    "hostName":"localhost",
+    "port":":27017",
+    "db":"msi-dev",
+    "dbserver":"mongodb://",
+    "logPath":"./logs/server.log",
+    "uploadPath":"./public/upload"
+  },
+  "prod":{
+    "baseUrl":"http://ec2-52-23-158-141.compute-1.amazonaws.com",
+    "hostName":"ec2-52-23-158-141.compute-1.amazonaws.com",
+    "port":":27017",
+    "db":"msi-prod",
+    "dbserver":"mongodb://",
+    "logPath":"./logs/server.log",
+    "uploadPath":"./public/upload"
+  },
+  "routes":{
+    "signup":"/#/sign-up"
+  },
+  "env" : "dev"
+}
