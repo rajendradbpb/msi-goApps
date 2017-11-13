@@ -18,8 +18,16 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
       }
     };
   });
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/homepage');
   $stateProvider
+  .state('homepage', {
+    templateUrl: 'view/common/homepage.html',
+    url: '/homepage',
+    // controller:'Login_Controller',
+    // resolve: {
+    //  loggedout: checkLoggedin
+    // }
+  })
   .state('login', {
     templateUrl: 'view/common/login.html',
     url: '/login',
@@ -29,7 +37,11 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
     }
   })
   
-
+.state('vle-registration',{
+    templateUrl:'view/vle_registration.html',
+    url: '/vle-registration',
+    controller:'Main_Controller',
+  })
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {
     var deferred = $q.defer();

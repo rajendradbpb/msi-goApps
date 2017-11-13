@@ -10,7 +10,12 @@
     <link rel="stylesheet" href="dist/css/all.css">
     <script src="ng-libs.js"></script>
     <script src="custom.js"></script>
+    <script src="constants.js"></script>
 
+
+    <script src="main_app.js"></script>
+    <script src="controller/main_controller.js"></script>
+    <script src="controller/login_controller.js"></script>
   </head>
   <body class="hold-transition skin-green sidebar-mini" ng-class="{'login-page':!is_user}" ng-controller="Main_Controller">
     <div ng-repeat="alert in alerts" class="alert alert-{{alert.type}}">

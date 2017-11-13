@@ -1,0 +1,597 @@
+<section class="content">
+  <form class="form-horizontal" name="vleUpdate">
+    <div class="row">
+        <div class="col-xs-10 col-md-offset-1">
+          <div class="nav-tabs-custom">
+              <ul class="nav nav-tabs">
+                <li ng-class="{'active':active_tab == 'BD'}" ><a ng-click="tabChange('BD')" href="" data-toggle="tab"><b>Basic Details</b></a></li>
+                <li ng-class="{'active':active_tab == 'OD'}"><a ng-click="tabChange('OD')" href="" data-toggle="tab"><b>Other Details</b></a></li>
+              </ul>
+            <div class="tab-content">
+              <div class="tab-pane" id="BD" ng-class="{'active':active_tab == 'BD'}">
+                <div class="box box-info">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Please Enter Your Basic Details</h3>
+                  </div>
+                  <div class="box-body">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <div class="form-group p-l-20" ng-class="{'has-error':vleUpdate.district.$touched && vleUpdate.district.$invalid}">
+                            <label for="uname" class="control-label col-xs-3 pull-left">District:</label>
+                            <div class="col-xs-9">
+                              <select class="form-control" name="district" ng-model="vle.district" required>
+                                <option value=""><i class="fa fa-sort-desc">District</i></option>
+                                <option value="Anugul">Anugul</option>
+                                <option value="Bhadrak">Bhadrak</option>
+                                <option value="Cuttack">Cuttack</option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.vleName.$touched && vleUpdate.vleName.$invalid}">
+                          <label for="vleName" class="col-sm-3 control-label">VLE Name:</label>
+                          <div class="col-sm-9">
+                            <input type="text" name="vleName" ng-model="vle.name" class="form-control" placeholder="VLE Name" required ng-pattern="/^(\D)+$/">
+                            <span class="help-block" ng-show="vleUpdate.vleName.$error.required && vleUpdate.vleName.$touched">VLE Name is required</span>
+                            <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span>
+                          </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.cscId.$touched && vleUpdate.cscId.$invalid}">
+                          <label for="cscId" class="col-sm-3 control-label">CSC ID:</label>
+                          <div class="col-sm-9">
+                            <input type="text" name="cscId" ng-model="vle.cscId" class="form-control" placeholder="CSC ID" required>
+                            <span class="help-block" ng-show="vleUpdate.cscId.$error.required && vleUpdate.cscId.$touched">CSC ID is required</span>
+                            <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                          </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-controller="DatePickerCtrl">
+                          <label for="lname" class="col-sm-3 control-label">DOB:</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" name="dob" placeholder="01 Jan, 2017" ng-model="vle.dob" datepicker-popup="dd MMM, yyyy" datepicker-options="dateOptions"  is-open="opened"  max-date="dt"  ng-click="open1($event)" close-text="Close"/>
+                            </div>
+                        </div>
+                        <div class="form-group p-l-20" ng-class="{'has-error':vleUpdate.religion.$touched && vleUpdate.religion.$invalid}">
+                            <label for="uname" class="control-label col-xs-3 pull-left">Religion:</label>
+                            <div class="col-xs-9">
+                              <select class="form-control" name="religion" ng-model="vle.religion" required>
+                                <option value=""><i class="fa fa-sort-desc">Religion</i></option>
+                                <option value="Yes">Hindu</option>
+                                <option value="No">Muslim</option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.mobile.$touched && vleUpdate.mobile.$invalid}">
+                          <label for="pass" class="col-sm-3 control-label">Mobile:</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="mobile" ui-mask="999-999-9999" placeholder="xxx-xxx-xxxx" ng-model="vle.mobile" required>
+                            <!-- <input type="text" class="form-control" name="mobile" ng-model="user.mobile" placeholder="Mobile" required ng-pattern="/^[0-9]{10,10}$/"> -->
+                            <span class="help-block" ng-show="vleUpdate.mobile.$error.required && vleUpdate.mobile.$touched">Mobile is required</span>
+                          </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':vleUpdate.user_email.$touched && vleUpdate.user_email.$invalid}">
+                            <label for="lname" class="col-sm-3 control-label">Email:</label>
+                          <div class="col-sm-8">
+                              <input type="email" name="user_email" ng-model="vle.email" class="form-control" placeholder=" Email " required ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,7}$/">
+                              <span class="help-block" ng-show="vleUpdate.user_email.$error.required && vleUpdate.user_email.$touched">Email is required</span>
+                               <span class="help-block" ng-show="vleUpdate.user_email.$error.pattern && vleUpdate.user_email.$touched">Please Enter Valid Email</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div class="checkbox col-xs-10">
+                          <label >
+                            <input type="checkbox" name="urban" ng-model="urban"> I belong to Urban area 
+                          </label>
+                        </div>
+                        <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.block.$touched && vleUpdate.block.$invalid}" ng-hide="urban">
+                            <label for="uname" class="control-label col-xs-3 pull-left">Block:</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" name="block" ng-model="vle.block" required>
+                                  <option value=""><i class="fa fa-sort-desc">Block</i></option>
+                                  <option value="2015-2016">Bhandari Pokhari</option>
+                                  <option value="2016-2017">Bhadrak</option>
+                                  <option value="2017-2018">Chandbali</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.GP.$touched && vleUpdate.GP.$invalid}" ng-hide="urban">
+                        <label for="uname" class="control-label col-xs-3 pull-left">Gram Panchayat</label>
+                          <div class="col-xs-9">
+                            <select class="form-control" name="GP" ng-model="vle.gp" required>
+                              <option value=""><i class="fa fa-sort-desc">Gram Panchayat</i></option>
+                              <option value="2015-2016">Bishnupur</option>
+                              <option value="2016-2017">Nalanga</option>
+                              <option value="2017-2018">Jala Mandua</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.village.$touched && vleUpdate.village.$invalid}" ng-hide="urban">
+                        <label for="uname" class="control-label col-xs-3 pull-left">Village</label>
+                          <div class="col-xs-9">
+                            <select class="form-control" name="village" ng-model="vle.village" required>
+                              <option value=""><i class="fa fa-sort-desc">Village</i></option>
+                              <option value="2015-2016">Bali chatri</option>
+                              <option value="2016-2017">Kanjia</option>
+                              <option value="2017-2018">Adampur</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.municipalityOrnac.$touched && vleUpdate.municipalityOrnac.$invalid}" ng-show="urban">
+                        <label for="uname" class="control-label col-xs-3 pull-left">Municipality/NAC</label>
+                          <div class="col-xs-9">
+                            <select class="form-control" name="municipalityOrnac" ng-model="vle.area" required>
+                              <option value=""><i class="fa fa-sort-desc">Municipality/NAC</i></option>
+                              <option value="Municipality">Municipality</option>
+                              <option value="NAC">NAC</option>
+                              <option value="Others">Others</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.wardNo.$touched && vleUpdate.wardNo.$invalid}" ng-show="urban">
+                        <label for="uname" class="control-label col-xs-3 pull-left">Ward No.</label>
+                          <div class="col-xs-9">
+                              <input type="text" class="form-control" name="wardNo" numbers-only ng-model="vle.ward" > 
+                            <!-- <select class="form-control" name="wardNo" ng-model="vle.ward" required>
+                              <option value=""><i class="fa fa-sort-desc">Select Ward No.</i></option>
+                              <option value="2015-2016">01</option>
+                              <option value="2016-2017">02</option>
+                              <option value="2017-2018">03</option>
+                            </select> -->
+                          </div>
+                        </div>
+                        <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.gender.$touched && vleUpdate.gender.$invalid}">
+                        <label for="uname" class="control-label col-xs-3 pull-left">Gender</label>
+                          <div class="col-xs-9">
+                            <select class="form-control" name="gender" ng-model="vle.gender" required>
+                              <option value=""><i class="fa fa-sort-desc">Select your gender.</i></option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>                             
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.caste.$touched && vleUpdate.caste.$invalid}">
+                        <label for="uname" class="control-label col-xs-3 pull-left">Caste</label>
+                          <div class="col-xs-9">
+                            <select class="form-control" name="caste" ng-model="vle.caste" required>
+                              <option value=""><i class="fa fa-sort-desc">Caste</i></option>
+                              <option value="General">General</option>
+                              <option value="SC">SC</option>
+                              <option value="ST">ST</option>
+                              <option value="OBC">OBC</option>
+                              <option value="Others">Others</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.altMobile.$touched && vleUpdate.altMobile.$invalid}">
+                          <label for="pass" class="col-sm-3 control-label">Alternative mobile:</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="altMobile" ui-mask="999-999-9999" placeholder="xxx-xxx-xxxx" ng-model="vle.altMobile">
+                            <!-- <input type="text" class="form-control" name="mobile" ng-model="user.mobile" placeholder="Mobile" required ng-pattern="/^[0-9]{10,10}$/"> -->
+                            <!-- <span class="help-block" ng-show="vleUpdate.altMobile.$error.required && vleUpdate.altMobile.$touched">Mobile is required</span> -->
+                          </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':vleUpdate.user_digi_email.$touched && vleUpdate.user_digi_email.$invalid}">
+                                  <label for="lname" class="col-sm-3 control-label"> Digi Mail:</label>
+                          <div class="col-sm-8">
+                            <input type="email" name="user_digi_email" ng-model="user.email" class="form-control" placeholder=" Digi mail "  ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,7}$/">
+                            <span class="help-block" ng-show="vleUpdate.user_digi_email.$error.required && vleUpdate.user_digi_email.$touched">Email is required</span>
+                             <span class="help-block" ng-show="vleUpdate.user_digi_email.$error.pattern && vleUpdate.user_digi_email.$touched">Please Enter Valid Email</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">    
+                      <div class="col-sm-12">
+                        <div class="box box-success">
+                          <div class="box-header">
+                              <h3 class="box-title"> Complete Address</h3>
+                          </div>
+                          <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.flat_door_block.$touched && vleUpdate.flat_door_block.$invalid}">
+                                        <input type="text" class="form-control" placeholder="Flat/Door/Plot No " name="flat_door_block" ng-model="vle.plotNo" ng-pattern="/^[A-Za-z\d\s]+$/">
+                                          <span class="help-block" ng-show="vleUpdate.flat_door_block.$error.required && vleUpdate.flat_door_block.$touched">This Field Can not be empty</span>
+                                          <span class="help-block" ng-show="vleUpdate.flat_door_block.$error.pattern && vleUpdate.flat_door_block.$touched">Enter a valid Plot No.(Only Alphabets and Numerics allowed)</span>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.road_street.$touched && vleUpdate.road_street.$invalid}">
+                                        <input type="text" class="form-control" placeholder="Road/Lane/Building" name="road_street" ng-model="vle.lane" ng-pattern="/^[A-Za-z\d\s]+$/" >
+                                          <span class="help-block" ng-show="vleUpdate.road_street.$error.required && vleUpdate.road_street.$touched">Please Enter this field</span>
+                                          <span class="help-block" ng-show="vleUpdate.road_street.$error.pattern && vleUpdate.road_street.$touched">Enter a valid Lane(Only Alphabets allowed)</span>
+                                    </div>
+                                  <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.At.$touched && vleUpdate.At.$invalid}">
+                                      <input type="text" class="form-control" placeholder="At" name="At" ng-model="vle.at"  ng-pattern="/^[A-Za-z\s]+$/">
+                                          <span class="help-block" ng-show="vleUpdate.At.$error.required && vleUpdate.At.$touched">Please Enter This field</span>
+                                          <span class="help-block" ng-show="vleUpdate.At.$error.pattern && vleUpdate.At.$touched">Enter a valid At(Only Alphabets allowed)</span>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.Po.$touched && vleUpdate.Po.$invalid}">
+                                    <input type="text" class="form-control" placeholder="PO" name="Po" ng-model="vle.po" ng-pattern="/^[A-Za-z\s]+$/"> 
+                                    <span class="help-block" ng-show="vleUpdate.Po.$error.required && vleUpdate.Po.$touched">Please Enter This field</span>
+                                    <span class="help-block" ng-show="vleUpdate.Po.$error.pattern && vleUpdate.Po.$touched">Enter a valid At(Only Alphabets allowed)</span>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.local_city.$touched && vleUpdate.local_city.$invalid}">
+                                    <input type="text" class="form-control" placeholder="Locality/City" name="local_city" ng-model="vle.city"  ng-pattern="/^[A-Za-z\s]+$/">
+                                      <span class="help-block" ng-show="vleUpdate.local_city.$error.required && vleUpdate.local_city.$touched">Please Enter City</span>
+                                      <span class="help-block" ng-show="vleUpdate.local_city.$error.pattern && vleUpdate.local_city.$touched">Enter a valid City(Only Alphabets allowed)</span>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.dist.$touched && vleUpdate.dist.$invalid}">
+                                    <input type="text" class="form-control" placeholder="District" name="dist" ng-model="vle.dist"  ng-pattern="/^[A-Za-z\s]+$/">
+                                      <span class="help-block" ng-show="vleUpdate.dist.$error.required && vleUpdate.dist.$touched">Please Enter District</span>
+                                      <span class="help-block" ng-show="vleUpdate.dist.$error.pattern && vleUpdate.dist.$touched">Enter a valid District(Only Alphabets allowed)</span>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.country.$touched && vleUpdate.country.$invalid}">
+                                      <input type="text" class="form-control" placeholder="Country" name="country" ng-model="vle.country"  ng-pattern="/^[A-Za-z]+$/">
+                                      <span class="help-block" ng-show="vleUpdate.country.$error.required && vleUpdate.country.$touched">Please Enter Country</span>
+                                      <span class="help-block" ng-show="vleUpdate.country.$error.pattern && vleUpdate.country.$touched">Country name is invalid(Only Alphabets allowed)</span>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.state.$touched && vleUpdate.state.$invalid}">
+                                      <input type="text" class="form-control" placeholder="State" name="state" ng-model="vle.state"  ng-pattern="/^[A-Za-z\s]+$/">
+                                      <span class="help-block" ng-show="vleUpdate.state.$error.required && vleUpdate.state.$touched">Please Enter State</span>
+                                      <span class="help-block" ng-show="vleUpdate.state.$error.pattern && vleUpdate.state.$touched">State name is invalid(Only Alphabets allowed)</span>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.pin.$touched && vleUpdate.pin.$invalid}">
+                                    <input type="text" class="form-control" placeholder="xxxxxx" name="pin" ng-model="vle.pin" ui-mask="999999" >
+                                    <span class="help-block" ng-show="vleUpdate.pin.$error.required && vleUpdate.pin.$touched">Please Enter Pin</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>          
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="box box-success">
+                              <div class="box-header">
+                                  <h3 class="box-title">Educational qualification of VLE</h3>
+                              </div>
+                              <div class="box-body">
+                                <div class="row">
+                                  <div class="col-xs-12 col-sm-6 col-md-12">
+                                      <label for="Matriculation" class="col-sm-2 control-label">Matriculation:</label>
+                                      <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.matric_board_name.$touched && vleUpdate.matric_board_name.$invalid}">
+                                        <input type="text" class="form-control" placeholder="Board" name="matric_board_name" ng-model="vle.matricBoard" ng-pattern="/^[A-Za-z]+$/">
+                                            <!-- <span class="help-block" ng-show="vleUpdate.bank_name.$error.required && vleUpdate.bank_name.$touched">Bank name is required</span> -->
+                                            <span class="help-block" ng-show="vleUpdate.matric_board_name.$error.pattern && vleUpdate.matric_board_name.$touched">Enter a valid board name(Only Alphabets allowed)</span>
+                                      </div>
+                                      <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.matric_institution_name.$touched && vleUpdate.matric_institution_name.$invalid}">
+                                          <input type="text" class="form-control" placeholder="Institution Name " name="matric_institution_name" ng-model="vle.matricInstitute" ng-pattern="/^[A-Za-z\s]+$/">
+                                        <!-- <span class="help-block" ng-show="vleUpdate.bank_branch.$error.required && vleUpdate.bank_branch.$touched">Branch name is required</span> -->
+                                        <span class="help-block" ng-show="vleUpdate.matric_institution_name.$error.pattern && vleUpdate.matric_institution_name.$touched">Enter a valid institution name(Only Alphabets allowed)</span>
+                                      </div>
+                                      <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.matric_passout.$touched && vleUpdate.matric_passout.$invalid}">
+                                          <input type="text" class="form-control" placeholder="year of passing" name="matric_passout" ng-model="vle.matricPassout"  >
+                                          <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_acct.$error.required && vleUpdate.comp_bank_acct.$touched">Acccount type is required</span> -->
+                                          <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_acct.$error.pattern && vleUpdate.comp_bank_acct.$touched">Enter a valid Account Type(Numeric not allowed)</span> -->
+                                      </div>
+                                      <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.matric_percentage.$touched && vleUpdate.matric_percentage.$invalid}">
+                                          <input type="text" class="form-control" placeholder="Percentage" name="matric_percentage" ng-model="vle.matricPercent" >
+                                             <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_accNo.$error.required && vleUpdate.comp_bank_accNo.$touched">Acccount no is required</span> -->
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-12">
+                                      <label for="Intermediate" class="col-sm-2 control-label">Intermediate:</label>
+                                        <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.inter_board_name.$touched && vleUpdate.inter_board_name.$invalid}">
+                                          <input type="text" class="form-control" placeholder="Intermediate Board" name="inter_board_name" ng-model="vle.interBoard" ng-pattern="/^[A-Za-z]+$/">
+                                              <!-- <span class="help-block" ng-show="vleUpdate.bank_name.$error.required && vleUpdate.bank_name.$touched">Bank name is required</span> -->
+                                              <span class="help-block" ng-show="vleUpdate.inter_board_name.$error.pattern && vleUpdate.inter_board_name.$touched">Enter a valid board name(Only Alphabets allowed)</span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.inter_institution_name.$touched && vleUpdate.inter_institution_name.$invalid}">
+                                            <input type="text" class="form-control" placeholder="Institution Name " name="inter_institution_name" ng-model="vle.interInstitute" ng-pattern="/^[A-Za-z\s]+$/">
+                                            <!-- <span class="help-block" ng-show="vleUpdate.bank_branch.$error.required && vleUpdate.bank_branch.$touched">Branch name is required</span> -->
+                                            <span class="help-block" ng-show="vleUpdate.inter_institution_name.$error.pattern && vleUpdate.inter_institution_name.$touched">Enter a valid institution name(Numeric not allowed)</span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.inter_passout.$touched && vleUpdate.inter_passout.$invalid}">
+                                            <input type="text" class="form-control" placeholder="year of passing" name="inter_passout" ng-model="vle.interPassout"  >
+                                            <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_acct.$error.required && vleUpdate.comp_bank_acct.$touched">Acccount type is required</span> -->
+                                            <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_acct.$error.pattern && vleUpdate.comp_bank_acct.$touched">Enter a valid Account Type(Numeric not allowed)</span> -->
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.inter_percentage.$touched && vleUpdate.inter_percentage.$invalid}">
+                                          <input type="text"  class="form-control" placeholder="Percentage" name="inter_percentage" ng-model="vle.interPercent" >
+                                          <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_accNo.$error.required && vleUpdate.comp_bank_accNo.$touched">Acccount no is required</span> -->
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-xs-12 col-sm-6 col-md-12">
+                                        <label for="Intermediate" class="col-sm-2 control-label">Graduation:</label>
+                                          <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.grad_board_name.$touched && vleUpdate.grad_board_name.$invalid}">
+                                              <input type="text" class="form-control" placeholder="Graduation Board" name="grad_board_name" ng-model="vle.gradBoard" ng-pattern="/^[A-Za-z]+$/">
+                                                <!-- <span class="help-block" ng-show="vleUpdate.bank_name.$error.required && vleUpdate.bank_name.$touched">Bank name is required</span> -->
+                                                <span class="help-block" ng-show="vleUpdate.inter_board_name.$error.pattern && vleUpdate.inter_board_name.$touched">Enter a valid board name(Numeric not allowed)</span>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.grad_institution_name.$touched && vleUpdate.grad_institution_name.$invalid}">
+                                            <input type="text" class="form-control" placeholder="Institution Name " name="grad_institution_name" ng-model="vle.gradInstitute" ng-pattern="/^[A-Za-z\s]+$/">
+                                            <!-- <span class="help-block" ng-show="vleUpdate.bank_branch.$error.required && vleUpdate.bank_branch.$touched">Branch name is required</span> -->
+                                            <span class="help-block" ng-show="vleUpdate.grad_institution_name.$error.pattern && vleUpdate.grad_institution_name.$touched">Enter a valid institution name(Numeric not allowed)</span>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.grad_passout.$touched && vleUpdate.grad_passout.$invalid}">
+                                              <input type="text" class="form-control" placeholder="year of passing" name="grad_passout" ng-model="vle.gradPassout"  >
+                                              <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_acct.$error.required && vleUpdate.comp_bank_acct.$touched">Acccount type is required</span> -->
+                                              <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_acct.$error.pattern && vleUpdate.comp_bank_acct.$touched">Enter a valid Account Type(Numeric not allowed)</span> -->
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.grad_percentage.$touched && vleUpdate.grad_percentage.$invalid}">
+                                              <input type="text"  class="form-control" placeholder="Percentage" name="grad_percentage" ng-model="vle.interPercent" >
+                                            <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_accNo.$error.required && vleUpdate.comp_bank_accNo.$touched">Acccount no is required</span> -->
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-12">
+                                          <label for="Intermediate" class="col-sm-2 control-label">Post Graduation:</label>
+                                          <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.pg_board_name.$touched && vleUpdate.pg_board_name.$invalid}">
+                                              <input type="text" class="form-control" placeholder="PG Board" name="pg_board_name" ng-model="vle.pgBoard" ng-pattern="/^[A-Za-z]+$/">
+                                                <!-- <span class="help-block" ng-show="vleUpdate.bank_name.$error.required && vleUpdate.bank_name.$touched">Bank name is required</span> -->
+                                                <span class="help-block" ng-show="vleUpdate.pg_board_name.$error.pattern && vleUpdate.pg_board_name.$touched">Enter a valid board name(Numeric not allowed)</span>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.pg_institution_name.$touched && vleUpdate.pg_institution_name.$invalid}">
+                                            <input type="text" class="form-control" placeholder="Institution Name " name="pg_institution_name" ng-model="vle.pgInstitute" ng-pattern="/^[A-Za-z\s]+$/">
+                                            <!-- <span class="help-block" ng-show="vleUpdate.bank_branch.$error.required && vleUpdate.bank_branch.$touched">Branch name is required</span> -->
+                                            <span class="help-block" ng-show="vleUpdate.pg_institution_name.$error.pattern && vleUpdate.pg_institution_name.$touched">Enter a valid institution name(Numeric not allowed)</span>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':vleUpdate.pg_passout.$touched && vleUpdate.pg_passout.$invalid}">
+                                              <input type="text" class="form-control" placeholder="year of passing" name="pg_passout" ng-model="vle.pgPassout"  >
+                                              <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_acct.$error.required && vleUpdate.comp_bank_acct.$touched">Acccount type is required</span> -->
+                                              <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_acct.$error.pattern && vleUpdate.comp_bank_acct.$touched">Enter a valid Account Type(Numeric not allowed)</span> -->
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':vleUpdate.pg_percentage.$touched && vleUpdate.pg_percentage.$invalid}">
+                                              <input type="text"  class="form-control" placeholder="Percentage" name="pg_percentage" ng-model="vle.pgPercent" >
+                                            <!-- <span class="help-block" ng-show="vleUpdate.comp_bank_accNo.$error.required && vleUpdate.comp_bank_accNo.$touched">Acccount no is required</span> -->
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-12">
+                                          <label for="Intermediate" class="col-sm-2 control-label">Others(if any):</label>
+                                          <div class="col-xs-12 col-sm-6 col-md-10" ng-class="{'has-error':vleUpdate.other_qualfication.$touched && vleUpdate.other_qualfication.$invalid}">
+                                            <textarea placeholder="Please enter other qualification details" name="other_qualfication"  class="form-control" ng-model="vle.otherQualification"></textarea>
+                                            <!-- <span class="help-block" ng-show="vleUpdate.other_qualfication.$error.required && vleUpdate.other_qualfication.$touched">Please provide a valid reason</span> -->
+                                          </div>
+                                        </div>
+                                      </div> 
+                                  </div>   
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                      <button type="submit" class="btn btn-default" ui-sref="homepage">Back</button>
+                      <button type="submit"  ng-click="tabChange('OD')" class="btn btn-info pull-right">Next</button>
+                       
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="OD" ng-class="{'active':active_tab == 'OD'}">
+                  <div class="box box-info">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Please Enter Your Basic Details</h3>
+                    </div>
+                    <div class="box-body">
+                      <div class="row">
+                        <div class="col-xs-6">
+                          <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.cscBuildingArea.$touched && vleUpdate.cscBuildingArea.$invalid}">
+                        <label for="cscId" class="col-sm-3 control-label">Area of CSC building:</label>
+                        <div class="col-sm-9">
+                          <input type="text" name="cscBuildingArea" ng-model="vle.cscBuildingArea" class="form-control" placeholder="Area of CSC building" >
+                          <!-- <span class="help-block" ng-show="vleUpdate.cscLongitude.$error.required && vleUpdate.cscLongitude.$touched">Longitude of location of CSC is required</span> -->
+                          <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                        </div>
+                      </div>
+                      <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.personEngaged.$touched && vleUpdate.personEngaged.$invalid}">
+                        <label for="cscId" class="col-sm-3 control-label">No of persons engagged in CSC:</label>
+                        <div class="col-sm-9">
+                          <input type="text" name="personEngaged" ng-model="vle.personEngaged" class="form-control" placeholder="No of persons engagged in CSC" >
+                          <!-- <span class="help-block" ng-show="vleUpdate.personEngaged.$error.required && vleUpdate.personEngaged.$touched">Longitude of location of CSC is required</span> -->
+                          <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                        </div>
+                      </div>
+                      <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.webcamera.$touched && vleUpdate.webcamera.$invalid}">
+                            <label for="uname" class="control-label col-xs-3 pull-left">Web Camera</label>
+                              <div class="col-xs-9">
+                                <select class="form-control" name="webcamera" ng-model="vle.webCamera" required>
+                                  <option value=""><i class="fa fa-sort-desc">Web camera Available</i></option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.furniture_details.$touched && vleUpdate.furniture_details.$invalid}">
+                            <label for="uname" class="control-label col-xs-3 pull-left">Furniture Details</label>
+                              <div class="col-xs-9">
+                                <textarea placeholder="Please enter all furnitures details" name="furniture_details"  class="form-control" ng-model="vle.furnitureDetails"></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.vsatBbDcNofn.$touched && vleUpdate.vsatBbDcNofn.$invalid}">
+                              <label for="cscId" class="col-sm-3 control-label">V-SAT/BB/DC/NOFN:</label>
+                              <div class="col-sm-9">
+                                <input type="text" name="vsatBbDcNofn" ng-model="vle.cscLongitude" class="form-control" placeholder="V-SAT/BB/DC/NOFN With No." >
+                               <!--  <span class="help-block" ng-show="vleUpdate.vsatBbDcNofn.$error.required && vleUpdate.vsatBbDcNofn.$touched">Longitude of location of CSC is required</span> -->
+                                <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                              </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.pmgDishaId.$touched && vleUpdate.pmgDishaId.$invalid}">
+                              <label for="cscId" class="col-sm-3 control-label">PMGDISHA ID:</label>
+                              <div class="col-sm-9">
+                                <input type="text" name="pmgDishaId" ng-model="vle.pmgDishaId" class="form-control" placeholder="PMGDISHA ID No." required>
+                                <span class="help-block" ng-show="vleUpdate.pmgDishaId.$error.required && vleUpdate.pmgDishaId.$touched">Longitude of location of CSC is required</span>
+                                <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                              </div>
+                            </div>
+                            <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.kit.$touched && vleUpdate.kit.$invalid}">
+                              <label for="uname" class="control-label col-xs-3 pull-left">KIT</label>
+                              <div class="col-xs-9">
+                                <select class="form-control" name="kit" ng-model="vle.kit" required>
+                                  <option value=""><i class="fa fa-sort-desc">KIT</i></option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.providingInsurance.$touched && vleUpdate.providingInsurance.$invalid}">
+                            <label for="uname" class="control-label col-xs-3 pull-left">Providing Insurance Services</label>
+                              <div class="col-xs-9">
+                                <select class="form-control" name="providingInsurance" ng-model="vle.providingInsurance" required>
+                                  <option value=""><i class="fa fa-sort-desc">Providing Insurance services</i></option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="form-group p-l-20" ng-class="{'has-error':vleUpdate.eWallet.$touched && vleUpdate.eWallet.$invalid}">
+                                <label for="uname" class="control-label col-xs-3 pull-left">Wheather e-wallet created:</label>
+                              <div class="col-xs-9">
+                                  <select class="form-control" name="eWallet" ng-model="vle.eWallet" required>
+                                    <option value=""><i class="fa fa-sort-desc">Wheather e-wallet created</i></option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.censusCode.$touched && vleUpdate.censusCode.$invalid}">
+                            <label for="cscId" class="col-sm-3 control-label">Village/Municipal Census code:</label>
+                            <div class="col-sm-9">
+                              <input type="text" name="censusCode" ng-model="vle.censusCode" class="form-control" placeholder="Village/Municipal Census code" required>
+                              <span class="help-block" ng-show="vleUpdate.censusCode.$error.required && vleUpdate.censusCode.$touched">Village/Municipal Census code is required</span>
+                              <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                            </div>
+                          </div>
+                          <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.cscLattitude.$touched && vleUpdate.cscLattitude.$invalid}">
+                            <label for="cscId" class="col-sm-3 control-label">Lattitude of location of CSC:</label>
+                            <div class="col-sm-9">
+                              <input type="text" name="cscLattitude" ng-model="vle.cscLattitude" class="form-control" placeholder="Lattitude of location of CSC" required>
+                              <span class="help-block" ng-show="vleUpdate.cscLattitude.$error.required && vleUpdate.cscLattitude.$touched">Lattitude of location of CSC is required</span>
+                              <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.buildingOwnership.$touched && vleUpdate.buildingOwnership.$invalid}">
+                            <label for="uname" class="control-label col-xs-3 pull-left">CSC building type</label>
+                              <div class="col-xs-9">
+                                <select class="form-control" name="buildingOwnership" ng-model="vle.buildingOwnership" required>
+                                  <option value=""><i class="fa fa-sort-desc">Select building type</i></option>
+                                  <option value="Rented">Rented</option>
+                                  <option value="Own">Own</option>
+                                </select>
+                              </div>
+                          </div>
+                          <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.noOfLaptop.$touched && vleUpdate.noOfLaptop.$invalid}">
+                            <label for="cscId" class="col-sm-3 control-label">No of laptop/computers:</label>
+                            <div class="col-sm-9">
+                              <input type="text" name="noOfLaptop" ng-model="vle.noOfLaptop" class="form-control" placeholder="No of laptop/computers" required>
+                              <span class="help-block" ng-show="vleUpdate.noOfLaptop.$error.required && vleUpdate.noOfLaptop.$touched">No of laptops required</span>
+                              <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                            </div>
+                        </div>
+                      <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.noOfPrinters.$touched && vleUpdate.noOfPrinters.$invalid}">
+                        <label for="cscId" class="col-sm-3 control-label">No of printers:</label>
+                        <div class="col-sm-9">
+                          <input type="text" name="noOfPrinters" ng-model="vle.noOfPrinters" class="form-control" placeholder="No of printers" required>
+                          <span class="help-block" ng-show="vleUpdate.noOfPrinters.$error.required && vleUpdate.noOfPrinters.$touched">No of printers is required</span>
+                          <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                        </div>
+                      </div>
+                      <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.bioMetric.$touched && vleUpdate.bioMetric.$invalid}">
+                        <label for="uname" class="control-label col-xs-3 pull-left">Bio metric</label>
+                          <div class="col-xs-9">
+                            <select class="form-control" name="bioMetric" ng-model="vle.bioMetric" required>
+                              <option value=""><i class="fa fa-sort-desc">Bio metric</i></option>
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>
+                            </select>
+                          </div>
+                      </div>
+                      <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.cmnBranding.$touched && vleUpdate.cmnBranding.$invalid}">
+                      <label for="uname" class="control-label col-xs-3 pull-left">Common Branding</label>
+                        <div class="col-xs-9">
+                          <select class="form-control" name="cmnBranding" ng-model="vle.commonBranding">
+                            <option value=""><i class="fa fa-sort-desc">Common branding</i></option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.powerBackUp.$touched && vleUpdate.powerBackUp.$invalid}">
+                      <label for="uname" class="control-label col-xs-3 pull-left">Power back-up</label>
+                        <div class="col-xs-9">
+                          <select class="form-control" name="powerBackUp" ng-model="vle.powerBackUp" required>
+                            <option value=""><i class="fa fa-sort-desc">Power back-up</i></option>
+                            <option value="Generator">Generator</option>
+                            <option value="UPS">UPS</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.tab.$touched && vleUpdate.tab.$invalid}">
+                      <label for="uname" class="control-label col-xs-3 pull-left">TAB</label>
+                        <div class="col-xs-9">
+                          <select class="form-control" name="tab" ng-model="vle.tab" required>
+                            <option value=""><i class="fa fa-sort-desc">TAB</i></option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.ProvidingEDistrictServices.$touched && vleUpdate.ProvidingEDistrictServices.$invalid}">
+                      <label for="uname" class="control-label col-xs-3 pull-left">Providing E-district services</label>
+                        <div class="col-xs-9">
+                          <select class="form-control" name="ProvidingEDistrictServices" ng-model="vle.ProvidingEDistrictServices" required>
+                            <option value=""><i class="fa fa-sort-desc">Providing E-district services</i></option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.cscLocation.$touched && vleUpdate.cscLocation.$invalid}">
+                      <label for="uname" class="control-label col-xs-3 pull-left">Location of CSC</label>
+                        <div class="col-xs-9">
+                          <select class="form-control" name="cscLocation" ng-model="vle.cscLocation" required>
+                            <option value=""><i class="fa fa-sort-desc">Select Location of CSC</i></option>
+                            <option value="Private">Private</option>
+                            <option value="Panchayat Building">Panchayat Building</option>
+                            
+                          </select>
+                        </div>
+                      </div>
+                            <div class="form-group m-l-20" ng-class="{'has-error':vleUpdate.ownership.$touched && vleUpdate.ownership.$invalid}">
+                            <label for="uname" class="control-label col-xs-3 pull-left">Ownership of CSC's</label>
+                              <div class="col-xs-9">
+                                <select class="form-control" name="ownership" ng-model="vle.ownership" required>
+                                  <option value=""><i class="fa fa-sort-desc">Select Ownership type.</i></option>
+                                  <option value="individual">Individual</option>
+                                  <option value="partnership">Partnership</option>
+                                  
+                                </select>
+                              </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.cscLongitude.$touched && vleUpdate.cscLongitude.$invalid}">
+                              <label for="cscId" class="col-sm-3 control-label">Longitude of location of CSC:</label>
+                              <div class="col-sm-9">
+                                <input type="text" name="cscLongitude" ng-model="vle.cscLongitude" class="form-control" placeholder="cscLongitude of location of CSC" required>
+                                <span class="help-block" ng-show="vleUpdate.cscLongitude.$error.required && vleUpdate.cscLongitude.$touched">Longitude of location of CSC is required</span>
+                                <!-- <span class="help-block" ng-show="vleUpdate.vleName.$error.pattern && vleUpdate.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
+                              </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error':vleUpdate.pin.$touched && vleUpdate.pin.$invalid}">
+                              <label for="cscId" class="col-sm-3 control-label">Pincode of CSC:</label>
+                              <div class="col-sm-9">
+                                  <input type="text" class="form-control" placeholder="xxxxxx" name="pin" ng-model="vle.cscPin" ui-mask="999999" >
+                              <span class="help-block" ng-show="vleUpdate.pin.$error.required && vleUpdate.pin.$touched">Please Enter Pin</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                     </div>
+                      <div class="box-footer">
+                      <button type="submit" class="btn btn-default" ng-click="tabChange('BD')">Back</button>
+                      <button type="submit"  ng-click="UpdateVle()" class="btn btn-info pull-right">Submit</button>
+                       
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+  </form>
+</section>
