@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- <html ng-app="return_file" manifest="returnFiling.appcache"> -->
-<html ng-app="msi" >
+<html ng-app="msi-goApps-goApps" >
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,12 +10,7 @@
     <link rel="stylesheet" href="dist/css/all.css">
     <script src="ng-libs.js"></script>
     <script src="custom.js"></script>
-    <script src="constants.js"></script>
 
-
-    <script src="main_app.js"></script>
-    <script src="controller/main_controller.js"></script>
-    <script src="controller/login_controller.js"></script>
   </head>
   <body class="hold-transition skin-green sidebar-mini" ng-class="{'login-page':!is_user}" ng-controller="Main_Controller">
     <div ng-repeat="alert in alerts" class="alert alert-{{alert.type}}">

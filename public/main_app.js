@@ -1,4 +1,4 @@
-var app = angular.module("msi", ['ui.router', 'ui.bootstrap', 'ngResource', 'ngStorage', 'ngAnimate','datePicker','ngTable','angular-js-xlsx','WebService','ui.utils','textAngular','Logger']);
+var app = angular.module("msi-goApps-goApps", ['ui.router', 'ui.bootstrap', 'ngResource', 'ngStorage', 'ngAnimate','datePicker','ngTable','angular-js-xlsx','WebService','ui.utils','textAngular','Logger']);
 app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
   $httpProvider.interceptors.push(function ($q, $location, $window,$localStorage) {
     return {
@@ -18,16 +18,8 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
       }
     };
   });
-  $urlRouterProvider.otherwise('/homepage');
+  $urlRouterProvider.otherwise('/login');
   $stateProvider
-  .state('homepage', {
-    templateUrl: 'view/common/homepage.html',
-    url: '/homepage',
-    // controller:'Login_Controller',
-    // resolve: {
-    //  loggedout: checkLoggedin
-    // }
-  })
   .state('login', {
     templateUrl: 'view/common/login.html',
     url: '/login',
@@ -36,12 +28,8 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
      loggedout: checkLoggedin
     }
   })
-  
-.state('vle-registration',{
-    templateUrl:'view/vle_registration.html',
-    url: '/vle-registration',
-    controller:'Main_Controller',
-  })
+
+
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {
     var deferred = $q.defer();
