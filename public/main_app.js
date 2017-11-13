@@ -28,6 +28,12 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
      loggedout: checkLoggedin
     }
   })
+  .state('vle', {
+    templateUrl: '/view/vle_registration.html',
+    url: '/vle',
+    controller:'Main_Controller',
+
+  })
 
 
 
