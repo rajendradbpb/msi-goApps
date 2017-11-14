@@ -4,18 +4,18 @@ var router = express.Router();
 var controllers = require("./../controllers/index");
 
 /* state CRUD starts */
-router.post('/state',function(req, res, next) {
-  controllers.commonCtrl.addState(req, res);
-});
-router.get('/state', function(req, res, next) {
-  controllers.commonCtrl.getState(req, res);
-});
-router.put('/state', function(req, res, next) {
-  controllers.commonCtrl.udpateState(req, res);
-});
-router.delete('state/:id', function(req, res, next) {
-  controllers.commonCtrl.deleteState(req, res);
-});
+// router.post('/state',function(req, res, next) {
+//   controllers.commonCtrl.addState(req, res);
+// });
+// router.get('/state', function(req, res, next) {
+//   controllers.commonCtrl.getState(req, res);
+// });
+// router.put('/state', function(req, res, next) {
+//   controllers.commonCtrl.udpateState(req, res);
+// });
+// router.delete('state/:id', function(req, res, next) {
+//   controllers.commonCtrl.deleteState(req, res);
+// });
 /* state CRUD starts */
 
 

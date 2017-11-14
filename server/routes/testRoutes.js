@@ -9,28 +9,46 @@ var passport = require("passport");
 var logger = require("./../component/log4j").getLogger('testRoutes');
 // console.log(log4j);
 // const logger = log4j.getLogger('testRoutes');
-router.post('/',function(req, res, next) {
+var excel = require('node-excel-export');
+router.get('/xls', function(req, res, next) {
+  console.log(">>>>>>>>>>>>>>>>>>>");
+  models.stateModel.find().select('name')
+    .exec()
+    .then(function(states) {
+      var dataset = [{name:"name1"},{name:"name2"},{name:"name3"}];
+      const heading = [['state']];
+      // states.filter(function(state) {
+      //   console.log("**** ",state.name);
+      //   dataset.push(state.name);
+      //
+      //   return state.name;
+      // })
+      // console.log(dataset);
+      var specification = {
+        name: { // <- the key should match the actual data key
+          displayName: 'State', // <- Here you specify the column header
+          width: 120 // <- width in pixels
+        }
+      };
+      var report = excel.buildExport(
+        [{
+          name: 'State',
+          heading: heading,
+          specification: specification,
+          data: dataset // <-- Report data
+        }]
+      );
+      res.attachment('state.xlsx');
+      return res.send(report);
 
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res.sendStatus(500).json({
+        error: err
+      });
+    })
 });
-router.get('/', function(req, res, next) {
-  models.userModel.findOne({email:"client@yopmail.com"},function(err,data) {
-    if(err)
-      response.sendResponse(res, 500, "error", constants.messages.errors.saveData, err);
-    else {
-      response.sendResponse(res, 200, "success", constants.messages.success.saveData, data);
 
-    }
-  })
-});
-router.get('/1', function(req, res, next) {
-  throw Error("this is a test Error");
-});
-router.get('/2', passport.authenticate('token', {session:false}),function(req, res, next) {
-  logger.debug("calling from test routes\n ",JSON.stringify(req.user));
-  res.send('calling from test routes');
-});
-router.delete('/:id', function(req, res, next) {
-
-});
 
 module.exports = router;

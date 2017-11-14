@@ -2,6 +2,8 @@ var config = require('config');
 var constants = {
   roles:['state-admin','district-admin','vle'],
   userStatus:['active','pending','inactive'],
+  blockTypes:['GP','URBAN'],
+  urbanTypes:['Municipality','Nsc','Others'],
   messages:{
     errors:{
       //global
