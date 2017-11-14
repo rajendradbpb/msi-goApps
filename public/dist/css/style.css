@@ -1096,7 +1096,7 @@ a:focus {
   border-top-left-radius: 0;
   padding: 1px 0 0 0;
   border-top-width: 0;
-  width: 280px;
+  width: 157px;
 }
 .navbar-nav > .user-menu > .dropdown-menu,
 .navbar-nav > .user-menu > .dropdown-menu > .user-body {
@@ -1146,7 +1146,7 @@ a:focus {
 }
 .navbar-nav > .user-menu > .dropdown-menu > .user-footer {
   background-color: #f9f9f9;
-  padding: 10px;
+  padding: 2px;
 }
 .navbar-nav > .user-menu > .dropdown-menu > .user-footer:before,
 .navbar-nav > .user-menu > .dropdown-menu > .user-footer:after {

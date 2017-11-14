@@ -33,10 +33,31 @@ app.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", function($s
     templateUrl: '/view/vle_registration.html',
     url: '/vle',
     controller:'Main_Controller',
+  })
+  .state('dashboard', {
+    templateUrl: '/view/dashboard.html',
+    url: '/dashboard',
+    controller:'Main_Controller',
 
   })
 
+  .state('user-profile', {
+    templateUrl: '/view/profile.html',
+    url: '/user-profile',
+    controller:'User_Controller',
+  })
+  .state('summary', {
+    templateUrl: '/view/summary.html',
+    url: '/summary',
+    controller:'User_Controller',
 
+  })
+  .state('vle-list', {
+    templateUrl: '/view/vle_list.html',
+    url: '/vle-list',
+    controller:'User_Controller',
+
+  })
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {
     var deferred = $q.defer();
@@ -465,165 +486,27 @@ app.filter('capitalize', function() {
   $scope.user.password = ($localStorage.user) ? $localStorage.user.password : "";
   $scope.userLogin = function(){
     $rootScope.showPreloader = true;
-    ApiCall.userLogin($scope.user ,function(response){
-      if($scope.user.rememberMe)
-        $localStorage.user = {
-          "uname":$scope.user.username,
-          "password":$scope.user.password
-        }
-        UserModel.setUser(response.data.user);
-      $rootScope.showPreloader = false;
-      $localStorage.token = response.data.token;
-      $rootScope.is_loggedin = true;
-      console.log("logged in");
-      console.log(response);
-      if(response.data.user.role.type == "superAdmin" && !response.data.user.father){
-         console.log("ist condition in");
-           $state.go('profile-update');
-      }
-      else if(response.data.user.role.type == "superAdmin" && response.data.user.father){
-           $state.go('dashboard');
-            console.log("2nd condition in");
-      }
-      else if(response.data.user.father){
-        $state.go('user-profile',{'user_id':response.data.user._id});
-         console.log("3rd condition in");
-      }
-       else if((response.data.user.role.type !== "superAdmin" || response.data.user.role.type !== "client") && response.data.user.father){
-          $state.go('user-profile',{'user_id':response.data.user._id});
-           console.log("4th condition in");
-      }
-      else{
-         console.log("5th condition in");
-        $state.go('profile-update');
-      }
-    },function(error){
-      $rootScope.showPreloader = false;
-      Util.alertMessage('danger',"Invalid username and password");
-    })
+    $rootScope.showPreloader = false;
+    $rootScope.is_loggedin = true;
+    $state.go('dashboard');
   }
 }]);
 ;/*****************************************************************************************************************/
 app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStorage", "NgTableParams", "ApiCall", "UserModel", "$uibModal", "$stateParams", "Util", "$timeout", function($scope,$rootScope,$state,$localStorage,NgTableParams,ApiCall,UserModel,$uibModal,$stateParams,Util,$timeout){
-  $scope.userList = {};
+
   $scope.dashboard = {};
-  $scope.referList = {};
    var loggedIn_user = UserModel.getUser();
+   $scope.active_tab = 'BD';
+   $scope.tabChange = function(tab){
+    $scope.active_tab = tab;
+   }
   $scope.signOut = function(){
     delete $localStorage.token;
     $rootScope.is_loggedin = false;
     UserModel.unsetUser();
     $state.go('login');
   }
-  $scope.getInternalUsers = function(data){
-    $scope.internalCount = 0;
-    var obj = {
-      'userType':data,
-    }
-    ApiCall.getUser(obj, function(response){
-     $scope.internalCount = response.data.length;
-
-      },function(error){
-      })
-  }
-  $scope.getUserDetails = function(){
-    var loggedIn_user = UserModel.getUser();
-    var obj = {
-        '_id' : loggedIn_user._id,
-      }
-        ApiCall.getUser(obj, function(response){
-          console.log(response);
-          $scope.userDetails = response.data;
-        },function(error){
-        });
-      }
-  $scope.getClientUsers = function(){
-    $scope.clientCount = 0;
-    $scope.clientUsers = [];
-    ApiCall.getUser( function(response){
-      console.log(response);
-      angular.forEach(response.data, function(item){
-            if(item.role.type == "client"){
-                $scope.clientUsers.push(item);
-                $scope.clientCount++;
-               }
-          });
-      console.log($scope.clientUsers);
-      },function(error){
-      })
-  }
-  $scope.checkAdmin = function(){
-    $scope.superAdmin = false;
-      var loggedIn_user = UserModel.getUser();
-      if(loggedIn_user && loggedIn_user.role && loggedIn_user.role.type == "superAdmin"){
-        $scope.superAdmin = true;
-      }
-      else{
-        $scope.superAdmin = false;
-      }
-      return  $scope.superAdmin;
-  }
-  $scope.checkClient = function(){
-    $scope.client = false;
-      var loggedIn_user = UserModel.getUser();
-      if(loggedIn_user && loggedIn_user.role && loggedIn_user.role.type == "client"){
-        $scope.client = true;
-      }
-      else{
-        $scope.client = false;
-      }
-      return  $scope.client;
-  }
-  $scope.checkInternalUser = function(){
-    $scope.internalUser = false;
-      var loggedIn_user = UserModel.getUser();
-      if(loggedIn_user && loggedIn_user.role && ( loggedIn_user.role.type == "client" || loggedIn_user.role.type == "superAdmin")){
-        $scope.internalUser = false;
-      }
-      else {
-        $scope.internalUser = true;
-      }
-      return  $scope.internalUser;
-  }
-  $scope.deleteUser = function(data){
-   $scope.deleteUserId = data._id;
-   $scope.modalInstance = $uibModal.open({
-      animation : true,
-      templateUrl : 'view/modals/user-delete-modal.html',
-      controller : 'daleteUserModalCtrl',
-      size: 'md',
-      resolve:{
-        userDelete : function(){
-           return $scope.userDelete;
-        }
-      }
-   })
-  }
-  $scope.userDelete = function(){
-    ApiCall.deleteUser({
-      _id: $scope.deleteUserId
-    }, function(res) {
-      Util.alertMessage('success', res.message);
-      $scope.getAllUsers();
-    }, function(error) {
-    })
-  }
-  $scope.getReturnCount = function(){
-    ApiCall.getcount(function(response){
-     $scope.returnFilesCounts = response.data;
-    },function(error){
-    })
-  }
-}]);
-app.controller('daleteUserModalCtrl',["$scope", "$uibModalInstance", "userDelete", function($scope, $uibModalInstance,userDelete){
-  $scope.ok = function () {
-    userDelete();
-    $uibModalInstance.close();
-  };
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-}]);
+ }]);
 app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
         $scope.today = function() {
             $scope.dt = new Date();
@@ -662,7 +545,12 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
 
     }
 ]);
-;app.directive('fileModell', ['$parse', function ($parse) {
+;app.controller("User_Controller",["$scope", "$rootScope", "$rootScope", "$state", "$localStorage", "NgTableParams", "ApiCall", "$timeout", "UserModel", "Util", function($scope,$rootScope,$rootScope,$state,$localStorage,NgTableParams,ApiCall, $timeout,UserModel,Util){
+
+$scope.user = {};
+
+
+}]);;app.directive('fileModell', ['$parse', function ($parse) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {

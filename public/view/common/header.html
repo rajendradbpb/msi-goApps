@@ -9,10 +9,10 @@
     </a>
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-         <li class="contact-us pull-left" ui-sref="login">
-            <span class="">Login</span>
+         <li class="contact-us pull-left" ng-if="!is_loggedin" ui-sref="login">
+            <span class="">Admin Login</span>
         </li>
-        <li class="contact-us pull-left" ui-sref="vle">
+        <li class="contact-us pull-left" ng-if="!is_loggedin" ui-sref="vle">
            <span class="">VLE Registration</span>
         </li>
         <li class="dropdown user user-menu" ng-if="is_loggedin">
@@ -30,10 +30,21 @@
             </li>
             <li class="user-footer">
               <div class="pull-left">
-                <a href="" class="btn btn-default btn-flat" ui-sref="user-profile">Profile</a>
+                <button type="button" href="" ng-click="signOut()" class="btn btn-primary" style="width:154px;">
+               Sign out</button>
               </div>
-              <div class="pull-right">
-                <a href="" class="btn btn-default btn-flat" ng-click="signOut()">Sign out</a>
+            </li>
+            <li class="user-footer">
+              <div class="pull-left">
+                <button type="button" href="" ui-sref="user-profile" class="btn btn-primary" style="width:154px;">
+               Profile</button>
+               
+              </div>
+            </li>
+            <li class="user-footer">
+              <div class="pull-left">
+                <button type="button" href="" ui-sref="change-password" class="btn btn-primary" style="width:154px;">
+               Change Password</button>
               </div>
             </li>
           </ul>
