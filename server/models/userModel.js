@@ -17,7 +17,7 @@ var userSchema = new mongoose.Schema({
     name                :{type: String},
     mobile              : {type: String},
     altMobile           : {type: String},
-    email               :{type: String,required: true},
+    email               :{type: String},
     digiMail            :{type: String},
     cscId               :{type: String},
     religion            :{type: String},

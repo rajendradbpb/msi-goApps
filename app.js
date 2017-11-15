@@ -3,7 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser'); 
+var bodyParser = require('body-parser');
 var db = require('./server/db.js');
 var passport = require('passport');
 var jwt     = require('jsonwebtoken');
@@ -81,17 +81,17 @@ var BearerStrategy = require('passport-http-bearer').Strategy;
 passport.use('login', new LocalStrategy(
   function(username,password, done) {
     console.log("login instercepter  ",username,password);
-    userModel.findOne({ $or: [{"username":username}]}).populate('role').exec(function (err, user) {
+    userModel.findOne({"username":username}).populate('role').exec(function (err, user) {
       if (err) { return done(err); }
       if (!user) { return done(null, false); }
-      console.log("got user/pass",username,password);
-      console.log("got user/pass >>>>>>>",user.username,user.password);
+      // console.log("got user/pass",username,password);
+      // console.log("got user/pass >>>>>>>",user.username,user.password);
       passwordHash(password).verifyAgainst(user.password,function(error, verified) {
-        console.log("after verification ",error,user);
-        if (error) { 
+        //console.log("after verification ",error,user);
+        if (error) {
           console.log("error");
           return done(err); }
-        else if (!verified) { 
+        else if (!verified) {
            console.log("not verified");
           return done(null, false); }
         else return done(null, user);
