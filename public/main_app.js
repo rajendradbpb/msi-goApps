@@ -31,12 +31,18 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
   .state('vle', {
     templateUrl: '/view/vle_registration.html',
     url: '/vle',
-    controller:'Main_Controller',
+    controller:'User_Controller',
+    resolve: {
+     loggedout: checkLoggedin
+    }
   })
   .state('dashboard', {
     templateUrl: '/view/dashboard.html',
     url: '/dashboard',
     controller:'Main_Controller',
+    //  resolve: {
+    //   loggedout: checkLoggedout
+    // }
 
   })
 
@@ -44,18 +50,25 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
     templateUrl: '/view/profile.html',
     url: '/user-profile',
     controller:'User_Controller',
+     resolve: {
+      loggedout: checkLoggedout
+    }
   })
   .state('summary', {
     templateUrl: '/view/summary.html',
     url: '/summary',
     controller:'User_Controller',
-
+     resolve: {
+      loggedout: checkLoggedout
+    }
   })
   .state('vle-list', {
     templateUrl: '/view/vle_list.html',
     url: '/vle-list',
     controller:'User_Controller',
-
+     resolve: {
+      loggedout: checkLoggedout
+    }
   })
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {

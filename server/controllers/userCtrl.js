@@ -54,12 +54,14 @@ var refreshToken = function(_id,callback){
 
 }
 exports.login = function(req, res) {
+  console.log("coming to server side control");
   // creating token that will send to the client side
 
   try {
     var token = jwt.sign(req.user, config.token.secret, {
         expiresIn: config.token.expiry
       },
+
       function(token) {
         var data = {
           user:req.user,
@@ -67,6 +69,7 @@ exports.login = function(req, res) {
         }
         response.sendResponse(res, 200, "success", constants.messages.success.login, data);
       });
+
   } catch (e) {
     LOG.error(e);
     logger.error("login  "+e);
@@ -78,14 +81,14 @@ exports.addUser = function(req, res) {
   // cheking validation
   try {
 
-    if (
-      component.utility.isEmpty(req.body.password) ||
-      component.utility.isEmpty(req.body.email) ||
-      component.utility.isEmpty(req.body.mobile) ||
-      component.utility.isEmpty(req.body.role)
-    ) {
-      return response.sendResponse(res, 400, "error", constants.statusCode['400']);
-    }
+    // if (
+    //   component.utility.isEmpty(req.body.password) ||
+    //   component.utility.isEmpty(req.body.email) ||
+    //   component.utility.isEmpty(req.body.mobile) ||
+    //   component.utility.isEmpty(req.body.role)
+    // ) {
+    //   return response.sendResponse(res, 400, "error", constants.statusCode['400']);
+    // }
     var rawPassword = req.body.password;
     models.roleModel.findById(req.body.role)
     .then(function(role) {

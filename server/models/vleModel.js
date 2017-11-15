@@ -4,36 +4,29 @@ var constants = require('./../../config/constants');
 var validator = require('validator');
 var Schema = mongoose.Schema;
 var password = require('password-hash-and-salt');
-var userSchema = new mongoose.Schema({
+var vleSchema = new mongoose.Schema({
     role                : {type: Schema.Types.ObjectId, ref: 'role',required: true},
-    username            : {type: String,unique : true,required: constants.messages.errors.username},
-    password            : {type: String,required: constants.messages.errors.undefinedPassword},
+    name                :{type: String},
+    mobile              : {type: String},
+    altMobile           : {type: String},
+    email               :{type: String},
+    digiMail            :{type: String},
+    cscId               :{type: String},
+    religion            :{type: String},
     state               :{type: Schema.Types.ObjectId,default:"Odisha"},
     district            :{type: Schema.Types.ObjectId, ref: 'district'},
    // blockType         :{type: String,enum:constants.blockTypes},
     block               :{type: String},
-    urbanType           :{type: String,enum:constants.urbanTypes},
     village             :{type: String},
-    name                :{type: String},
-    mobile              : {type: String},
-    altMobile           : {type: String},
-    email               :{type: String,required: true},
-    digiMail            :{type: String},
-    cscId               :{type: String},
-    religion            :{type: String},
      urban              :{type: Boolean,default:false},
+    urbanType           :{type: String,enum:constants.urbanTypes},
      gp                 :{type: String},
      ward               :{type: String},
+      dob                 : {type: String},
      gender             :{type: String},
      caste              :{type: String},
-
-
-    // firstname           : {type: String},
-    // lastname            : {type: String},
-    // middlename          : {type: String},
     pan                 : {type: String},
     adhar               : {type: String},
-    dob                 : {type: String},
     plotNo              : {type: String},
     lane                : {type: String},
     at                  : {type: String},
@@ -82,7 +75,7 @@ var userSchema = new mongoose.Schema({
     tab                 : {type: String},
     ProvidingEDistrictServices  : {type: String},
     cscLocation         : {type: String},
-    buildingOwnership   : {type: String},
+    ownership   : {type: String},
     cscLongitude        : {type: String},
     cscPin              : {type: String},
 
@@ -91,7 +84,7 @@ var userSchema = new mongoose.Schema({
     status            : {type: String,enum: constants.userStatus,default:'pending'},
     isDelete          : {type: Boolean, default:false},
 });
-userSchema.plugin(uniqueValidator, {message: "Email / Mobile already exists"});
+vleSchema.plugin(uniqueValidator, {message: "Email / Mobile already exists"});
 
-var userModel = mongoose.model('user', userSchema);
-module.exports = userModel;
+var vleModel = mongoose.model('vle', vleSchema);
+module.exports = vleModel;

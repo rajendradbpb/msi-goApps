@@ -17,21 +17,19 @@
                   <div class="box-body">
                     <div class="row">
                       <div class="col-xs-6">
-                        <div class="form-group p-l-20" ng-class="{'has-error':basic.district.$touched && basic.district.$invalid}">
+                        <div class="form-group p-l-20" ng-class="{'has-error':basic.district.$touched && basic.district.$invalid}" ng-init="getDistrict()">
                             <label for="uname" class="control-label col-sm-4">District:</label>
                             <div class="col-xs-8">
                               <select class="form-control" name="district" ng-model="vle.district" required>
                                 <option value=""><i class="fa fa-sort-desc">District</i></option>
-                                <option value="Anugul">Anugul</option>
-                                <option value="Bhadrak">Bhadrak</option>
-                                <option value="Cuttack">Cuttack</option>
+                                <option ng-value="districts._id" ng-repeat="districts in districtList">{{districts.name}}</i></option>
                               </select>
                             </div>
                         </div>
                         <div class="form-group has-feedback" ng-class="{'has-error':basic.vleName.$touched && basic.vleName.$invalid}">
                           <label for="vleName" class="col-sm-4 control-label">VLE Name:</label>
                           <div class="col-sm-8">
-                            <input type="text" name="vleName" ng-model="vle.name" class="form-control" placeholder="VLE Name" required ng-pattern="/^(\D)+$/">
+                            <input type="text" name="vleName" ng-model="vle.name" class="form-control" placeholder="VLE Name" required ng-pattern="/^[A-Za-z\s]+$/">
                             <span class="help-block" ng-show="basic.vleName.$error.required && basic.vleName.$touched">VLE Name is required</span>
                             <span class="help-block" ng-show="basic.vleName.$error.pattern && basic.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span>
                           </div>
@@ -80,10 +78,10 @@
                       <div class="col-xs-6">
                         <div class="checkbox col-xs-10">
                           <label >
-                            <input type="checkbox" name="urban" ng-model="urban"> I belong to Urban area 
+                            <input type="checkbox" name="urban" ng-model="vle.urban"> I belong to Urban area 
                           </label>
                         </div>
-                        <div class="form-group m-l-20" ng-class="{'has-error':basic.block.$touched && basic.block.$invalid}" ng-hide="urban">
+                        <div class="form-group m-l-20" ng-class="{'has-error':basic.block.$touched && basic.block.$invalid}" ng-hide="vle.urban">
                             <label for="uname" class="control-label col-xs-4 pull-left">Block:</label>
                             <div class="col-xs-8">
                                 <select class="form-control" name="block" ng-model="vle.block" required>
@@ -94,7 +92,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group m-l-20" ng-class="{'has-error':basic.GP.$touched && basic.GP.$invalid}" ng-hide="urban">
+                        <div class="form-group m-l-20" ng-class="{'has-error':basic.GP.$touched && basic.GP.$invalid}" ng-hide="vle.urban">
                         <label for="uname" class="control-label col-xs-4 pull-left">Gram Panchayat</label>
                           <div class="col-xs-8">
                             <select class="form-control" name="GP" ng-model="vle.gp" required>
@@ -105,9 +103,9 @@
                             </select>
                           </div>
                         </div>
-                        <div class="form-group m-l-20" ng-class="{'has-error':basic.village.$touched && basic.village.$invalid}" ng-hide="urban">
-                        <label for="uname" class="control-label col-xs-3 pull-left">Village</label>
-                          <div class="col-xs-9">
+                        <div class="form-group m-l-20" ng-class="{'has-error':basic.village.$touched && basic.village.$invalid}" ng-hide="vle.urban">
+                        <label for="uname" class="control-label col-xs-4 pull-left">Village</label>
+                          <div class="col-xs-8">
                             <select class="form-control" name="village" ng-model="vle.village" required>
                               <option value=""><i class="fa fa-sort-desc">Village</i></option>
                               <option value="2015-2016">Bali chatri</option>
@@ -116,10 +114,10 @@
                             </select>
                           </div>
                         </div>
-                        <div class="form-group m-l-20" ng-class="{'has-error':basic.municipalityOrnac.$touched && basic.municipalityOrnac.$invalid}" ng-show="urban">
+                        <div class="form-group m-l-20" ng-class="{'has-error':basic.municipalityOrnac.$touched && basic.municipalityOrnac.$invalid}" ng-show="vle.urban">
                         <label for="uname" class="control-label col-xs-4 pull-left">Municipality/NAC</label>
                           <div class="col-xs-8">
-                            <select class="form-control" name="municipalityOrnac" ng-model="vle.area" required>
+                            <select class="form-control" name="municipalityOrnac" ng-model="vle.urbanType" required>
                               <option value=""><i class="fa fa-sort-desc">Municipality/NAC</i></option>
                               <option value="Municipality">Municipality</option>
                               <option value="NAC">NAC</option>
@@ -127,7 +125,7 @@
                             </select>
                           </div>
                         </div>
-                        <div class="form-group m-l-20" ng-class="{'has-error':basic.wardNo.$touched && basic.wardNo.$invalid}" ng-show="urban">
+                        <div class="form-group m-l-20" ng-class="{'has-error':basic.wardNo.$touched && basic.wardNo.$invalid}" ng-show="vle.urban">
                         <label for="uname" class="control-label col-xs-4 pull-left">Ward No.</label>
                           <div class="col-xs-8">
                               <input type="text" class="form-control" name="wardNo" numbers-only ng-model="vle.ward" > 
@@ -173,7 +171,7 @@
                         <div class="form-group" ng-class="{'has-error':basic.user_digi_email.$touched && basic.user_digi_email.$invalid}">
                                   <label for="lname" class="col-sm-4 control-label"> Digi Mail:</label>
                           <div class="col-sm-8">
-                            <input type="email" name="user_digi_email" ng-model="user.email" class="form-control" placeholder=" Digi mail "  ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,7}$/">
+                            <input type="email" name="user_digi_email" ng-model="vle.digiMail" class="form-control" placeholder=" Digi mail "  ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,7}$/">
                             <span class="help-block" ng-show="basic.user_digi_email.$error.required && basic.user_digi_email.$touched">Email is required</span>
                              <span class="help-block" ng-show="basic.user_digi_email.$error.pattern && basic.user_digi_email.$touched">Please Enter Valid Email</span>
                           </div>
@@ -313,7 +311,7 @@
                                               <!-- <span class="help-block" ng-show="basic.comp_bank_acct.$error.pattern && basic.comp_bank_acct.$touched">Enter a valid Account Type(Numeric not allowed)</span> -->
                                           </div>
                                           <div class="col-xs-12 col-sm-6 col-md-2" ng-class="{'has-error':basic.grad_percentage.$touched && basic.grad_percentage.$invalid}">
-                                              <input type="text"  class="form-control" placeholder="Percentage" name="grad_percentage" ng-model="vle.interPercent" >
+                                              <input type="text"  class="form-control" placeholder="Percentage" name="grad_percentage" ng-model="vle.gradPercent" >
                                             <!-- <span class="help-block" ng-show="basic.comp_bank_accNo.$error.required && basic.comp_bank_accNo.$touched">Acccount no is required</span> -->
                                           </div>
                                         </div>
@@ -408,7 +406,7 @@
                             <div class="form-group has-feedback" ng-class="{'has-error':other.vsatBbDcNofn.$touched && other.vsatBbDcNofn.$invalid}">
                               <label for="cscId" class="col-sm-4 control-label">V-SAT/BB/DC/NOFN:</label>
                               <div class="col-sm-8">
-                                <input type="text" name="vsatBbDcNofn" ng-model="vle.cscLongitude" class="form-control" placeholder="V-SAT/BB/DC/NOFN With No." >
+                                <input type="text" name="vsatBbDcNofn" ng-model="vle.vsatBbDcNofn" class="form-control" placeholder="V-SAT/BB/DC/NOFN With No." >
                                <!--  <span class="help-block" ng-show="basic.vsatBbDcNofn.$error.required && basic.vsatBbDcNofn.$touched">Longitude of location of CSC is required</span> -->
                                 <!-- <span class="help-block" ng-show="basic.vleName.$error.pattern && basic.vleName.$touched">Please Enter Valid VLE Name(Only Alphabets Allowed)</span> -->
                               </div>
@@ -587,7 +585,7 @@
                      </div>
                       <div class="box-footer">
                       <button type="submit" class="btn btn-default" ng-click="tabChange('BD')">Back</button>
-                      <button type="submit"  ng-click="UpdateVle()" class="btn btn-info pull-right">Submit</button>
+                      <button type="submit"  ng-click="registerVle()" class="btn btn-info pull-right">Submit</button>
                        
                     </div>
                   </div>

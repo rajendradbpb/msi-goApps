@@ -65,121 +65,125 @@ angular.module('WebService', [])
             'Accept': 'application/json'
         },
     },
-    postClient: {
-      url: "/client",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    postReturnFile: {
-      url: "/returnFile",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    getcount : {
-      url:"/returnFile/count",
-      method: "GET"
-    },
-    getReferral : {
-      url:"/referral/count",
-      method: "GET"
-    },
-    getReferralList : {
-      url:"/referral",
-      method: "GET"
-    },
-     getOverview : {
-      url:"/referral/overview",
-      method: "GET"
-    },
-    getReturnList : {
-      url:"/returnFile",
-      method: "GET"
-    },
-    getItr : {
-      url:"/returnFile/itr",
-      method: "GET"
-    },
-    postTransaction: {
-      url: "/returnFile/transaction",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    getFiscalYear: {
-      url:"/returnFile/fiscalYear",
-      method: "GET"
-    },
-    getReturnFile: {
-      url:"/returnFile",
-      method: "GET"
-    },
-    updateReturnFile: {
-        url: "/returnFile/",
-        method: "PUT",
-        "headers": {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-    },
-    getPaymentList: {
-      url:"/returnFile/transaction/payment",
-      method: "GET"
-    },
-    postTemplate: {
-      url: "/template",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    putTemplate: {
-      url: "/template",
-      method: "PUT",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    getTemplate: {
-      url: "/template",
-      method: "GET",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    jobcategoryList:{
-      url:"/job",
-      method: "GET"
-    },
-    postAssignment: {
-      url: "/jobAssignment",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    getjobAssignments:{
-      url:"/jobAssignment",
-      method: "GET"
-    },
-    updateJobAssignment: {
-        url: "/jobAssignment/",
-        method: "PUT",
-        "headers": {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
+    // postClient: {
+    //   url: "/client",
+    //   method: "POST",
+    //   "headers": {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //   },
+    // },
+    // postReturnFile: {
+    //   url: "/returnFile",
+    //   method: "POST",
+    //   "headers": {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //   },
+    // },
+    // getcount : {
+    //   url:"/returnFile/count",
+    //   method: "GET"
+    // },
+    // getReferral : {
+    //   url:"/referral/count",
+    //   method: "GET"
+    // },
+    // getReferralList : {
+    //   url:"/referral",
+    //   method: "GET"
+    // },
+    //  getOverview : {
+    //   url:"/referral/overview",
+    //   method: "GET"
+    // },
+    // getReturnList : {
+    //   url:"/returnFile",
+    //   method: "GET"
+    // },
+    // getItr : {
+    //   url:"/returnFile/itr",
+    //   method: "GET"
+    // },
+    // postTransaction: {
+    //   url: "/returnFile/transaction",
+    //   method: "POST",
+    //   "headers": {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //   },
+    // },
+    // getFiscalYear: {
+    //   url:"/returnFile/fiscalYear",
+    //   method: "GET"
+    // },
+    // getReturnFile: {
+    //   url:"/returnFile",
+    //   method: "GET"
+    // },
+    // updateReturnFile: {
+    //     url: "/returnFile/",
+    //     method: "PUT",
+    //     "headers": {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json'
+    //     },
+    // },
+    // getPaymentList: {
+    //   url:"/returnFile/transaction/payment",
+    //   method: "GET"
+    // },
+    // postTemplate: {
+    //   url: "/template",
+    //   method: "POST",
+    //   "headers": {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //   },
+    // },
+    // putTemplate: {
+    //   url: "/template",
+    //   method: "PUT",
+    //   "headers": {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //   },
+    // },
+    // getTemplate: {
+    //   url: "/template",
+    //   method: "GET",
+    //   "headers": {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //   },
+    // },
+    // jobcategoryList:{
+    //   url:"/job",
+    //   method: "GET"
+    // },
+    // postAssignment: {
+    //   url: "/jobAssignment",
+    //   method: "POST",
+    //   "headers": {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //   },
+    // },
+    // getjobAssignments:{
+    //   url:"/jobAssignment",
+    //   method: "GET"
+    // },
+    // updateJobAssignment: {
+    //     url: "/jobAssignment/",
+    //     method: "PUT",
+    //     "headers": {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json'
+    //     },
+    // },
+    getDistrict:{
+      url:"/common/district",
+       method: "GET",
     },
     forgotPassword: {
         url: "/user/forgotPassword",
@@ -197,6 +201,14 @@ angular.module('WebService', [])
             'Accept': 'application/json'
         },
     },
+    registerVle: {
+        url: "/vle",
+        method: "POST",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+    },
   }
 })
 .factory('ApiCall', function($http, $resource, API, EnvService,ApiGenerator) {
@@ -205,29 +217,9 @@ angular.module('WebService', [])
     userLogin : ApiGenerator.getApi('userLogin'),
     getUser: ApiGenerator.getApi('getUser'),
     postUser: ApiGenerator.getApi('postUser'),
-    getFiscalYear: ApiGenerator.getApi('getFiscalYear'),
-    deleteUser: ApiGenerator.getApi('deleteUser'),
-    updateUser: ApiGenerator.getApi('updateUser'),
-    postReturnFile: ApiGenerator.getApi('postReturnFile'),
-    getcount: ApiGenerator.getApi('getcount'),
-    getReturnList:ApiGenerator.getApi('getReturnList'),
-    getReturnFile:ApiGenerator.getApi('getReturnFile'),
-    getItr:ApiGenerator.getApi('getItr'),
-    postTransaction: ApiGenerator.getApi('postTransaction'),
-    updateReturnFile: ApiGenerator.getApi('updateReturnFile'),
-    getPaymentList: ApiGenerator.getApi('getPaymentList'),
-    getReferral: ApiGenerator.getApi('getReferral'),
-    getTemplate: ApiGenerator.getApi('getTemplate'),
-    postTemplate: ApiGenerator.getApi('postTemplate'),
-    putTemplate: ApiGenerator.getApi('putTemplate'),
-    getReferralList : ApiGenerator.getApi('getReferralList'),
-    getOverview:  ApiGenerator.getApi('getOverview'),
-    jobcategoryList :  ApiGenerator.getApi('jobcategoryList'),
-    postAssignment:  ApiGenerator.getApi('postAssignment'),
-    getjobAssignments:  ApiGenerator.getApi('getjobAssignments'),
-    updateJobAssignment:  ApiGenerator.getApi('updateJobAssignment'),
-    forgotPassword:  ApiGenerator.getApi('forgotPassword'),
+   registerVle: ApiGenerator.getApi('registerVle'),
     changePassword:  ApiGenerator.getApi('changePassword'),
+    getDistrict:     ApiGenerator.getApi('getDistrict'),
   })
 })
 
@@ -238,6 +230,7 @@ angular.module('WebService', [])
         obj = angular.copy(API[api]);
         obj.url = EnvService.getBasePath() + obj.url;
         return obj;
+        console.log(obj);
       }
     }
 })

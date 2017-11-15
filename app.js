@@ -19,9 +19,9 @@ var jsonParser       = bodyParser.json({limit:1024*1024*20, type:'application/js
 
 
 // custom files starts
-// var userModel = require('./server/models/userModel');
-// var response = require("./server/component/response")
-// var config = require("config")
+ var userModel = require('./server/models/userModel');
+ var response = require("./server/component/response")
+ var config = require("config")
 var logger = require("./server/component/log4j").getLogger('app');
 
 var app = express();
@@ -78,45 +78,49 @@ var BearerStrategy = require('passport-http-bearer').Strategy;
   * this is used to check the user in the database existence
   used in case of the signIn and signUp user
 */
-// passport.use('login', new LocalStrategy(
-//   function(username,password, done) {
-//     console.log("login instercepter  ",username,password);
-//     userModel.findOne({ $or: [{"email":username},{'mobile':username}]}).populate('role').exec(function (err, user) {
-//       if (err) { return done(err); }
-//       if (!user) { return done(null, false); }
-//       console.log("got user/pass",username,password);
-//       console.log("got user/pass >>>>>>>",user.username,user.password);
-//       passwordHash(password).verifyAgainst(user.password,function(error, verified) {
-//         console.log("after verification ",error,user);
-//         if (error) { return done(err); }
-//         else if (!verified) { return done(null, false); }
-//         else return done(null, user);
-//       })
-//     });
-//   }
-// )
-// );
+passport.use('login', new LocalStrategy(
+  function(username,password, done) {
+    console.log("login instercepter  ",username,password);
+    userModel.findOne({ $or: [{"username":username}]}).populate('role').exec(function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      console.log("got user/pass",username,password);
+      console.log("got user/pass >>>>>>>",user.username,user.password);
+      passwordHash(password).verifyAgainst(user.password,function(error, verified) {
+        console.log("after verification ",error,user);
+        if (error) { 
+          console.log("error");
+          return done(err); }
+        else if (!verified) { 
+           console.log("not verified");
+          return done(null, false); }
+        else return done(null, user);
+      })
+    });
+  }
+)
+);
 //
 //
-// passport.use('token',new BearerStrategy(
-//   function(token, done) {
-//     jwt.verify(token,config.token.secret, function(err, decoded) {
-//       if (err) {
-//         //console.log("error in verify token  ",err);
-//         return done(err,null);
-//       }
-//       else if(!decoded) {
-//         // console.log("No  token  ",err);
-//         return done(null, false);
-//       }
-//       else {
-//         // console.log("yes  token  ",decoded);
-//         return done(null, decoded);
-//       }
-//      });
-//
-//   }
-// ));
+passport.use('token',new BearerStrategy(
+  function(token, done) {
+    jwt.verify(token,config.token.secret, function(err, decoded) {
+      if (err) {
+        console.log("error in verify token  ",err);
+        return done(err,null);
+      }
+      else if(!decoded) {
+        console.log("No  token  ",err);
+        return done(null, false);
+      }
+      else {
+         console.log("yes  token  ",decoded);
+        return done(null, decoded);
+      }
+     });
+
+  }
+));
 // passport.use('superAdmin',new BearerStrategy(
 //   function(token, done) {
 //     jwt.verify(token,config.token.secret, function(err, decoded) {

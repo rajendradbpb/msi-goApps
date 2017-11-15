@@ -1,6 +1,7 @@
 var app = angular.module("msi-goApps-goApps", ['ui.router', 'ui.bootstrap', 'ngResource', 'ngStorage', 'ngAnimate','datePicker','ngTable','angular-js-xlsx','WebService','ui.utils','textAngular','Logger']);
 app.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", function($stateProvider, $urlRouterProvider,$httpProvider) {
   checkLoggedin.$inject = ["$q", "$timeout", "$rootScope", "$http", "$state", "$localStorage"];
+  checkLoggedout.$inject = ["$q", "$timeout", "$rootScope", "$state", "$http", "$localStorage", "UserModel"];
   $httpProvider.interceptors.push(["$q", "$location", "$window", "$localStorage", function ($q, $location, $window,$localStorage) {
     return {
       request: function (config) {
@@ -32,7 +33,10 @@ app.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", function($s
   .state('vle', {
     templateUrl: '/view/vle_registration.html',
     url: '/vle',
-    controller:'Main_Controller',
+    controller:'User_Controller',
+    resolve: {
+     loggedout: checkLoggedin
+    }
   })
   .state('dashboard', {
     templateUrl: '/view/dashboard.html',
@@ -45,18 +49,25 @@ app.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", function($s
     templateUrl: '/view/profile.html',
     url: '/user-profile',
     controller:'User_Controller',
+     resolve: {
+      loggedout: checkLoggedout
+    }
   })
   .state('summary', {
     templateUrl: '/view/summary.html',
     url: '/summary',
     controller:'User_Controller',
-
+     resolve: {
+      loggedout: checkLoggedout
+    }
   })
   .state('vle-list', {
     templateUrl: '/view/vle_list.html',
     url: '/vle-list',
     controller:'User_Controller',
-
+     resolve: {
+      loggedout: checkLoggedout
+    }
   })
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {
@@ -264,121 +275,9 @@ app.filter('capitalize', function() {
             'Accept': 'application/json'
         },
     },
-    postClient: {
-      url: "/client",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    postReturnFile: {
-      url: "/returnFile",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    getcount : {
-      url:"/returnFile/count",
-      method: "GET"
-    },
-    getReferral : {
-      url:"/referral/count",
-      method: "GET"
-    },
-    getReferralList : {
-      url:"/referral",
-      method: "GET"
-    },
-     getOverview : {
-      url:"/referral/overview",
-      method: "GET"
-    },
-    getReturnList : {
-      url:"/returnFile",
-      method: "GET"
-    },
-    getItr : {
-      url:"/returnFile/itr",
-      method: "GET"
-    },
-    postTransaction: {
-      url: "/returnFile/transaction",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    getFiscalYear: {
-      url:"/returnFile/fiscalYear",
-      method: "GET"
-    },
-    getReturnFile: {
-      url:"/returnFile",
-      method: "GET"
-    },
-    updateReturnFile: {
-        url: "/returnFile/",
-        method: "PUT",
-        "headers": {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-    },
-    getPaymentList: {
-      url:"/returnFile/transaction/payment",
-      method: "GET"
-    },
-    postTemplate: {
-      url: "/template",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    putTemplate: {
-      url: "/template",
-      method: "PUT",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    getTemplate: {
-      url: "/template",
-      method: "GET",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    jobcategoryList:{
-      url:"/job",
-      method: "GET"
-    },
-    postAssignment: {
-      url: "/jobAssignment",
-      method: "POST",
-      "headers": {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-    },
-    getjobAssignments:{
-      url:"/jobAssignment",
-      method: "GET"
-    },
-    updateJobAssignment: {
-        url: "/jobAssignment/",
-        method: "PUT",
-        "headers": {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
+    getDistrict:{
+      url:"/common/district",
+       method: "GET",
     },
     forgotPassword: {
         url: "/user/forgotPassword",
@@ -396,6 +295,14 @@ app.filter('capitalize', function() {
             'Accept': 'application/json'
         },
     },
+    registerVle: {
+        url: "/vle",
+        method: "POST",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+    },
   }
 }])
 .factory('ApiCall', ["$http", "$resource", "API", "EnvService", "ApiGenerator", function($http, $resource, API, EnvService,ApiGenerator) {
@@ -404,29 +311,9 @@ app.filter('capitalize', function() {
     userLogin : ApiGenerator.getApi('userLogin'),
     getUser: ApiGenerator.getApi('getUser'),
     postUser: ApiGenerator.getApi('postUser'),
-    getFiscalYear: ApiGenerator.getApi('getFiscalYear'),
-    deleteUser: ApiGenerator.getApi('deleteUser'),
-    updateUser: ApiGenerator.getApi('updateUser'),
-    postReturnFile: ApiGenerator.getApi('postReturnFile'),
-    getcount: ApiGenerator.getApi('getcount'),
-    getReturnList:ApiGenerator.getApi('getReturnList'),
-    getReturnFile:ApiGenerator.getApi('getReturnFile'),
-    getItr:ApiGenerator.getApi('getItr'),
-    postTransaction: ApiGenerator.getApi('postTransaction'),
-    updateReturnFile: ApiGenerator.getApi('updateReturnFile'),
-    getPaymentList: ApiGenerator.getApi('getPaymentList'),
-    getReferral: ApiGenerator.getApi('getReferral'),
-    getTemplate: ApiGenerator.getApi('getTemplate'),
-    postTemplate: ApiGenerator.getApi('postTemplate'),
-    putTemplate: ApiGenerator.getApi('putTemplate'),
-    getReferralList : ApiGenerator.getApi('getReferralList'),
-    getOverview:  ApiGenerator.getApi('getOverview'),
-    jobcategoryList :  ApiGenerator.getApi('jobcategoryList'),
-    postAssignment:  ApiGenerator.getApi('postAssignment'),
-    getjobAssignments:  ApiGenerator.getApi('getjobAssignments'),
-    updateJobAssignment:  ApiGenerator.getApi('updateJobAssignment'),
-    forgotPassword:  ApiGenerator.getApi('forgotPassword'),
+   registerVle: ApiGenerator.getApi('registerVle'),
     changePassword:  ApiGenerator.getApi('changePassword'),
+    getDistrict:     ApiGenerator.getApi('getDistrict'),
   })
 }])
 
@@ -437,6 +324,7 @@ app.filter('capitalize', function() {
         obj = angular.copy(API[api]);
         obj.url = EnvService.getBasePath() + obj.url;
         return obj;
+        console.log(obj);
       }
     }
 }])
@@ -471,6 +359,7 @@ app.filter('capitalize', function() {
   var userModel = {};
   userModel.setUser = function(user){
     userModel.user = user;
+
   }
   userModel.getUser = function(user){
     return userModel.user;
@@ -485,10 +374,25 @@ app.filter('capitalize', function() {
   $scope.user.username = ($localStorage.user) ? $localStorage.user.uname : "";
   $scope.user.password = ($localStorage.user) ? $localStorage.user.password : "";
   $scope.userLogin = function(){
-    $rootScope.showPreloader = true;
-    $rootScope.showPreloader = false;
-    $rootScope.is_loggedin = true;
-    $state.go('dashboard');
+     $rootScope.showPreloader = true;
+    
+    ApiCall.userLogin($scope.user ,function(response){
+      console.log(response);
+      if($scope.user.rememberMe)
+        $localStorage.user = {
+          "uname":$scope.user.username,
+          "password":$scope.user.password
+        }
+        UserModel.setUser(response.data.user);
+      $rootScope.showPreloader = false;
+      $localStorage.token = response.data.token;
+      $rootScope.is_loggedin = true;
+     $state.go('dashboard');
+    },function(error){
+      $rootScope.showPreloader = false;
+      console.log(error);
+      Util.alertMessage('danger',"Invalid username and password");
+    })
   }
 }]);
 ;/*****************************************************************************************************************/
@@ -546,10 +450,26 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
     }
 ]);
 ;app.controller("User_Controller",["$scope", "$rootScope", "$rootScope", "$state", "$localStorage", "NgTableParams", "ApiCall", "$timeout", "UserModel", "Util", function($scope,$rootScope,$rootScope,$state,$localStorage,NgTableParams,ApiCall, $timeout,UserModel,Util){
+$scope.vle = {};
+$scope.districtList = [];
+$scope.registerVle = function(){
+	$scope.vle.role = "5a0baa97721f3f17b86d1119";  
+	ApiCall.registerVle($scope.vle,function(response){
+		console.log(response);
+	},function(error){
 
-$scope.user = {};
-
-
+	});	
+}
+ $scope.getDistrict = function(){
+ 	ApiCall.getDistrict(function(response){
+ 		angular.forEach(response.data,function(item){
+ 			$scope.districtList.push(item);
+ 		});
+ 		console.log($scope.districtList);
+ 	},function(error){
+ 		console.log(error);
+ 	});
+ }
 }]);;app.directive('fileModell', ['$parse', function ($parse) {
     return {
         restrict: 'A',

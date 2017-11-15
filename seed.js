@@ -15,11 +15,39 @@ var roles = [{
     type: 'vle'
   }
 ];
-var districts = [
-  'district1',
-  'district2',
-  'district3',
-  'district4'
+var districts = [ 
+    'BALASORE',
+    'BOUDH',
+    'CUTTACK',
+    'DEOGARH',
+    'JAGATSINGHPUR',
+    'JHARSUGUDA',
+    'KENDRAPARA',
+    'KHORDHA',
+    'MAYURBHANJ',
+    'NAWARANGPUR',
+    'PURI',
+    'SONEPUR',
+    'ANGUL',
+    'BALANGIR',
+    'BARAGARH',
+    'BHADRAK',
+    'DHENKANAL',
+    'GAJAPATI',
+    'GANJAM',
+    'JAJPUR',
+    'KALAHANDI',
+    'KANDHAMAL',
+    'KEONJHAR',
+    'KORAPUT',
+    'MALKANGIRI',
+    'NAYAGARH',
+    'NUAPADA',
+    'RAYAGADA',
+    'SAMBALPUR',
+    'SUNDARGARH',
+
+
 ]
 
 //************************************* User schema **************************///
