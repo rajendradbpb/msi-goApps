@@ -10,8 +10,8 @@ var controllers = require("./../controllers/index");
 router.post('/',function(req, res, next) {
   controllers.vleCtrl.addVle(req, res);
 });
-router.get('/', passport.authenticate('superAdmin', {session:false}),function(req, res, next) {
-  controllers.userCtrl.getUser(req, res);
+router.get('/',function(req, res, next) {
+  controllers.vleCtrl.getVle(req, res);
 });
 router.put('/', function(req, res, next) {
   controllers.userCtrl.udpateUser(req, res);

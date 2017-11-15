@@ -39,7 +39,30 @@ exports.addVle = function(req,res){
     logger.error("addVle ", e);
   }
 }
+exports.getVle = function(req,res){
+  try {
+    var params = {
+      isDelete:false,
+      //type:{$in:["aa","consultant","bm"]}
+    };
+    if(req.query._id){
+      params['_id'] = req.query._id;
+    }
+    if(req.query.district){
+      params['district'] = req.query.district;
+    }
+    models.vleModel.find(params,function(err,data){
+      if(err){
+        logger.error("getVle ", err);
+        return response.sendResponse(res,500,"error",constants.messages.errors.fetchRoles,err);
+      }
+      return response.sendResponse(res,200,"success",constants.messages.success.fetchRoles,data);
+    })
 
+  } catch (e) {
+    logger.error("getRole ", e);
+  }
+}
 // exports.verifiedUser = function(req, res, isError) {
 //   console.log("verified in ctrl");
 //   if (!isError) {

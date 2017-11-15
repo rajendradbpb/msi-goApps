@@ -219,6 +219,7 @@ app.filter('capitalize', function() {
           'Accept': 'application/json'
       },
     },
+    
     postRole: {
       url: "/role",
       method: "POST",
@@ -275,9 +276,14 @@ app.filter('capitalize', function() {
             'Accept': 'application/json'
         },
     },
+    
     getDistrict:{
       url:"/common/district",
        method: "GET",
+    },
+    getVle: {
+      "url": "/vle",
+      "method": "GET",
     },
     forgotPassword: {
         url: "/user/forgotPassword",
@@ -314,6 +320,7 @@ app.filter('capitalize', function() {
    registerVle: ApiGenerator.getApi('registerVle'),
     changePassword:  ApiGenerator.getApi('changePassword'),
     getDistrict:     ApiGenerator.getApi('getDistrict'),
+    getVle:     ApiGenerator.getApi('getVle'),
   })
 }])
 
@@ -455,17 +462,22 @@ $scope.districtList = [];
 $scope.registerVle = function(){
 	$scope.vle.role = "5a0baa97721f3f17b86d1119";  
 	ApiCall.registerVle($scope.vle,function(response){
-		console.log(response);
 	},function(error){
 
 	});	
+}
+$scope.getVles = function(){
+	ApiCall.getVle(function(response){
+		console.log(response);
+	},function(error){
+		console.log(error);
+	});
 }
  $scope.getDistrict = function(){
  	ApiCall.getDistrict(function(response){
  		angular.forEach(response.data,function(item){
  			$scope.districtList.push(item);
  		});
- 		console.log($scope.districtList);
  	},function(error){
  		console.log(error);
  	});

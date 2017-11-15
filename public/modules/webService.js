@@ -9,6 +9,7 @@ angular.module('WebService', [])
           'Accept': 'application/json'
       },
     },
+    
     postRole: {
       url: "/role",
       method: "POST",
@@ -65,125 +66,14 @@ angular.module('WebService', [])
             'Accept': 'application/json'
         },
     },
-    // postClient: {
-    //   url: "/client",
-    //   method: "POST",
-    //   "headers": {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //   },
-    // },
-    // postReturnFile: {
-    //   url: "/returnFile",
-    //   method: "POST",
-    //   "headers": {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //   },
-    // },
-    // getcount : {
-    //   url:"/returnFile/count",
-    //   method: "GET"
-    // },
-    // getReferral : {
-    //   url:"/referral/count",
-    //   method: "GET"
-    // },
-    // getReferralList : {
-    //   url:"/referral",
-    //   method: "GET"
-    // },
-    //  getOverview : {
-    //   url:"/referral/overview",
-    //   method: "GET"
-    // },
-    // getReturnList : {
-    //   url:"/returnFile",
-    //   method: "GET"
-    // },
-    // getItr : {
-    //   url:"/returnFile/itr",
-    //   method: "GET"
-    // },
-    // postTransaction: {
-    //   url: "/returnFile/transaction",
-    //   method: "POST",
-    //   "headers": {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //   },
-    // },
-    // getFiscalYear: {
-    //   url:"/returnFile/fiscalYear",
-    //   method: "GET"
-    // },
-    // getReturnFile: {
-    //   url:"/returnFile",
-    //   method: "GET"
-    // },
-    // updateReturnFile: {
-    //     url: "/returnFile/",
-    //     method: "PUT",
-    //     "headers": {
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json'
-    //     },
-    // },
-    // getPaymentList: {
-    //   url:"/returnFile/transaction/payment",
-    //   method: "GET"
-    // },
-    // postTemplate: {
-    //   url: "/template",
-    //   method: "POST",
-    //   "headers": {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //   },
-    // },
-    // putTemplate: {
-    //   url: "/template",
-    //   method: "PUT",
-    //   "headers": {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //   },
-    // },
-    // getTemplate: {
-    //   url: "/template",
-    //   method: "GET",
-    //   "headers": {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //   },
-    // },
-    // jobcategoryList:{
-    //   url:"/job",
-    //   method: "GET"
-    // },
-    // postAssignment: {
-    //   url: "/jobAssignment",
-    //   method: "POST",
-    //   "headers": {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //   },
-    // },
-    // getjobAssignments:{
-    //   url:"/jobAssignment",
-    //   method: "GET"
-    // },
-    // updateJobAssignment: {
-    //     url: "/jobAssignment/",
-    //     method: "PUT",
-    //     "headers": {
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json'
-    //     },
-    // },
+    
     getDistrict:{
       url:"/common/district",
        method: "GET",
+    },
+    getVle: {
+      "url": "/vle",
+      "method": "GET",
     },
     forgotPassword: {
         url: "/user/forgotPassword",
@@ -220,6 +110,7 @@ angular.module('WebService', [])
    registerVle: ApiGenerator.getApi('registerVle'),
     changePassword:  ApiGenerator.getApi('changePassword'),
     getDistrict:     ApiGenerator.getApi('getDistrict'),
+    getVle:     ApiGenerator.getApi('getVle'),
   })
 })
 
