@@ -6,58 +6,77 @@
 </section>
 <section class="content">
   <div class="row">
-    <div class="col-md-5 col-sm-6 col-xs-12">
-        <div class="small-box bg-green">
+    <div class="col-md-4 col-sm-4 col-xs-12" ng-init="getDistrict()">
+        <div class="small-box bg-green" ng-init="getAreaCount('district')">
             <div class="inner">
-              <h3>{{internalCount}}</h3>
+              <div class="row">
+              <div class="col-xs-6">
+                <h3>{{districtList.length}}</h3>
+                <p>Total No of Districts</p>
+              </div>
+              <div class="col-xs-6">
+                <h3>{{districtCount.length}}</h3>
+                <p>Districts Covered</p>
+              </div>
+            <!--   <h3>{{districtList.length}}</h3><h3 class="pull-right">{{districtList.length}}</h3>
 
-              <p>Total No of Districts</p>
+              <p>Total No of Districts</p><p class="pull-right">Districts Covered</p> -->
             </div>
-            <div class="icon">
+          </div>
+           <!--  <div class="icon">
               <i class="fa fa-file"></i>
-            </div>
+            </div> -->
             <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>
     </div>
-    <div class="col-md-5 col-sm-6 col-xs-12">
-        <div class="small-box bg-green">
+   
+    <div class="col-md-4 col-sm-4 col-xs-12" ng-init="getAreaCount('gp')">
+        <div class="small-box bg-green" >
             <div class="inner">
-              <h3>{{clientCount}}</h3>
-
-              <p>Total No of Blocks</p>
+              <div class="row">
+              <div class="col-xs-6">
+                <h3>{{districtList.length}}</h3>
+                <p>Total No of GPs</p>
+              </div>
+              <div class="col-xs-6">
+                <h3>{{gpList.length}}</h3>
+                <p>GPs Covered</p>
             </div>
-            <div class="icon">
-              <i class="fa fa-file"></i>
+          </div>
+        </div>
+            <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12" ng-init="getAreaCount('Municipality')">
+       <div class="small-box bg-green" >
+            <div class="inner">
+              <div class="row">
+              <div class="col-xs-6">
+                <h3>4{{municipalityList.length}}</h3>
+                <p>Total No Municipality</p>
+              </div>
+              <div class="col-xs-6">
+                <h3>{{municipalityList.length}}</h3>
+                <p>Municipalities Covered</p>
             </div>
-            <a href="" ui-sref="user-list({'userType':'clients'})" class="small-box-footer">
+          </div>
+        </div>
+            <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>
     </div>
 
-    <div class="col-md-5 col-sm-6 col-xs-12">
-        <div class="small-box bg-green">
+</div>
+  <div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-12" ng-init="getVles()">
+          <div class="small-box bg-blue" >
             <div class="inner">
-              <h3>{{dashboard.referralCount}}</h3>
-
-              <p>Total No of GPs</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-file"></i>
-            </div>
-            <a href="" ui-sref="referral-overview" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
-    </div>
-
-
-    <div class="col-md-5 col-sm-6 col-xs-12">
-          <div class="small-box bg-yellow" >
-            <div class="inner">
-              <h3>{{returnFilesCounts[0].count}}</h3>
+              <h3>{{vleList.length}}</h3>
 
               <p> Total VLEs registered</p>
             </div>
@@ -69,12 +88,12 @@
             </a>
           </div>
         </div>
-     </div>
-   <div class="row">
-     <div class="col-md-5 col-sm-6 col-xs-12">
+     
+ 
+     <div class="col-md-4 col-sm-4 col-xs-12" ng-init="getVles('gp')">
            <div class="small-box bg-blue" >
              <div class="inner">
-               <h3>0{{returnFilesCounts[1].count}}</h3>
+               <h3>{{gpVleList.length}}</h3>
 
                <p>Total VLEs registered in GP area</p>
              </div>
@@ -86,10 +105,10 @@
              </a>
            </div>
          </div>
-         <div class="col-md-5 col-sm-6 col-xs-12">
-               <div class="small-box bg-black">
+         <div class="col-md-4 col-sm-4 col-xs-12" ng-init="getVles('urban')">
+               <div class="small-box bg-blue">
                  <div class="inner">
-                   <h3>0{{returnFilesCounts[2].count}}</h3>
+                   <h3>{{urbanVleList.length}}</h3>
 
                    <p>Total VLEs registered in Urban area</p>
                  </div>
@@ -102,37 +121,7 @@
                </div>
              </div>
     </div>
-    <div class="row">
-      <div class="col-md-5 col-sm-6 col-xs-12">
-        <div class="small-box bg-purple">
-          <div class="inner">
-              <h3>{{returnFilesCounts[3].count}}</h3>
-              <p>Total GPs Covered</p>
-          </div>
-          <div class="icon">
-              <i class="fa fa-file"></i>
-          </div>
-            <a href="" ui-sref="return-file-list({ 'status': returnFilesCounts[3]._id.status})" class="small-box-footer">
-                   More info {{returnFilesCounts[3]._id.status}}<i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-5 col-sm-6 col-xs-12">
-        <div class="small-box bg-purple">
-          <div class="inner">
-              <h3>{{returnFilesCounts[3].count}}</h3>
-              <p>Total GPs Yet to be covered</p>
-          </div>
-          <div class="icon">
-              <i class="fa fa-file"></i>
-          </div>
-            <a href="" ui-sref="return-file-list({ 'status': returnFilesCounts[3]._id.status})" class="small-box-footer">
-                   More info {{returnFilesCounts[3]._id.status}}<i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-      </div>
-    </div>
+    
+    
  </section>
  

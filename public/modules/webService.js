@@ -75,6 +75,10 @@ angular.module('WebService', [])
       "url": "/vle",
       "method": "GET",
     },
+    getAreatCount: {
+      "url": "/vle/district",
+      "method": "GET",
+    },
     forgotPassword: {
         url: "/user/forgotPassword",
         method: "PUT",
@@ -111,6 +115,7 @@ angular.module('WebService', [])
     changePassword:  ApiGenerator.getApi('changePassword'),
     getDistrict:     ApiGenerator.getApi('getDistrict'),
     getVle:     ApiGenerator.getApi('getVle'),
+    getAreatCount:     ApiGenerator.getApi('getAreatCount'),
   })
 })
 

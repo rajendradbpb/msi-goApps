@@ -13,6 +13,9 @@ router.post('/',function(req, res, next) {
 router.get('/',function(req, res, next) {
   controllers.vleCtrl.getVle(req, res);
 });
+router.get('/district',function(req, res, next) {
+  controllers.vleCtrl.getDistrictCount(req, res);
+});
 router.put('/', function(req, res, next) {
   controllers.userCtrl.udpateUser(req, res);
 });

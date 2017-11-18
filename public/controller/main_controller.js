@@ -40,17 +40,17 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
 //  /*******************************************************/
 //   /*********FUNCTION IS USED TO GET USER Details*************/
 //   /*******************************************************/
-//   $scope.getUserDetails = function(){
-//     var loggedIn_user = UserModel.getUser();
-//     var obj = {
-//         '_id' : loggedIn_user._id,
-//       }
-//         ApiCall.getUser(obj, function(response){
-//           console.log(response);
-//           $scope.userDetails = response.data;
-//         },function(error){
-//         });
-//       }
+  $scope.getUserDetails = function(){
+    var loggedIn_user = UserModel.getUser();
+    var obj = {
+        '_id' : loggedIn_user._id,
+      }
+        ApiCall.getUser(obj, function(response){
+          console.log(response);
+          $scope.userDetails = response.data;
+        },function(error){
+        });
+      }
 
 
 //    /*******************************************************/

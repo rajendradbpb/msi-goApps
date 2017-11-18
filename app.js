@@ -121,25 +121,25 @@ passport.use('token',new BearerStrategy(
 
   }
 ));
-// passport.use('superAdmin',new BearerStrategy(
-//   function(token, done) {
-//     jwt.verify(token,config.token.secret, function(err, decoded) {
-//       if (err) {
-//         //console.log("error in verify token  ",err);
-//         return done(err,null);
-//       }
-//       else if(!decoded) {
-//         // console.log("No  token  ",err);
-//         return done(null, false);
-//       }
-//       else {
-//         console.log("yes  token  ",decoded);
-//         return done(null, decoded);
-//       }
-//      });
-//
-//   }
-// ));
+passport.use('superAdmin',new BearerStrategy(
+  function(token, done) {
+    jwt.verify(token,config.token.secret, function(err, decoded) {
+      if (err) {
+        //console.log("error in verify token  ",err);
+        return done(err,null);
+      }
+      else if(!decoded) {
+        // console.log("No  token  ",err);
+        return done(null, false);
+      }
+      else {
+        console.log("yes  token  ",decoded);
+        return done(null, decoded);
+      }
+     });
+
+  }
+));
 
 
 app.use('/', routes);

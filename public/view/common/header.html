@@ -1,4 +1,4 @@
-<header class="main-header" ng-controller="Main_Controller" >
+<header class="main-header" ng-init="getUserDetails()" ng-controller="Main_Controller" >
   <a ui-sref="dashboard" class="logo">
     <span class="logo-mini"><b>M</b><b>S</b><b>I</b></span>
     <span class="logo-lg">MSI</span>
@@ -17,14 +17,14 @@
         </li>
         <li class="dropdown user user-menu" ng-if="is_loggedin">
           <a href="" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="profile-pic-name">{{userDetails.firstname+" "+userDetails.lastname | getShortName}}</span>
-            <span class="hidden-xs">{{userDetails.firstname+" "+userDetails.lastname}}</span>
+            <span class="profile-pic-name">{{userDetails.username| getShortName}}</span>
+            <span class="hidden-xs">{{userDetails.username}}</span>
           </a>
           <ul class="dropdown-menu">
             <li class="user-header">
-              <span class="profile-pic-name m-t-6">{{userDetails.firstname+" "+userDetails.lastname | getShortName}}</span>
+              <span class="profile-pic-name m-t-6">{{userDetails.username | getShortName}}</span>
                 <p>
-                 {{userDetails.firstname+" "+userDetails.lastname}}
+                 {{userDetails.username}}
                   <!-- <small>Member since Nov. 2012</small> -->
                 </p>
             </li>

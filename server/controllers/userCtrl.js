@@ -67,6 +67,7 @@ exports.login = function(req, res) {
           user:req.user,
           token: token
         }
+        
         response.sendResponse(res, 200, "success", constants.messages.success.login, data);
       });
 
@@ -154,9 +155,9 @@ exports.getUser = function(req, res) {
       var filter = {};
         params['_id'] = req.query._id;
 
-      if(req.query.viewType == "list"){
-        filter = 'firstName lastName email';
-      }
+      // if(req.query.viewType == "list"){
+      //   filter = 'firstName lastName email';
+      // }
       userModel.findOne(params,function(err,user) {
         return response.sendResponse(res, 200, "success", constants.messages.success.getUser, user);
       })

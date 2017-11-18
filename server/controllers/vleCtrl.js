@@ -48,10 +48,45 @@ exports.getVle = function(req,res){
     if(req.query._id){
       params['_id'] = req.query._id;
     }
+    if(req.query.urban){
+      params['urban'] = req.query.urban;
+    }
     if(req.query.district){
       params['district'] = req.query.district;
     }
-    models.vleModel.find(params,function(err,data){
+    models.vleModel.find(params, function(err,data){
+      if(err){
+        logger.error("getVle ", err);
+        return response.sendResponse(res,500,"error",constants.messages.errors.fetchRoles,err);
+      }
+      return response.sendResponse(res,200,"success",constants.messages.success.fetchRoles,data);
+    })
+
+  } catch (e) {
+    logger.error("getRole ", e);
+  }
+}
+exports.getDistrictCount = function(req,res){
+  try {
+    var params = {
+      isDelete:false,
+      //type:{$in:["aa","consultant","bm"]}
+    };
+    // if(req.query._id){
+    //   params['_id'] = req.query._id;
+    // }
+    if(req.query.distinct == "district"){
+      distinct = 'district';
+    }
+    if(req.query.distinct == "gp"){
+      distinct = 'gp';
+    }
+    if(req.query.distinct == "Municipality"){
+      params['urbanType'] = req.query.urbanType;
+      distinct = 'urbanType';
+    }
+      
+    models.vleModel.find(params).distinct(distinct, function(err,data){
       if(err){
         logger.error("getVle ", err);
         return response.sendResponse(res,500,"error",constants.messages.errors.fetchRoles,err);

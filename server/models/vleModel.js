@@ -19,7 +19,7 @@ var vleSchema = new mongoose.Schema({
     block               :{type: String},
     village             :{type: String},
      urban              :{type: Boolean,default:false},
-    urbanType           :{type: String,enum:constants.urbanTypes},
+    urbanType           :{type: String},
      gp                 :{type: String},
      ward               :{type: String},
       dob                 : {type: String},

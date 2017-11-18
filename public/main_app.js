@@ -39,10 +39,10 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
   .state('dashboard', {
     templateUrl: '/view/dashboard.html',
     url: '/dashboard',
-    controller:'Main_Controller',
-    //  resolve: {
-    //   loggedout: checkLoggedout
-    // }
+    controller:'User_Controller',
+     resolve: {
+      loggedout: checkLoggedout
+    }
 
   })
 
@@ -70,6 +70,14 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
       loggedout: checkLoggedout
     }
   })
+  .state('thankYou', {
+    templateUrl: '/view/thankYou.html',
+    url: '/registration-complete',
+    controller:'User_Controller',
+    //  resolve: {
+    //   loggedout: checkLoggedout
+    // }
+  })
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {
     var deferred = $q.defer();
@@ -78,9 +86,9 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
       $timeout(function(){
         $rootScope.is_loggedin = true;
           UserModel.setUser(response.user);
-          if($state.current.name == "dashboard" && UserModel.getUser().role.type == "client") {
-            $state.go('user-profile');
-          }
+          // if($state.current.name == "dashboard" && UserModel.getUser().role.type == "client") {
+          //   $state.go('user-profile');
+          // }
           console.log("$state >>>>> ",$state.current.name)
           deferred.resolve();
       },200)
