@@ -189,8 +189,12 @@ function seedBlocks(blocks) {
     models.blockModel.insertMany(blocksData)
     .then(function(data) {
       console.log("######################### end seeding blocks ########################\n\n\n\n");
+      return models.gpModel.remove();
+
+    })
+    .then(function(data){
       console.log("######################### start seeding gps ########################\n\n\n\n");
-      console.log(gps);
+      // console.log(gps);
       seedGps(gps);
     })
     .catch(function(err) {
