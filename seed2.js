@@ -96,7 +96,7 @@ function seedDistricts(districtCount) {
   try {
     if (districtCount < 0) {
       // save user
-      console.log(userArr);
+      //console.log(userArr);
       models.userModel.insertMany(userArr,function(err,users){
         if(err){
           console.error(err);
@@ -107,6 +107,7 @@ function seedDistricts(districtCount) {
           models.blockModel.remove()
           .then(function(data) {
             console.log("######################### starts seeding blocks ########################");
+            
             seedBlocks(blocks);
           })
           .catch(function(err){
@@ -119,7 +120,7 @@ function seedDistricts(districtCount) {
     } else {
       // create district
       new models.districtModel({
-        name: districts[districtCount]
+        name: districts[districtCount].toLocaleUpperCase()
       }).save(function(err, district) {
         if (err) {
           console.error(err);
@@ -154,46 +155,56 @@ function seedDistricts(districtCount) {
 var blocksData = [];
 
 function seedBlocks(blocks) {
+  
+  // console.log('blocks[0] && blocks[0].district',blocks[0] && blocks[0].district);
   if (blocks[0] && blocks[0].district) {
 
     models.districtModel.findOne({
-        name: blocks[0].district.trim()
+        name: blocks[0].district.trim().toLocaleUpperCase()
       }).exec()
       .then(function(district) {
         // looping in blocks under current district
         for (var i in blocks[0].blocks) {
           blocksData.push({
             district: district,
-            name: blocks[0].blocks[i]
+            name: blocks[0].blocks[i].toLocaleUpperCase()
           })
         }
         blocks.splice(0, 1); // remove fist index,after pushing data in query data
-        seedBlocks(blocks); // recurssion
+        console.log('blocks >>>>>',blocks.length);
+        if(blocks.length > 0)
+         {
+           seedBlocks(blocks); // recurssion
+
+         } 
+       else {
+            // saving blocks information
+            // console.log('blocksData.length  ',blocksData.length);
+            models.blockModel.insertMany(blocksData)
+              .then(function(data) {
+                console.log("######################### end seeding blocks ########################\n\n\n\n");
+                return models.gpModel.remove();
+        
+              })
+              .then(function(data) {
+                console.log("######################### start seeding gps ########################\n\n\n\n");
+                // console.log(gps);
+                seedGps(gps);
+              })
+              .catch(function(err) {
+                console.error(err);
+                return;
+        
+              })
+          }
       })
       .catch(function(err) {
         console.error(err);
         return;
       })
 
-  } else {
-    // saving blocks information
-    models.blockModel.insertMany(blocksData)
-      .then(function(data) {
-        console.log("######################### end seeding blocks ########################\n\n\n\n");
-        return models.gpModel.remove();
-
-      })
-      .then(function(data) {
-        console.log("######################### start seeding gps ########################\n\n\n\n");
-        // console.log(gps);
-        seedGps(gps);
-      })
-      .catch(function(err) {
-        console.error(err);
-        return;
-
-      })
-  }
+  } 
+  
 }
 
 /**
@@ -214,21 +225,20 @@ function seedBlocks(blocks) {
 
 var gpData = [];
 var count = 0;
-console.log();
 
 function seedGps(gps) {
   console.log('count >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ' + ++count);
   if (gps[0] && gps[0].block) {
 
     models.blockModel.findOne({
-        name: gps[0].block.trim()
+        name: gps[0].block.trim().toLocaleUpperCase()
       }).exec()
       .then(function(block) {
         // looping in gps under current block
         for (var i in gps[0].gps) {
           gpData.push({
             block: block,
-            name: gps[0].gps[i]
+            name: gps[0].gps[i].toLocaleUpperCase()
           })
         }
         gps.splice(0, 1); // remove fist index,after pushing data in query data
@@ -241,6 +251,7 @@ function seedGps(gps) {
 
   } else {
     // saving blocks information
+    //console.log('gpData  ',gpData);
     models.gpModel.insertMany(gpData)
       .then(function(data) {
         console.log("######################### end seeding gps ########################");

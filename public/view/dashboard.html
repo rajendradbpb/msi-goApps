@@ -6,7 +6,7 @@
 </section>
 <section class="content">
   <div class="row">
-    <div class="col-md-4 col-sm-4 col-xs-12" ng-init="getDistrict()">
+    <div class="col-md-4 col-sm-4 col-xs-12" ng-controller="Main_Controller" ng-show="checkStateAdmin()" ng-init="getDistrict()">
         <div class="small-box bg-green" ng-init="getAreaCount('district')">
             <div class="inner">
               <div class="row">
@@ -18,14 +18,8 @@
                 <h3>{{districtCount.length}}</h3>
                 <p>Districts Covered</p>
               </div>
-            <!--   <h3>{{districtList.length}}</h3><h3 class="pull-right">{{districtList.length}}</h3>
-
-              <p>Total No of Districts</p><p class="pull-right">Districts Covered</p> -->
             </div>
           </div>
-           <!--  <div class="icon">
-              <i class="fa fa-file"></i>
-            </div> -->
             <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
@@ -51,7 +45,7 @@
             </a>
           </div>
     </div>
-    <div class="col-md-4 col-sm-4 col-xs-12" ng-init="getAreaCount('Municipality')">
+    <!-- <div class="col-md-4 col-sm-4 col-xs-12" ng-init="getAreaCount('Municipality')">
        <div class="small-box bg-green" >
             <div class="inner">
               <div class="row">
@@ -69,7 +63,7 @@
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>
-    </div>
+    </div> -->
 
 </div>
   <div class="row">

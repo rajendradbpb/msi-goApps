@@ -286,6 +286,14 @@ app.filter('capitalize', function() {
       url:"/common/district",
        method: "GET",
     },
+    getBlocks:{
+      url:"/common/block",
+       method: "GET",
+    },
+    getGPs:{
+      url:"/common/gp",
+       method: "GET",
+    },
     getVle: {
       "url": "/vle",
       "method": "GET",
@@ -329,8 +337,10 @@ app.filter('capitalize', function() {
    registerVle: ApiGenerator.getApi('registerVle'),
     changePassword:  ApiGenerator.getApi('changePassword'),
     getDistrict:     ApiGenerator.getApi('getDistrict'),
+    getBlocks:     ApiGenerator.getApi('getBlocks'),
     getVle:     ApiGenerator.getApi('getVle'),
     getAreatCount:     ApiGenerator.getApi('getAreatCount'),
+    getGPs:     ApiGenerator.getApi('getGPs'),
   })
 }])
 
@@ -395,7 +405,6 @@ app.filter('capitalize', function() {
      $rootScope.showPreloader = true;
     
     ApiCall.userLogin($scope.user ,function(response){
-      console.log(response);
       if($scope.user.rememberMe)
         $localStorage.user = {
           "uname":$scope.user.username,
@@ -415,8 +424,6 @@ app.filter('capitalize', function() {
 }]);
 ;/*****************************************************************************************************************/
 app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStorage", "NgTableParams", "ApiCall", "UserModel", "$uibModal", "$stateParams", "Util", "$timeout", function($scope,$rootScope,$state,$localStorage,NgTableParams,ApiCall,UserModel,$uibModal,$stateParams,Util,$timeout){
-
-  $scope.dashboard = {};
    var loggedIn_user = UserModel.getUser();
    $scope.active_tab = 'BD';
    $scope.tabChange = function(tab){
@@ -428,13 +435,23 @@ app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStora
     UserModel.unsetUser();
     $state.go('login');
   }
+  $scope.checkStateAdmin = function(){
+    $scope.stateAdmin = false;
+      var loggedIn_user = UserModel.getUser();
+      if(loggedIn_user && loggedIn_user.role && loggedIn_user.role.type == "state-admin"){
+        $scope.stateAdmin = true;
+      }
+      else{
+        $scope.stateAdmin = false;
+      }
+      return  $scope.stateAdmin;
+  }
   $scope.getUserDetails = function(){
     var loggedIn_user = UserModel.getUser();
     var obj = {
         '_id' : loggedIn_user._id,
       }
         ApiCall.getUser(obj, function(response){
-          console.log(response);
           $scope.userDetails = response.data;
         },function(error){
         });
@@ -478,8 +495,10 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
 
     }
 ]);
-;app.controller("User_Controller",["$scope", "$rootScope", "$rootScope", "$state", "$localStorage", "NgTableParams", "ApiCall", "$timeout", "UserModel", "Util", function($scope,$rootScope,$rootScope,$state,$localStorage,NgTableParams,ApiCall, $timeout,UserModel,Util){
+;app.controller("User_Controller",["$scope", "$rootScope", "$state", "$localStorage", "NgTableParams", "ApiCall", "$timeout", "UserModel", "Util", function($scope,$rootScope,$state,$localStorage,NgTableParams,ApiCall, $timeout,UserModel,Util){
 $scope.vle = {};
+$scope.row = {};
+$scope.filter = {};
 $scope.districtList = [];
 $scope.districtCount = {};
 $scope.urbanVleList = {};
@@ -497,7 +516,11 @@ $scope.registerVle = function(){
 	});	
 }
 $scope.getVles = function(type){
+	var loggedIn_user = UserModel.getUser();
 	var obj = {};
+	if(loggedIn_user && loggedIn_user.role && loggedIn_user.role.type == "district-admin"){
+		obj.district = loggedIn_user.district;
+	}
 	if(type == "urban"){
 		obj.urban = true;
 	}
@@ -505,24 +528,60 @@ $scope.getVles = function(type){
 		obj.urban = false;
 	}
 	ApiCall.getVle(obj, function(response){
+		$scope.row = response.data;
 		if(obj.urban == true){
-			$scope.urbanVleList = response.data;
+			$scope.urbanVleList = $scope.row;
 		}
 		if(obj.urban == false){
-			$scope.gpVleList = response.data;
-		}
+			$scope.gpVleList = $scope.row;
+		}		
 		if(obj.urban == undefined){
-			$scope.vleList = response.data;
+			$scope.vleList = $scope.row;
 		}
+
+		$scope.vleTabledata = new NgTableParams;
+		$scope.vleTabledata.settings({
+			dataset : $scope.row
+		});
 
 	},function(error){
 		console.log(error);
 	});
 }
- $scope.getDistrict = function(){
+$scope.filterVles = function(){
+	var obj = {};
+	var loggedIn_user = UserModel.getUser();
+	obj.district = loggedIn_user.district;
+	obj.block = $scope.filter.block;
+	obj.gp = $scope.filter.gp;
+	if(loggedIn_user.role.type = "district-admin"){
+		obj.district = loggedIn_user.district;
+	}
+	ApiCall.getVle(obj, function(response){
+		$scope.row = response.data;
+		$scope.vleTabledata = new NgTableParams;
+		$scope.vleTabledata.settings({
+			dataset : $scope.row
+		});
 
- 	ApiCall.getDistrict(function(response){
- 			$scope.districtList = [];
+	},function(error){
+		console.log(error);
+	});
+}
+ $scope.getDistrict = function(row){
+	 var loggedIn_user  = UserModel.getUser();
+	 var obj = {};
+	 if($state.current.name == "vle-list" && row.district){
+		 obj._id = row.district;
+	 }
+	 if(row=="filter" && $state.current.name == "vle-list" ){
+		obj._id = loggedIn_user.district;
+	}
+ 	ApiCall.getDistrict(obj, function(response){
+		if($state.current.name == "vle-list" && row.district){
+			row.districtDetails = response.data[0];
+		}
+ 		$scope.districtList = [];
  		angular.forEach(response.data,function(item){
  			$scope.districtList.push(item);
  		});
@@ -531,17 +590,71 @@ $scope.getVles = function(type){
  		console.log(error);
  	});
  }
+ $scope.getBlocks = function(row){
+	var loggedIn_user  = UserModel.getUser();
+	var obj = {};
+	if($state.current.name == "vle" && $scope.vle.district){
+		obj.district = $scope.vle.district;
+	}
+	if($state.current.name == "vle-list" && row.block){
+		obj._id = row.block;
+	}
+	if(row=="blockFilter" && $state.current.name == "vle-list" ){
+		obj.district = loggedIn_user.district;
+	}
+	if(row=="changeBlock" && $scope.filter.district && $state.current.name == "vle-list" ){
+		obj.district = $scope.filter.district;
+	}
+		 ApiCall.getBlocks(obj, function(response){
+			if($state.current.name == "vle-list" && row.block){
+				row.blockDetails = response.data[0];
+			}
+			else {
+			$scope.blockList = [];
+			angular.forEach(response.data,function(item){
+				$scope.blockList.push(item);
+			 });
+			}
+		 },function(error){
+			 console.log(error);
+		 });
+	 }
+	 $scope.getGps = function(row){
+		var obj = {};
+		if($state.current.name == "vle" && $scope.vle.block){
+			obj.block = $scope.vle.block;
+		}
+		if($state.current.name == "vle-list" && row.gp){
+			obj._id = row.gp;
+		}
+		if(row=="changeGps" && $scope.filter.block && $state.current.name == "vle-list" ){
+			obj.block = $scope.filter.block;
+		}
+			 ApiCall.getGPs(obj, function(response){
+				if($state.current.name == "vle-list" && row.gp){
+					row.gpDetails = response.data[0];
+				}
+				else {
+				$scope.gpList = [];
+				angular.forEach(response.data,function(item){
+					$scope.gpList.push(item);
+				 });
+				}
+			 },function(error){
+				 console.log(error);
+			 });
+		 }
  $scope.getAreaCount = function(areaType){
- 	var obj = {};
+	 var obj = {};
+	 var loggedIn_user = UserModel.getUser();
+	 if(loggedIn_user && loggedIn_user.role && loggedIn_user.role.type == "district-admin"){
+		obj.district = loggedIn_user.district;
+	}
  	if(areaType == "district"){
  		obj.distinct = "district";
  	}
  	if(areaType == "gp"){
  		obj.distinct = "gp";
- 	}
- 	if(areaType == "Municipality"){
- 		obj.urbanType = "Municipality";
- 		obj.distinct = "Municipality";
  	}
  	ApiCall.getAreatCount(obj, function(response){
  		if(obj.distinct == "district"){
@@ -553,7 +666,7 @@ $scope.getVles = function(type){
 		if(obj.distinct == "Municipality"){
 			$scope.municipalityList = response.data;
 		}
-		console.log($scope.municipalityList);
+		
  	},function(error){
 
  	});

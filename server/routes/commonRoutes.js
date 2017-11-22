@@ -39,4 +39,35 @@ router.delete('district/:id', function(req, res, next) {
 });
 /* state CRUD starts */
 
+/* Block CRUD starts */
+router.post('/block',function(req, res, next) {
+  controllers.commonCtrl.addBlock(req, res);
+});
+router.get('/block', function(req, res, next) {
+  controllers.commonCtrl.getBlock(req, res);
+});
+router.put('/block', function(req, res, next) {
+  controllers.commonCtrl.updateBlock(req, res);
+});
+router.delete('block/:id', function(req, res, next) {
+  controllers.commonCtrl.deleteBlock(req, res);
+});
+/* block CRUD starts */
+
+
+/* GP CRUD starts */
+router.post('/gp',function(req, res, next) {
+  controllers.commonCtrl.addGP(req, res);
+});
+router.get('/gp', function(req, res, next) {
+  controllers.commonCtrl.getGP(req, res);
+});
+router.put('/gp', function(req, res, next) {
+  controllers.commonCtrl.updateGP(req, res);
+});
+router.delete('gp/:id', function(req, res, next) {
+  controllers.commonCtrl.deleteGP(req, res);
+});
+/* GP CRUD starts */
+
 module.exports = router;

@@ -3,7 +3,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 var constants = require("./../../config/constants")
 var districtSchema = new mongoose.Schema({
-    state        : {type:String, default:'Odisha'},
+    state             : {type:String, default:'Odisha'},
     name              : {type: String,unique:true,trim:true},
     createdDate       : {type: Date, default: new Date()},
     isDelete          : {type: Boolean, default:false},

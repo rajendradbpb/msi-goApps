@@ -71,6 +71,14 @@ angular.module('WebService', [])
       url:"/common/district",
        method: "GET",
     },
+    getBlocks:{
+      url:"/common/block",
+       method: "GET",
+    },
+    getGPs:{
+      url:"/common/gp",
+       method: "GET",
+    },
     getVle: {
       "url": "/vle",
       "method": "GET",
@@ -114,8 +122,10 @@ angular.module('WebService', [])
    registerVle: ApiGenerator.getApi('registerVle'),
     changePassword:  ApiGenerator.getApi('changePassword'),
     getDistrict:     ApiGenerator.getApi('getDistrict'),
+    getBlocks:     ApiGenerator.getApi('getBlocks'),
     getVle:     ApiGenerator.getApi('getVle'),
     getAreatCount:     ApiGenerator.getApi('getAreatCount'),
+    getGPs:     ApiGenerator.getApi('getGPs'),
   })
 })
 

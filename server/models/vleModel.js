@@ -16,7 +16,7 @@ var vleSchema = new mongoose.Schema({
     state               :{type: Schema.Types.ObjectId,default:"Odisha"},
     district            :{type: Schema.Types.ObjectId, ref: 'district'},
    // blockType         :{type: String,enum:constants.blockTypes},
-    block               :{type: String},
+   block                :{type: Schema.Types.ObjectId, ref: 'block'},
     village             :{type: String},
      urban              :{type: Boolean,default:false},
     urbanType           :{type: String},

@@ -1,9 +1,9 @@
 module.exports =  [
 'Angul',
 'Balasore',
+'Balangir',
 'Bargarh',
 'Bhadrak',
-'Balangir',
 'Boudh',
 'Cuttack',
 'Deogarh',

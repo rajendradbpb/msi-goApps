@@ -3,16 +3,13 @@
 /*****************************************************************************************************************/
 app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage,NgTableParams,ApiCall,UserModel,$uibModal,$stateParams,Util,$timeout){
 
-  $scope.dashboard = {};
+  //$scope.dashboard = {};
    var loggedIn_user = UserModel.getUser();
    $scope.active_tab = 'BD';
    $scope.tabChange = function(tab){
     $scope.active_tab = tab;
    }
-   // event listener
-  //  $rootScope.$on("LOGGED_IN",function() {
-  //    $scope.getUserDetails();;
-  //  });
+  
   /*******************************************************/
   /*********FUNCTION IS USED TO SIGN OUT PROFILE**********/
   /*******************************************************/
@@ -21,6 +18,17 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
     $rootScope.is_loggedin = false;
     UserModel.unsetUser();
     $state.go('login');
+  }
+  $scope.checkStateAdmin = function(){
+    $scope.stateAdmin = false;
+      var loggedIn_user = UserModel.getUser();
+      if(loggedIn_user && loggedIn_user.role && loggedIn_user.role.type == "state-admin"){
+        $scope.stateAdmin = true;
+      }
+      else{
+        $scope.stateAdmin = false;
+      }
+      return  $scope.stateAdmin;
   }
 
 //   /*******************************************************/
@@ -46,7 +54,6 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
         '_id' : loggedIn_user._id,
       }
         ApiCall.getUser(obj, function(response){
-          console.log(response);
           $scope.userDetails = response.data;
         },function(error){
         });
@@ -75,17 +82,7 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
 //   /*******************************************************/
 //   /*********FUNCTION IS USED TO CHECK ADMIN USER**********/
 //   /*******************************************************/
-//   $scope.checkAdmin = function(){
-//     $scope.superAdmin = false;
-//       var loggedIn_user = UserModel.getUser();
-//       if(loggedIn_user && loggedIn_user.role && loggedIn_user.role.type == "superAdmin"){
-//         $scope.superAdmin = true;
-//       }
-//       else{
-//         $scope.superAdmin = false;
-//       }
-//       return  $scope.superAdmin;
-//   }
+
 //   /*******************************************************/
 //   /*********FUNCTION IS USED TO CHECK CLIENT USER**********/
 //   /*******************************************************/

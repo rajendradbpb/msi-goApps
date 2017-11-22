@@ -189,3 +189,67 @@ exports.deleteDistrict = function(req,res){
 }
 
 /*state crud ends */
+
+
+
+/*block crud starts */
+exports.getBlock = function(req,res){
+  console.log("inside server ctrl");
+  try {
+    var params = {
+      isDelete:false,
+    };
+    if(req.query._id){
+      params['_id'] = req.query._id;
+    }
+    if(req.query.district){
+      params['district'] = req.query.district;
+    }
+    models.blockModel.find(params,function(err,data){
+      if(err){
+        logger.error("getBlock ", err);
+        return response.sendResponse(res,500,"error",constants.messages.errors.getData,err);
+      }
+      return response.sendResponse(res,200,"success",constants.messages.success.getData,data);
+    })
+
+  } catch (e) {
+    logger.error("getBlock ", e);
+  }
+}
+/*block crud ends */
+
+
+
+
+
+
+
+
+
+
+/*gp crud starts */
+exports.getGP = function(req,res){
+  console.log("inside server ctrl");
+  try {
+    var params = {
+      isDelete:false,
+    };
+    if(req.query._id){
+      params['_id'] = req.query._id;
+    }
+    if(req.query.block){
+      params['block'] = req.query.block;
+    }
+    models.gpModel.find(params,function(err,data){
+      if(err){
+        logger.error("getGP ", err);
+        return response.sendResponse(res,500,"error",constants.messages.errors.getData,err);
+      }
+      return response.sendResponse(res,200,"success",constants.messages.success.getData,data);
+    })
+
+  } catch (e) {
+    logger.error("getGP ", e);
+  }
+}

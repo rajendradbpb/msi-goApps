@@ -43,7 +43,7 @@ exports.getVle = function(req,res){
   try {
     var params = {
       isDelete:false,
-      //type:{$in:["aa","consultant","bm"]}
+    
     };
     if(req.query._id){
       params['_id'] = req.query._id;
@@ -53,6 +53,12 @@ exports.getVle = function(req,res){
     }
     if(req.query.district){
       params['district'] = req.query.district;
+    }
+    if(req.query.block){
+      params['block'] = req.query.block;
+    }
+    if(req.query.gp){
+      params['gp'] = req.query.gp;
     }
     models.vleModel.find(params, function(err,data){
       if(err){

@@ -9,7 +9,6 @@ app.controller("Login_Controller",function($scope,$rootScope,$rootScope,$state,$
      $rootScope.showPreloader = true;
     
     ApiCall.userLogin($scope.user ,function(response){
-      console.log(response);
       if($scope.user.rememberMe)
         $localStorage.user = {
           "uname":$scope.user.username,
