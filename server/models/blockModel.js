@@ -8,6 +8,6 @@ var blockSchema = new mongoose.Schema({
     createdDate       : {type: Date, default: new Date()},
     isDelete          : {type: Boolean, default:false},
 });
-blockSchema.plugin(uniqueValidator, {message: "district already exists"});
+blockSchema.plugin(uniqueValidator, {message: "block already exists"});
 var blockModel = mongoose.model('block', blockSchema);
 module.exports = blockModel;

@@ -7,6 +7,7 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var moment = require('moment');
 var config = require("config");
+var excel = require('node-excel-export');
 var utility = {};
 utility.isEmpty = function(data) {
   if (!data || data == "")
@@ -220,4 +221,25 @@ utility.getAlphaNumeric = function(precision) {
 /**
  * making dynamically validation for the fields passed in the request ENDS
  */
+
+ utility.downloadXls = function(data,res){
+   var dataset = [{name:"name1"},{name:"name2"},{name:"name3"}];
+   const heading = [['state','asdf']];
+   var specification = {
+     name: { // <- the key should match the actual data key
+       displayName: 'State', // <- Here you specify the column header
+       width: 120 // <- width in pixels
+     }
+   };
+   var report = excel.buildExport(
+     [{
+       name: 'State',
+       heading: heading,
+       specification: specification,
+       data: dataset // <-- Report data
+     }]
+   );
+   res.attachment('state.xlsx');
+   return res.send(report);
+ }
 module.exports = utility;

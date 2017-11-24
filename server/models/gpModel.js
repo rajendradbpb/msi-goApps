@@ -8,6 +8,6 @@ var gpSchema = new mongoose.Schema({
     createdDate    : {type: Date, default: new Date()},
     isDelete       : {type: Boolean, default:false},
 });
-gpSchema.plugin(uniqueValidator, {message: "district already exists"});
+gpSchema.plugin(uniqueValidator, {message: "gp already exists"});
 var gpModel = mongoose.model('gp', gpSchema);
 module.exports = gpModel;
