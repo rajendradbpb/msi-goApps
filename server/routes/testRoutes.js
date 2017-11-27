@@ -7,48 +7,30 @@ var response = require("./../component/response");
 var constants = require("./../../config/constants");
 var passport = require("passport");
 var logger = require("./../component/log4j").getLogger('testRoutes');
+var component = require("./../component/index");
 // console.log(log4j);
 // const logger = log4j.getLogger('testRoutes');
 var excel = require('node-excel-export');
 router.get('/xls', function(req, res, next) {
-  console.log(">>>>>>>>>>>>>>>>>>>");
-  models.stateModel.find().select('name')
+  models.blockModel.find().populate('district')
     .exec()
-    .then(function(states) {
-      var dataset = [{name:"name1"},{name:"name2"},{name:"name3"}];
-      const heading = [['state']];
-      // states.filter(function(state) {
-      //   console.log("**** ",state.name);
-      //   dataset.push(state.name);
-      //
-      //   return state.name;
-      // })
-      // console.log(dataset);
-      var specification = {
-        name: { // <- the key should match the actual data key
-          displayName: 'State', // <- Here you specify the column header
-          width: 120 // <- width in pixels
-        }
-      };
-      var report = excel.buildExport(
-        [{
-          name: 'State',
-          heading: heading,
-          specification: specification,
-          data: dataset // <-- Report data
-        }]
-      );
-      res.attachment('state.xlsx');
-      return res.send(report);
+    .then(function(blocks) {
+      // preparing data set
+      var dataset = [];
+        blocks.filter(function(block) {
+        var obj = {};
+        obj.name = block.name;
+        obj.district = block.district.name;
+        dataset.push(obj);
+        return obj;
+      })
+      // component.utility.downloadXls(res,dataset,['col1','col2'],'sample','block'); // using custom columns as ->'col1','col2'
+      component.utility.downloadXls(res,dataset,null,'sample','block'); // using defult values
+    })
+    .catch(function(err){
+       return response.sendResponse(res, 500, "error", constants.messages.errors.getData,err);
+    })
 
-    })
-    .catch(function(err) {
-      console.log(err);
-      return res.sendStatus(500).json({
-        error: err
-      });
-    })
 });
-
 
 module.exports = router;

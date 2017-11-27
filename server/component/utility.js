@@ -222,24 +222,45 @@ utility.getAlphaNumeric = function(precision) {
  * making dynamically validation for the fields passed in the request ENDS
  */
 
- utility.downloadXls = function(data,res){
-   var dataset = [{name:"name1"},{name:"name2"},{name:"name3"}];
-   const heading = [['state','asdf']];
-   var specification = {
-     name: { // <- the key should match the actual data key
-       displayName: 'State', // <- Here you specify the column header
-       width: 120 // <- width in pixels
+ utility.downloadXls = function(res,dataset,columns,fileName,tabName){
+   try{
+     if(!fileName){
+       return response.sendResponse(res, 402, "error", "file name not present");
      }
-   };
-   var report = excel.buildExport(
-     [{
-       name: 'State',
-       heading: heading,
-       specification: specification,
-       data: dataset // <-- Report data
-     }]
-   );
-   res.attachment('state.xlsx');
-   return res.send(report);
+     if(!tabName){
+       return response.sendResponse(res, 402, "error", "tab Name  not present");
+     }
+     var heading = [];
+     // get properties
+     var properties = Object.keys(dataset[0]);
+     if(!columns || columns.length != properties.length){
+       heading.push(properties);
+     }
+     else{
+       // heading present
+       heading.push(columns);
+     }
+     // create specifications
+     var specification = {};
+     for(var i in properties){
+       specification[properties[i]]  = {
+         width: 120
+       }
+     }
+     var report = excel.buildExport(
+       [{
+         name: tabName,// represents the tab name
+         heading: heading,
+         specification: specification,
+         data: dataset // <-- Report data
+       }]
+     );
+     res.attachment(fileName+".xlsx");
+     console.log("sending response");
+     return res.send(report);
+   }
+   catch(err){
+     return response.sendResponse(res, 500, "error", constants.messages.errors.getData,err);
+   }
  }
 module.exports = utility;
