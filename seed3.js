@@ -30,8 +30,8 @@ function init() {
         type: "state-admin"
       }).exec();
     })
-    .then(function(stateAdminRole) {
-      stateAdminRole = stateAdminRole;
+    .then(function(stateAdminRoleData) {
+      stateAdminRole = stateAdminRoleData;
       // get district admin role
       return models.roleModel.findOne({
         type: "district-admin"
@@ -98,6 +98,13 @@ function initData(data,readIndex){
   console.log("Reading record "+readIndex);
   if(readIndex >= data.length)
   {
+    // adding state admin user
+    userArr.push({
+        username: "odisha",
+        password: passwordhash,
+        role: stateAdminRole
+      })
+      
     models.userModel.insertMany(userArr,function(err,users){
       if(err)
       {
@@ -132,6 +139,7 @@ function initData(data,readIndex){
             role: districtAdminRole,
             district: district
           })
+
         // create new block and new Gp
         // create block
         new models.blockModel({name:data[readIndex][blockIndex],district: currentDistrict})
