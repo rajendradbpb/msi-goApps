@@ -4,6 +4,7 @@ var constants = require('./../../config/constants');
 var validator = require('validator');
 var Schema = mongoose.Schema;
 var password = require('password-hash-and-salt');
+var models = require("./index");
 var vleSchema = new mongoose.Schema({
     role                : {type: Schema.Types.ObjectId, ref: 'role',required: true},
     name                :{type: String},
@@ -84,7 +85,54 @@ var vleSchema = new mongoose.Schema({
     status            : {type: String,enum: constants.userStatus,default:'pending'},
     isDelete          : {type: Boolean, default:false},
 });
+
+// pre save
+// vleSchema.methods.preSave = function(cb){
+//   console.log('pre save ',this.body);
+// }
+
+vleSchema.pre('save',function(next){
+  var update = {
+    isCover:true
+  },
+  option = {
+    new : true
+  },
+  districtQuery = {
+    _id:this.district
+  },
+  blockQuery = {
+    _id:this.block
+  },
+  gpQuery = {
+    _id:this.gp
+  };
+  models.districtModel.update(districtQuery,update,option,function(err,district){
+    if(err){
+      next(err);
+    }
+    else{
+      models.blockModel.update(blockQuery,update,option,function(err,block){
+        if(err){
+          next(err);
+        }
+        else{
+          models.gpModel.update(gpQuery,update,option,function(err,gp){
+            if(err){
+              next(err);
+            }
+            else{
+              next();
+            }
+          })
+        }
+      })
+    }
+  })
+  // next();
+})
 vleSchema.plugin(uniqueValidator, {message: "Email / Mobile already exists"});
 
 var vleModel = mongoose.model('vle', vleSchema);
+
 module.exports = vleModel;

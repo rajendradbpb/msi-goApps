@@ -25,6 +25,8 @@ var passwordHash = require('password-hash-and-salt');
 
 exports.addVle = function(req,res){
   try {
+    // models.vleModel.preSave();
+    console.log("add vle");
     new models.vleModel(req.body).save(function (err) {
       if(err){
         logger.error("addVle ", err);
@@ -43,7 +45,7 @@ exports.getVle = function(req,res){
   try {
     var params = {
       isDelete:false,
-    
+
     };
     if(req.query._id){
       params['_id'] = req.query._id;
@@ -91,7 +93,7 @@ exports.getDistrictCount = function(req,res){
       params['urbanType'] = req.query.urbanType;
       distinct = 'urbanType';
     }
-      
+
     models.vleModel.find(params).distinct(distinct, function(err,data){
       if(err){
         logger.error("getVle ", err);

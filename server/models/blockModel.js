@@ -6,6 +6,7 @@ var blockSchema = new mongoose.Schema({
     district        : {type: Schema.Types.ObjectId, ref: 'district'},
     name              : {type: String,unique:true,trim:true},
     createdDate       : {type: Date, default: new Date()},
+    isCover           : {type: Boolean, default: false},
     isDelete          : {type: Boolean, default:false},
 });
 blockSchema.plugin(uniqueValidator, {message: "block already exists"});

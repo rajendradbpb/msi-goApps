@@ -1,5 +1,6 @@
 var config = require('config');
 var constants = {
+  debug:true,
   roles:['state-admin','district-admin','vle'],
   userStatus:['active','pending','inactive'],
   blockTypes:['GP','URBAN'],

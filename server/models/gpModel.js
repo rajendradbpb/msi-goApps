@@ -6,6 +6,7 @@ var gpSchema = new mongoose.Schema({
     block          : {type: Schema.Types.ObjectId, ref: 'block'},
     name           : {type: String,trim:true},
     createdDate    : {type: Date, default: new Date()},
+    isCover           : {type: Boolean, default: false},
     isDelete       : {type: Boolean, default:false},
 });
 gpSchema.plugin(uniqueValidator, {message: "gp already exists"});

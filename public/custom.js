@@ -2,13 +2,17 @@ var app = angular.module("msi-goApps-goApps", ['ui.router', 'ui.bootstrap', 'ngR
 app.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", function($stateProvider, $urlRouterProvider,$httpProvider) {
   checkLoggedin.$inject = ["$q", "$timeout", "$rootScope", "$http", "$state", "$localStorage"];
   checkLoggedout.$inject = ["$q", "$timeout", "$rootScope", "$state", "$http", "$localStorage", "UserModel"];
-  $httpProvider.interceptors.push(["$q", "$location", "$window", "$localStorage", function ($q, $location, $window,$localStorage) {
+  $httpProvider.interceptors.push(["$q", "$location", "$window", "$localStorage", "Constants", function ($q, $location, $window,$localStorage,Constants) {
     return {
       request: function (config) {
         var isSignInUrl = config.url.indexOf('login') > -1 ? true : false;
         if($localStorage.token ){
           config.headers = config.headers || {};
           config.headers['Authorization'] = 'bearer '+$localStorage.token;
+        }
+        if(Constants.debug) {
+          console.log("calling web service ->>>>>>>>>>>" , config.url);
+          console.log("Data web service ->>>>>>>>>>>" , JSON.stringify(config.data));
         }
         return config;
       },

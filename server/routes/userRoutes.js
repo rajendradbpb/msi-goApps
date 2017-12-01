@@ -25,6 +25,9 @@ router.put('/forgotPassword', function(req, res, next) {
 router.delete('/:id', function(req, res, next) {
   controllers.userCtrl.deleteUser(req, res);
 });
+router.get('/dashboard', passport.authenticate('token', {session:false}),function(req, res, next) {
+  controllers.userCtrl.getDashboardData(req, res);
+});
 // router.get('/referral', passport.authenticate('token', {session:false}), function(req, res, next) {
 //   controllers.userCtrl.getReferral(req, res);
 // });

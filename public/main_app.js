@@ -1,12 +1,16 @@
 var app = angular.module("msi-goApps-goApps", ['ui.router', 'ui.bootstrap', 'ngResource', 'ngStorage', 'ngAnimate','datePicker','ngTable','angular-js-xlsx','WebService','ui.utils','textAngular','Logger']);
 app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
-  $httpProvider.interceptors.push(function ($q, $location, $window,$localStorage) {
+  $httpProvider.interceptors.push(function ($q, $location, $window,$localStorage,Constants) {
     return {
       request: function (config) {
         var isSignInUrl = config.url.indexOf('login') > -1 ? true : false;
         if($localStorage.token ){
           config.headers = config.headers || {};
           config.headers['Authorization'] = 'bearer '+$localStorage.token;
+        }
+        if(Constants.debug) {
+          console.log("calling web service ->>>>>>>>>>>" , config.url);
+          console.log("Data web service ->>>>>>>>>>>" , JSON.stringify(config.data));
         }
         return config;
       },
