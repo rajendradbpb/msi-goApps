@@ -228,6 +228,14 @@ app.filter('capitalize', function() {
           'Accept': 'application/json'
       },
     },
+    getDashboard: {
+      "url": "/user/dashboard",
+      "method": "GET",
+      "headers": {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+    },
 
     postRole: {
       url: "/role",
@@ -352,6 +360,7 @@ app.filter('capitalize', function() {
     getAreatCount:     ApiGenerator.getApi('getAreatCount'),
     getGPs:     ApiGenerator.getApi('getGPs'),
     exportExcel:     ApiGenerator.getApi('exportExcel'),
+    getDashboard:     ApiGenerator.getApi('getDashboard'),
   })
 }])
 
@@ -522,6 +531,15 @@ $scope.registerVle = function(){
 	ApiCall.registerVle($scope.vle,function(response){
 		$rootScope.showProloader = false;
 		$state.go('thankYou');
+	},function(error){
+		$rootScope.showProloader = false;
+	});
+}
+$scope.dashboardInit = function(){
+	$rootScope.showProloader = true;
+	ApiCall.getDashboard(function(response){
+		$rootScope.showProloader = false;
+		$scope.dashboardDetails = response.data;
 	},function(error){
 		$rootScope.showProloader = false;
 	});

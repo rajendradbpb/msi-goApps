@@ -442,16 +442,16 @@ exports.forgotPassword = function(req, res) {
 exports.getDashboardData = function(req, res) {
   var responseData = {
     district: {
-      total: 0,
-      covered: 0
+      total: [],
+      covered: []
     },
     block: {
-      total: 0,
-      covered: 0
+      total: [],
+      covered: []
     },
     gp: {
-      total: 0,
-      covered: 0
+      total: [],
+      covered: []
     },
     vle: {
       total: 0,
@@ -497,14 +497,16 @@ exports.getDashboardData = function(req, res) {
       responseData.gp.covered = gpcovered;
       // getting  vle
       // get vle details
-      return models.vleModel.find({}).exec();
+      var query = {};
+      if(req.user._doc.role.type != "state-admin"){
+        query.district = req.user._doc.district;
+      }
+      return models.vleModel.find(query).exec();
     })
     .then(function(vleData) {
-      var count = 0;
+      responseData.vle.total = vleData.length;
       vleData.filter(function(vle){
-        responseData.vle.total = vle.length;
         vle.urban ? responseData.vle.urban++ : responseData.vle.gp++ ;
-        count++;
         // if(count >= vle.length){
         //   return response.sendResponse(res, 200, "success", constants.messages.success.getData,responseData);
         // }

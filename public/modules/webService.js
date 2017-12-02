@@ -9,6 +9,14 @@ angular.module('WebService', [])
           'Accept': 'application/json'
       },
     },
+    getDashboard: {
+      "url": "/user/dashboard",
+      "method": "GET",
+      "headers": {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+    },
 
     postRole: {
       url: "/role",
@@ -135,6 +143,7 @@ angular.module('WebService', [])
     getAreatCount:     ApiGenerator.getApi('getAreatCount'),
     getGPs:     ApiGenerator.getApi('getGPs'),
     exportExcel:     ApiGenerator.getApi('exportExcel'),
+    getDashboard:     ApiGenerator.getApi('getDashboard'),
   })
 })
 

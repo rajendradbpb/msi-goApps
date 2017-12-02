@@ -18,6 +18,15 @@ $scope.registerVle = function(){
 		$rootScope.showProloader = false;
 	});
 }
+$scope.dashboardInit = function(){
+	$rootScope.showProloader = true;
+	ApiCall.getDashboard(function(response){
+		$rootScope.showProloader = false;
+		$scope.dashboardDetails = response.data;
+	},function(error){
+		$rootScope.showProloader = false;
+	});
+}
 $scope.getVles = function(type){
 	var loggedIn_user = UserModel.getUser();
 	var obj = {};
