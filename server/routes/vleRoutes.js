@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var router = express.Router();
 var passport = require('passport');
+var component = require('./../component/index');
 
 
 // custom files
@@ -27,6 +28,10 @@ router.put('/forgotPassword', function(req, res, next) {
 });
 router.delete('/:id', function(req, res, next) {
   controllers.userCtrl.deleteUser(req, res);
+});
+router.get('/exportExcel', function(req, res, next) {
+  controllers.vleCtrl.exportVle(req, res);
+  //component.utility.downloadXls(res,req.body.data,null,'vleList','vle');
 });
 
 module.exports = router;

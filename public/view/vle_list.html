@@ -6,37 +6,40 @@
   <section>
         <div class="row">
             <form  class="form-horizontal"  name="filter">
-            <div class="col-xs-12 col-md-6 col-md-offset-1">
-                <div class="col-xs-4">
+            <div class="col-xs-12 col-md-12 col-md-offset-1">
+                <div class="col-xs-2">
                     <div class="input-group" ng-init="getDistrict('filter')" >
                             <select class="form-control" name="district" ng-model="filter.district" ng-change="getBlocks('changeBlock')">
                                 <option value="" ng-selected=""><i class="fa fa-sort-desc">District</i></option>
                                 <option ng-value="districts._id" ng-repeat="districts in districtList">{{districts.name}}</option>
                             </select>
-                       
+
                     </div>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-xs-2">
                     <div class="input-group" ng-init="getBlocks('blockFilter')">
                             <select class="form-control" name="block" ng-model="filter.block" ng-change="getGps('changeGps')">
                                     <option value=""><i class="fa fa-sort-desc">Block</i></option>
                                     <option ng-value="blocks._id" ng-repeat="blocks in blockList" >{{blocks.name}}</option>
                             </select>
-                       
-                    </div>   
+
+                    </div>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                     <div class="input-group">
                             <select class="form-control" name="GP" ng-model="filter.gp">
                                     <option value=""><i class="fa fa-sort-desc">Gram Panchayat</i></option>
                                     <option ng-value="gps._id" ng-repeat="gps in gpList">{{gps.name}}</option>
-                                   
+
                                   </select>
-                       
-                    </div>  
+
+                    </div>
                 </div>
-                <div class="input-group-btn col-xs-2">
-                        <button type="button" ng-click="filterVles()" class="btn btn-danger">Search VLE</button>
+                <div class="col-xs-2">
+                        <button type="button" ng-click="filterVles()" class="btn btn-success">Search VLE</button>
+                </div>
+                <div class="col-xs-2">
+                        <a href="{{exportLink}}" target="blank" class="btn btn-success">Export</a>
                 </div>
             </div>
             </form>
@@ -63,7 +66,7 @@
                                       </button>
                                   </div>
                                   <div class="btn-group">
-                                      <button type="button" class="btn btn-success"><a href="" class="option-btn" ui-sref="returnFile-details({'returnFile_id':row._id})"><i class="fa fa-eye"></i></a></button> 
+                                      <button type="button" class="btn btn-success"><a href="" class="option-btn" ui-sref="returnFile-details({'returnFile_id':row._id})"><i class="fa fa-eye"></i></a></button>
                                   </div>
                               </td>
                           </tr>
@@ -71,7 +74,6 @@
                       </div>
                   </div>
               </div>
-          </div>    
+          </div>
       </div>
   </section>
-  

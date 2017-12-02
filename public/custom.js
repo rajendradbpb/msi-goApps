@@ -228,7 +228,7 @@ app.filter('capitalize', function() {
           'Accept': 'application/json'
       },
     },
-    
+
     postRole: {
       url: "/role",
       method: "POST",
@@ -285,7 +285,7 @@ app.filter('capitalize', function() {
             'Accept': 'application/json'
         },
     },
-    
+
     getDistrict:{
       url:"/common/district",
        method: "GET",
@@ -330,6 +330,12 @@ app.filter('capitalize', function() {
             'Accept': 'application/json'
         },
     },
+    exportExcel: {
+        url: "/vle/exportExcel",
+        method: "POST",
+        "headers": {
+        },
+    },
   }
 }])
 .factory('ApiCall', ["$http", "$resource", "API", "EnvService", "ApiGenerator", function($http, $resource, API, EnvService,ApiGenerator) {
@@ -345,6 +351,7 @@ app.filter('capitalize', function() {
     getVle:     ApiGenerator.getApi('getVle'),
     getAreatCount:     ApiGenerator.getApi('getAreatCount'),
     getGPs:     ApiGenerator.getApi('getGPs'),
+    exportExcel:     ApiGenerator.getApi('exportExcel'),
   })
 }])
 
@@ -499,7 +506,7 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
 
     }
 ]);
-;app.controller("User_Controller",["$scope", "$rootScope", "$state", "$localStorage", "NgTableParams", "ApiCall", "$timeout", "UserModel", "Util", function($scope,$rootScope,$state,$localStorage,NgTableParams,ApiCall, $timeout,UserModel,Util){
+;app.controller("User_Controller",["$scope", "$rootScope", "$state", "$localStorage", "ApiGenerator", "NgTableParams", "ApiCall", "$timeout", "UserModel", "Util", function($scope,$rootScope,$state,$localStorage,ApiGenerator,NgTableParams,ApiCall, $timeout,UserModel,Util){
 $scope.vle = {};
 $scope.row = {};
 $scope.filter = {};
@@ -511,13 +518,13 @@ $scope.gpVleList = {};
 $scope.municipalityList = {};
 $scope.registerVle = function(){
 	$rootScope.showProloader = true;
-	$scope.vle.role = "5a0baa97721f3f17b86d1119";  
+	$scope.vle.role = "5a0baa97721f3f17b86d1119";
 	ApiCall.registerVle($scope.vle,function(response){
 		$rootScope.showProloader = false;
 		$state.go('thankYou');
 	},function(error){
 		$rootScope.showProloader = false;
-	});	
+	});
 }
 $scope.getVles = function(type){
 	var loggedIn_user = UserModel.getUser();
@@ -531,6 +538,7 @@ $scope.getVles = function(type){
 	if(type == "gp"){
 		obj.urban = false;
 	}
+
 	ApiCall.getVle(obj, function(response){
 		$scope.row = response.data;
 		if(obj.urban == true){
@@ -538,7 +546,7 @@ $scope.getVles = function(type){
 		}
 		if(obj.urban == false){
 			$scope.gpVleList = $scope.row;
-		}		
+		}
 		if(obj.urban == undefined){
 			$scope.vleList = $scope.row;
 		}
@@ -547,11 +555,11 @@ $scope.getVles = function(type){
 		$scope.vleTabledata.settings({
 			dataset : $scope.row
 		});
-
 	},function(error){
 		console.log(error);
 	});
 }
+
 $scope.filterVles = function(){
 	var obj = {};
 	var loggedIn_user = UserModel.getUser();
@@ -561,6 +569,25 @@ $scope.filterVles = function(){
 	if(loggedIn_user.role.type = "district-admin"){
 		obj.district = loggedIn_user.district;
 	}
+	$scope.exportLink = (function(params) {
+		var temp = ApiGenerator.getApi('exportExcel').url+"?";
+		var flag = false;
+		Object.keys(params).forEach(function(key,index) {
+			if(params[key]){
+				if(!flag){
+					temp+=key+"="+params[key];
+					flag = true;
+				}
+				else{
+					temp+="&"+key+"="+params[key] ;
+				}
+
+			}
+		});
+		return temp;
+
+	})(obj);
+	console.log(">>>>>>>>>>>>>>  ",$scope.exportLink,obj );
 	ApiCall.getVle(obj, function(response){
 		$scope.row = response.data;
 		$scope.vleTabledata = new NgTableParams;
@@ -589,7 +616,7 @@ $scope.filterVles = function(){
  		angular.forEach(response.data,function(item){
  			$scope.districtList.push(item);
  		});
- 		
+
  	},function(error){
  		console.log(error);
  	});
@@ -670,12 +697,13 @@ $scope.filterVles = function(){
 		if(obj.distinct == "Municipality"){
 			$scope.municipalityList = response.data;
 		}
-		
+
  	},function(error){
 
  	});
  }
-}]);;app.directive('fileModell', ['$parse', function ($parse) {
+}]);
+;app.directive('fileModell', ['$parse', function ($parse) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {

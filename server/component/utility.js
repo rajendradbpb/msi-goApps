@@ -223,6 +223,7 @@ utility.getAlphaNumeric = function(precision) {
  */
 
  utility.downloadXls = function(res,dataset,columns,fileName,tabName){
+   console.log("############# dataset   ",dataset);
    try{
      if(!fileName){
        return response.sendResponse(res, 402, "error", "file name not present");

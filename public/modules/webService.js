@@ -9,7 +9,7 @@ angular.module('WebService', [])
           'Accept': 'application/json'
       },
     },
-    
+
     postRole: {
       url: "/role",
       method: "POST",
@@ -66,7 +66,7 @@ angular.module('WebService', [])
             'Accept': 'application/json'
         },
     },
-    
+
     getDistrict:{
       url:"/common/district",
        method: "GET",
@@ -111,6 +111,14 @@ angular.module('WebService', [])
             'Accept': 'application/json'
         },
     },
+    exportExcel: {
+        url: "/vle/exportExcel",
+        method: "POST",
+        "headers": {
+            // 'Content-Type': 'application/json',
+            // 'Accept': 'application/json'
+        },
+    },
   }
 })
 .factory('ApiCall', function($http, $resource, API, EnvService,ApiGenerator) {
@@ -126,6 +134,7 @@ angular.module('WebService', [])
     getVle:     ApiGenerator.getApi('getVle'),
     getAreatCount:     ApiGenerator.getApi('getAreatCount'),
     getGPs:     ApiGenerator.getApi('getGPs'),
+    exportExcel:     ApiGenerator.getApi('exportExcel'),
   })
 })
 
