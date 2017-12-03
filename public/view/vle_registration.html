@@ -1,5 +1,5 @@
-<section class="content" ng-init="getVles()">
-  
+<section class="content" ng-init="vleRegdInit()">
+
     <div class="row">
         <div class="col-xs-10 col-md-offset-1">
           <div class="nav-tabs-custom">
@@ -17,10 +17,10 @@
                   <div class="box-body">
                     <div class="row">
                       <div class="col-xs-6">
-                        <div class="form-group p-l-20" ng-class="{'has-error':basic.district.$touched && basic.district.$invalid}" ng-init="getDistrict()">
+                        <div class="form-group p-l-20" ng-class="{'has-error':basic.district.$touched && basic.district.$invalid}">
                             <label for="uname" class="control-label col-sm-4">District:</label>
                             <div class="col-xs-8">
-                              <select class="form-control" name="district" ng-model="vle.district" ng-change="getBlocks()" required>
+                              <select class="form-control" name="district" ng-model="vle.district" ng-change="getBlocks(vle.district)" required>
                                 <option value=""><i class="fa fa-sort-desc">District</i></option>
                                 <option ng-value="districts._id" ng-repeat="districts in districtList">{{districts.name}}</i></option>
                               </select>
@@ -78,13 +78,13 @@
                       <div class="col-xs-6">
                         <div class="checkbox col-xs-10">
                           <label >
-                            <input type="checkbox" name="urban" ng-model="vle.urban"> I belong to Urban area 
+                            <input type="checkbox" name="urban" ng-model="vle.urban"> I belong to Urban area
                           </label>
                         </div>
                         <div class="form-group m-l-20" ng-class="{'has-error':basic.block.$touched && basic.block.$invalid}" ng-hide="vle.urban">
                             <label for="uname" class="control-label col-xs-4 pull-left">Block:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="block" ng-model="vle.block" ng-change="getGps()" required>
+                                <select class="form-control" name="block" ng-model="vle.block" ng-change="getGps(vle.block)" required>
                                   <option value=""><i class="fa fa-sort-desc">Block</i></option>
                                   <option ng-value="blocks._id" ng-repeat="blocks in blockList" >{{blocks.name}}</option>
                                 </select>
@@ -96,7 +96,7 @@
                             <select class="form-control" name="GP" ng-model="vle.gp" required>
                               <option value=""><i class="fa fa-sort-desc">Gram Panchayat</i></option>
                               <option ng-value="gps._id" ng-repeat="gps in gpList">{{gps.name}}</option>
-                             
+
                             </select>
                           </div>
                         </div>
@@ -125,7 +125,7 @@
                         <div class="form-group m-l-20" ng-class="{'has-error':basic.wardNo.$touched && basic.wardNo.$invalid}" ng-show="vle.urban">
                         <label for="uname" class="control-label col-xs-4 pull-left">Ward No.</label>
                           <div class="col-xs-8">
-                              <input type="text" class="form-control" name="wardNo" numbers-only ng-model="vle.ward" > 
+                              <input type="text" class="form-control" name="wardNo" numbers-only ng-model="vle.ward" >
                             <!-- <select class="form-control" name="wardNo" ng-model="vle.ward" required>
                               <option value=""><i class="fa fa-sort-desc">Select Ward No.</i></option>
                               <option value="2015-2016">01</option>
@@ -140,7 +140,7 @@
                             <select class="form-control" name="gender" ng-model="vle.gender" required>
                               <option value=""><i class="fa fa-sort-desc">Select your gender.</i></option>
                               <option value="Male">Male</option>
-                              <option value="Female">Female</option>                             
+                              <option value="Female">Female</option>
                             </select>
                           </div>
                         </div>
@@ -175,7 +175,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row ">    
+                    <div class="row ">
                       <div class="col-sm-12">
                         <div class="box box-success">
                           <div class="box-header">
@@ -199,7 +199,7 @@
                                           <span class="help-block" ng-show="basic.At.$error.pattern && basic.At.$touched">Enter a valid At(Only Alphabets allowed)</span>
                                   </div>
                                   <div class="col-xs-12 col-sm-6 col-md-3" ng-class="{'has-error':basic.Po.$touched && basic.Po.$invalid}">
-                                    <input type="text" class="form-control" placeholder="PO" name="Po" ng-model="vle.po" ng-pattern="/^[A-Za-z\s]+$/"> 
+                                    <input type="text" class="form-control" placeholder="PO" name="Po" ng-model="vle.po" ng-pattern="/^[A-Za-z\s]+$/">
                                     <span class="help-block" ng-show="basic.Po.$error.required && basic.Po.$touched">Please Enter This field</span>
                                     <span class="help-block" ng-show="basic.Po.$error.pattern && basic.Po.$touched">Enter a valid At(Only Alphabets allowed)</span>
                                   </div>
@@ -233,7 +233,7 @@
                               </div>
                             </div>
                           </div>
-                        </div>          
+                        </div>
                         <div class="row">
                           <div class="col-xs-12">
                             <div class="box box-success">
@@ -345,8 +345,8 @@
                                             <!-- <span class="help-block" ng-show="basic.other_qualfication.$error.required && basic.other_qualfication.$touched">Please provide a valid reason</span> -->
                                           </div>
                                         </div>
-                                      </div> 
-                                  </div>   
+                                      </div>
+                                  </div>
                                </div>
                             </div>
                         </div>
@@ -354,7 +354,7 @@
                     <div class="box-footer">
                       <button type="submit" class="btn btn-default" ui-sref="homepage">Back</button>
                       <button type="submit"  ng-click="tabChange('OD')" class="btn btn-info pull-right">Next</button>
-                       
+
                     </div>
                   </div>
                 </form>
@@ -547,7 +547,7 @@
                             <option value=""><i class="fa fa-sort-desc">Select Location of CSC</i></option>
                             <option value="Private">Private</option>
                             <option value="Panchayat Building">Panchayat Building</option>
-                            
+
                           </select>
                         </div>
                       </div>
@@ -558,7 +558,7 @@
                                   <option value=""><i class="fa fa-sort-desc">Select Ownership type.</i></option>
                                   <option value="individual">Individual</option>
                                   <option value="partnership">Partnership</option>
-                                  
+
                                 </select>
                               </div>
                             </div>
@@ -583,7 +583,7 @@
                       <div class="box-footer">
                       <button type="submit" class="btn btn-default" ng-click="tabChange('BD')">Back</button>
                       <button type="submit"  ng-click="registerVle()" class="btn btn-info pull-right">Submit</button>
-                       
+
                     </div>
                   </div>
                 </form>
@@ -593,5 +593,3 @@
         </div>
      </div>
  </section>
-
- 

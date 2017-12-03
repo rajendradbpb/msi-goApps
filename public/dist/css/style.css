@@ -5200,5 +5200,7 @@ table.text-center th {
     color: #000;
 }
 
-
+.vle-filter{
+  min-width: 150px;
+}
 /*overriding header starts*/

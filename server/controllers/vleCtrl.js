@@ -62,12 +62,12 @@ exports.getVle = function(req,res){
     if(req.query.gp){
       params['gp'] = req.query.gp;
     }
-    models.vleModel.find(params, function(err,data){
-      if(err){
-        logger.error("getVle ", err);
-        return response.sendResponse(res,500,"error",constants.messages.errors.fetchRoles,err);
-      }
+    models.vleModel.find(params).populate('district block gp').exec()
+    .then(function(data){
         return response.sendResponse(res,200,"success",constants.messages.success.fetchRoles,data);
+    })
+    .catch(function(err){
+        return response.sendResponse(res,500,"error",constants.messages.errors.fetchRoles,err);
     })
 
   } catch (e) {

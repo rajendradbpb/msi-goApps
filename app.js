@@ -133,7 +133,7 @@ passport.use('superAdmin',new BearerStrategy(
         return done(null, false);
       }
       else {
-        console.log("yes  token  ",decoded);
+        // console.log("yes  token  ",decoded);
         return done(null, decoded);
       }
      });
