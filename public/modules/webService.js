@@ -2,7 +2,7 @@ angular.module('WebService', [])
 .factory('API', function($http, $resource, EnvService) {
   return {
     getRole: {
-      "url": "/role/",
+      "url": "/role",
       "method": "GET",
       "headers": {
           'Content-Type': 'application/json',

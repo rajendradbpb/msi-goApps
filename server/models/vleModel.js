@@ -21,7 +21,7 @@ var vleSchema = new mongoose.Schema({
     village             :{type: String},
      urban              :{type: Boolean,default:false},
     urbanType           :{type: String},
-     gp                 :{type: String},
+     gp                 :{type: String,ref: 'gp'},
      ward               :{type: String},
       dob                 : {type: String},
      gender             :{type: String},

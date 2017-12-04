@@ -21,7 +21,6 @@
                             <label for="uname" class="control-label col-sm-4">District:</label>
                             <div class="col-xs-8">
                               <select class="form-control" name="district" ng-model="vle.district" ng-change="getBlocks(vle.district)" required>
-                                <option value=""><i class="fa fa-sort-desc">District</i></option>
                                 <option ng-value="districts._id" ng-repeat="districts in districtList">{{districts.name}}</i></option>
                               </select>
                             </div>
@@ -85,7 +84,6 @@
                             <label for="uname" class="control-label col-xs-4 pull-left">Block:</label>
                             <div class="col-xs-8">
                                 <select class="form-control" name="block" ng-model="vle.block" ng-change="getGps(vle.block)" required>
-                                  <option value=""><i class="fa fa-sort-desc">Block</i></option>
                                   <option ng-value="blocks._id" ng-repeat="blocks in blockList" >{{blocks.name}}</option>
                                 </select>
                             </div>
@@ -94,7 +92,6 @@
                         <label for="uname" class="control-label col-xs-4 pull-left">Gram Panchayat</label>
                           <div class="col-xs-8">
                             <select class="form-control" name="GP" ng-model="vle.gp" required>
-                              <option value=""><i class="fa fa-sort-desc">Gram Panchayat</i></option>
                               <option ng-value="gps._id" ng-repeat="gps in gpList">{{gps.name}}</option>
 
                             </select>

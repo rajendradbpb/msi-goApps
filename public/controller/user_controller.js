@@ -15,10 +15,15 @@ app.controller("User_Controller", function($scope, $rootScope, $state, $localSto
   }
 	$scope.vleRegdInit = function(){
 		$scope.getDistrict();
+    ApiCall.getRole({type:"vle"},function(response) {
+      $scope.vle.role = response.data[0]._id;
+    },function(error) {
+      Util.alertMessage('danger',error.message);
+    })
 	}
   $scope.registerVle = function() {
     $rootScope.showProloader = true;
-    $scope.vle.role = "5a0baa97721f3f17b86d1119"; // remove static role
+    // $scope.vle.role = "5a0baa97721f3f17b86d1119"; // remove static role
     ApiCall.registerVle($scope.vle, function(response) {
       $rootScope.showProloader = false;
       $state.go('thankYou');
@@ -73,11 +78,11 @@ app.controller("User_Controller", function($scope, $rootScope, $state, $localSto
   $scope.filterVles = function() {
     var obj = {};
     var loggedIn_user = UserModel.getUser();
-    if ($scope.filter.district)
+    if ($scope.filter.district && $scope.filter.district != "Select District")
       obj.district = $scope.filter.district;
-    if ($scope.filter.block)
+    if ($scope.filter.block != "" && $scope.filter.block != "Select Block")
       obj.block = $scope.filter.block;
-    if ($scope.filter.gp)
+    if ($scope.filter.gp && $scope.filter.gp != "Select GP")
       obj.gp = $scope.filter.gp;
     if (loggedIn_user.role.type == "district-admin") {
       obj.district = loggedIn_user.district;

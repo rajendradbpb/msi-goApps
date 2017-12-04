@@ -33,6 +33,9 @@ exports.getRole = function(req,res){
     if(req.query._id){
       params['_id'] = req.query._id;
     }
+    if(req.query.type){
+      params['type'] = req.query.type;
+    }
     models.roleModel.find(params,function(err,data){
       if(err){
         logger.error("getRole ", err);
