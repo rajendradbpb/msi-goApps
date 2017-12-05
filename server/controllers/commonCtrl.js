@@ -136,6 +136,9 @@ exports.getDistrict = function(req,res){
     if(req.query._id){
       params['_id'] = req.query._id;
     }
+    if(req.query.isCover && (req.query.isCover == "true" || req.query.isCover == "false") ){
+      params['isCover'] = Boolean(req.query.isCover);
+    }
     models.districtModel.find(params,function(err,data){
       if(err){
         logger.error("getDistrict ", err);
@@ -205,15 +208,22 @@ exports.getBlock = function(req,res){
     if(req.query.district){
       params['district'] = req.query.district;
     }
-    models.blockModel.find(params,function(err,data){
+    if(req.query.isCover && (req.query.isCover == "true" || req.query.isCover == "false") ){
+      params['isCover'] = Boolean(req.query.isCover);
+    }
+    models.blockModel.find(params).populate('district').exec()
+    .then(function(data){
+      return response.sendResponse(res,200,"success",constants.messages.success.getData,data);
+    })
+    .catch(function(err){
       if(err){
         logger.error("getBlock ", err);
         return response.sendResponse(res,500,"error",constants.messages.errors.getData,err);
       }
-      return response.sendResponse(res,200,"success",constants.messages.success.getData,data);
     })
 
-  } catch (e) {
+}
+ catch (e) {
     logger.error("getBlock ", e);
   }
 }
@@ -241,12 +251,19 @@ exports.getGP = function(req,res){
     if(req.query.block){
       params['block'] = req.query.block;
     }
-    models.gpModel.find(params,function(err,data){
+    if(req.query.isCover && (req.query.isCover == "true" || req.query.isCover == "false") ){
+      params['isCover'] = Boolean(req.query.isCover);
+    }
+    models.gpModel.find(params).populate('block').exec()
+    .then(function(data){
+      return response.sendResponse(res,200,"success",constants.messages.success.getData,data);
+    })
+    .catch(function(err) {
       if(err){
         logger.error("getGP ", err);
         return response.sendResponse(res,500,"error",constants.messages.errors.getData,err);
       }
-      return response.sendResponse(res,200,"success",constants.messages.success.getData,data);
+
     })
 
   } catch (e) {

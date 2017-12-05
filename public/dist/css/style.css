@@ -5203,4 +5203,7 @@ table.text-center th {
 .vle-filter{
   min-width: 150px;
 }
+.pointer{
+  cursor: pointer;
+}
 /*overriding header starts*/
