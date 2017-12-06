@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var Schema = mongoose.Schema;
 var constants = require("./../../config/constants")
 var gpSchema = new mongoose.Schema({
@@ -10,5 +11,10 @@ var gpSchema = new mongoose.Schema({
     isDelete       : {type: Boolean, default:false},
 });
 gpSchema.plugin(uniqueValidator, {message: "gp already exists"});
+gpSchema.plugin(deepPopulate, {
+  whitelist: [
+    'block.district'
+  ]
+});
 var gpModel = mongoose.model('gp', gpSchema);
 module.exports = gpModel;

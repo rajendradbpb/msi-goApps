@@ -74,6 +74,33 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
       loggedout: checkLoggedout
     }
   })
+  .state('district', {
+    templateUrl: '/view/districtList.html',
+    url: '/district/:isCover',
+    controller:'DashBoardController',
+    params:{isCover:null},
+     resolve: {
+      loggedout: checkLoggedout
+    }
+  })
+  .state('block', {
+    templateUrl: '/view/blockList.html',
+    url: '/block/:isCover',
+    controller:'DashBoardController',
+    params:{isCover:null},
+     resolve: {
+      loggedout: checkLoggedout
+    }
+  })
+  .state('gp', {
+    templateUrl: '/view/gpList.html',
+    url: '/gp/:isCover',
+    controller:'DashBoardController',
+    params:{isCover:null},
+     resolve: {
+      loggedout: checkLoggedout
+    }
+  })
   .state('thankYou', {
     templateUrl: '/view/thankYou.html',
     url: '/registration-complete',

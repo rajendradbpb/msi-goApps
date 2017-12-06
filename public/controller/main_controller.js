@@ -9,7 +9,7 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
    $scope.tabChange = function(tab){
     $scope.active_tab = tab;
    }
-  
+
   /*******************************************************/
   /*********FUNCTION IS USED TO SIGN OUT PROFILE**********/
   /*******************************************************/

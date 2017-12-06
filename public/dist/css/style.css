@@ -5206,4 +5206,13 @@ table.text-center th {
 .pointer{
   cursor: pointer;
 }
+.table-t-a-c{
+  text-align: center;
+}
+.not-covered{
+  color:red;
+}
+a {
+    color: #fff;
+}
 /*overriding header starts*/

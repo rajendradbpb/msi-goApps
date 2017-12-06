@@ -76,6 +76,33 @@ app.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", function($s
       loggedout: checkLoggedout
     }
   })
+  .state('district', {
+    templateUrl: '/view/districtList.html',
+    url: '/district/:isCover',
+    controller:'DashBoardController',
+    params:{isCover:null},
+     resolve: {
+      loggedout: checkLoggedout
+    }
+  })
+  .state('block', {
+    templateUrl: '/view/blockList.html',
+    url: '/block/:isCover',
+    controller:'DashBoardController',
+    params:{isCover:null},
+     resolve: {
+      loggedout: checkLoggedout
+    }
+  })
+  .state('gp', {
+    templateUrl: '/view/gpList.html',
+    url: '/gp/:isCover',
+    controller:'DashBoardController',
+    params:{isCover:null},
+     resolve: {
+      loggedout: checkLoggedout
+    }
+  })
   .state('thankYou', {
     templateUrl: '/view/thankYou.html',
     url: '/registration-complete',
@@ -417,6 +444,90 @@ app.filter('capitalize', function() {
   }
   return userModel;
 })
+;app.controller("DashBoardController",["$scope", "$rootScope", "$state", "NgTableParams", "ApiCall", "UserModel", "$stateParams", "Util", function($scope,$rootScope,$state,NgTableParams,ApiCall,UserModel,$stateParams,Util){
+$scope.getDistrict = function(){
+
+  var obj = {};
+  if($stateParams.isCover == "true") {
+    obj.isCover = true;
+  }
+  var loggedIn_user = UserModel.getUser();
+  if(!loggedIn_user){
+    $timeout(function(){
+      $scope.getDistrict();
+    },1000);
+    return;
+  }
+  else if (loggedIn_user.role.type == "district-admin") {
+    obj.district = loggedIn_user.district;
+  }
+  ApiCall.getDistrict(obj,function(districts) {
+    $scope.totalDistrict = new NgTableParams;
+    $scope.totalDistrict.settings({
+      dataset: districts.data
+    });
+  }, function(err) {
+    Util.alertMessage("danger",err.message);
+  })
+
+}
+  $scope.getBlocks = function(){
+
+    var obj = {};
+    if($stateParams.isCover == "true") {
+      obj.isCover = true;
+    }
+    var loggedIn_user = UserModel.getUser();
+    if(!loggedIn_user){
+      $timeout(function(){
+        $scope.getBlocks();
+      },1000);
+      return;
+    }
+    else if (loggedIn_user.role.type == "district-admin") {
+      obj.district = loggedIn_user.district;
+    }
+    ApiCall.getBlocks(obj,function(blocks) {
+      $scope.totalBlocks = new NgTableParams;
+      $scope.totalBlocks.settings({
+        dataset: blocks.data
+      });
+    }, function(err) {
+      Util.alertMessage("danger",err.message);
+    })
+
+  }
+  $scope.getGPs = function(){
+
+    var obj = {};
+    if($stateParams.isCover == "true") {
+      obj.isCover = true;
+    }
+    var loggedIn_user = UserModel.getUser();
+    if(!loggedIn_user){
+      $timeout(function(){
+        $scope.getBlocks();
+      },1000);
+      return;
+    }
+    else if (loggedIn_user.role.type == "district-admin") {
+      obj.district = loggedIn_user.district;
+    }
+    ApiCall.getGPs(obj,function(gps) {
+      $scope.totalGp = new NgTableParams;
+      $scope.totalGp.settings({
+        dataset: gps.data
+      });
+    }, function(err) {
+      Util.alertMessage("danger",err.message);
+    })
+
+  }
+
+
+
+
+}])
 ;app.controller("Login_Controller",["$scope", "$rootScope", "$rootScope", "$state", "$localStorage", "NgTableParams", "ApiCall", "$timeout", "UserModel", "Util", function($scope,$rootScope,$rootScope,$state,$localStorage,NgTableParams,ApiCall, $timeout,UserModel,Util){
   $scope.user = {};
   $scope.user.username = ($localStorage.user) ? $localStorage.user.uname : "";

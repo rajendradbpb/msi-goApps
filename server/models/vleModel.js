@@ -5,6 +5,7 @@ var validator = require('validator');
 var Schema = mongoose.Schema;
 var password = require('password-hash-and-salt');
 var models = require("./index");
+
 var vleSchema = new mongoose.Schema({
     role                : {type: Schema.Types.ObjectId, ref: 'role',required: true},
     name                :{type: String},

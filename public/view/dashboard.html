@@ -7,113 +7,125 @@
 <section class="content">
   <div class="row">
     <div class="col-md-4 col-sm-4 col-xs-12" ng-controller="Main_Controller" ng-show="checkStateAdmin()">
-        <div class="small-box bg-green">
-            <div class="inner">
-              <div class="row">
-              <div class="col-xs-6">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <div class="row">
+            <div class="col-xs-6">
+              <a ui-sref="district">
                 <h3>{{dashboardDetails.district.total.length}}</h3>
                 <p>Total No of Districts</p>
-              </div>
-              <div class="col-xs-6">
+              </a>
+            </div>
+            <div class="col-xs-6">
+              <a ui-sref="district({isCover:'true'})">
                 <h3>{{dashboardDetails.district.covered.length}}</h3>
                 <p>Districts Covered</p>
-              </div>
+              </a>
             </div>
           </div>
-            <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
+        </div>
+        <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
-          </div>
+      </div>
     </div>
 
-    <div class="col-md-4 col-sm-4 col-xs-12" >
-        <div class="small-box bg-green" >
-            <div class="inner">
-              <div class="row">
-              <div class="col-xs-6">
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <div class="row">
+            <div class="col-xs-6">
+              <a ui-sref="gp">
                 <h3>{{dashboardDetails.gp.total.length}}</h3>
                 <p>Total No of GPs</p>
-              </div>
-              <div class="col-xs-6">
+              </a>
+            </div>
+            <div class="col-xs-6">
+              <a ui-sref="gp({isCover:'true'})">
                 <h3>{{dashboardDetails.gp.covered.length}}</h3>
                 <p>GPs Covered</p>
+              </a>
             </div>
           </div>
         </div>
-            <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
+        <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
-          </div>
+      </div>
     </div>
-    <div class="col-md-4 col-sm-4 col-xs-12" >
-        <div class="small-box bg-green" >
-            <div class="inner">
-              <div class="row">
-              <div class="col-xs-6">
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <div class="row">
+            <div class="col-xs-6">
+              <a ui-sref="block">
                 <h3>{{dashboardDetails.block.total.length}}</h3>
                 <p>Total No of Blocks</p>
-              </div>
-              <div class="col-xs-6">
+              </a>
+            </div>
+            <div class="col-xs-6">
+              <a ui-sref="block({isCover:'true'})">
                 <h3>{{dashboardDetails.block.covered.length}}</h3>
                 <p>Blocks Covered</p>
+              </a>
             </div>
           </div>
         </div>
-            <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
+        <a href="" ui-sref="user-list({'userType':'in'})" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
-          </div>
+      </div>
     </div>
-</div>
+  </div>
   <div class="row">
-    <div class="col-md-4 col-sm-4 col-xs-12" >
-          <div class="small-box bg-blue" >
-            <div class="inner">
-              <h3>{{dashboardDetails.vle.total}}</h3>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="small-box bg-blue">
+        <div class="inner">
+          <h3>{{dashboardDetails.vle.total}}</h3>
 
-              <p> Total VLEs registered</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-file"></i>
-            </div>
-            <a href="" ui-sref="return-file-list({'status': returnFilesCounts[0]._id.status})" class="small-box-footer">
+          <p> Total VLEs registered</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-file"></i>
+        </div>
+        <a href="" ui-sref="return-file-list({'status': returnFilesCounts[0]._id.status})" class="small-box-footer">
               View List {{returnFilesCounts[0]._id.status}} <i class="fa fa-arrow-circle-right"></i>
             </a>
-          </div>
-        </div>
-
-
-     <div class="col-md-4 col-sm-4 col-xs-12" >
-           <div class="small-box bg-blue" >
-             <div class="inner">
-               <h3>{{dashboardDetails.vle.gp}}</h3>
-
-               <p>Total VLEs registered in GP area</p>
-             </div>
-             <div class="icon">
-               <i class="fa fa-file"></i>
-             </div>
-             <a href="" ui-sref="return-file-list({ 'status': returnFilesCounts[1]._id.status})" class="small-box-footer">
-               More info {{returnFilesCounts[1]._id.status}} <i class="fa fa-arrow-circle-right"></i>
-             </a>
-           </div>
-         </div>
-         <div class="col-md-4 col-sm-4 col-xs-12">
-               <div class="small-box bg-blue">
-                 <div class="inner">
-                   <h3>{{dashboardDetails.vle.urban}}</h3>
-
-                   <p>Total VLEs registered in Urban area</p>
-                 </div>
-                 <div class="icon">
-                   <i class="fa fa-file"></i>
-                 </div>
-                 <a href="" ui-sref="return-file-list({ 'status': returnFilesCounts[2]._id.status})" class="small-box-footer">
-                   More info {{returnFilesCounts[2]._id.status}}<i class="fa fa-arrow-circle-right"></i>
-                 </a>
-               </div>
-             </div>
+      </div>
     </div>
 
 
- </section>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="small-box bg-blue">
+        <div class="inner">
+          <h3>{{dashboardDetails.vle.gp}}</h3>
+
+          <p>Total VLEs registered in GP area</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-file"></i>
+        </div>
+        <a href="" ui-sref="return-file-list({ 'status': returnFilesCounts[1]._id.status})" class="small-box-footer">
+               More info {{returnFilesCounts[1]._id.status}} <i class="fa fa-arrow-circle-right"></i>
+             </a>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="small-box bg-blue">
+        <div class="inner">
+          <h3>{{dashboardDetails.vle.urban}}</h3>
+
+          <p>Total VLEs registered in Urban area</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-file"></i>
+        </div>
+        <a href="" ui-sref="return-file-list({ 'status': returnFilesCounts[2]._id.status})" class="small-box-footer">
+                   More info {{returnFilesCounts[2]._id.status}}<i class="fa fa-arrow-circle-right"></i>
+                 </a>
+      </div>
+    </div>
+  </div>
+
+
+</section>

@@ -254,7 +254,7 @@ exports.getGP = function(req,res){
     if(req.query.isCover && (req.query.isCover == "true" || req.query.isCover == "false") ){
       params['isCover'] = Boolean(req.query.isCover);
     }
-    models.gpModel.find(params).populate('block').exec()
+    models.gpModel.find(params).deepPopulate('block.district').exec()
     .then(function(data){
       return response.sendResponse(res,200,"success",constants.messages.success.getData,data);
     })
