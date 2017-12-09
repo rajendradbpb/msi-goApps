@@ -1,0 +1,27 @@
+<section class="content-header m-b-40" ng-init="getDistrict()">
+    <h1 class="pull-left">
+     District
+    <small>List</small></h1>
+  </section>
+  <section>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <div class="box box-info">
+                    <!-- <div class="box-header">
+                        <h4><b>Vle Lists</b></h4>
+                  </div> -->
+                  <div class="box-body">
+                      <div class="table-responsive">
+                      <table ng-table="totalDistrict" class="table table-bordered table-hover table-t-a-c">
+                          <tr   ng-repeat="row in $data">
+                              <td data-title="'Sl No'" ng-class="{'not-covered':!row.isCover}">{{ $index + 1}}</td>
+                              <td data-title="' District'" filter="{ 'name': 'text'}"  ng-class="{'not-covered':!row.isCover}" sortable="'District'">{{row.name ? row.name : "" }}</td>
+                          </tr>
+                      </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
