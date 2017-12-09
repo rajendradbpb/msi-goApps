@@ -53,18 +53,19 @@
                           <tr   ng-repeat="row in $data">
                               <td data-title="'Sl No'">{{ $index + 1}}</td>
                               <td data-title="' District'" sortable="'District'">{{row.district && row.district.name ? row.district.name : "" }}</td>
-                              <td data-title="' Block'" sortable="'Block'" >{{row.block && row.block.name ? row.block.name : ""}}</td>
-                              <td data-title="' GP'" sortable="'GP'" >{{row.gp && row.gp.name ? row.gp.name : ""}}</td>
+                              <td  data-title="' Block'" sortable="'Block'" >{{row.block && row.block.name ? row.block.name : "NA"}}</td>
+                              <td data-title="' GP'" sortable="'GP'" >{{row.gp && row.gp.name ? row.gp.name : "NA"}}</td>
+                              <td data-title="' Urban Type'" sortable="'Urban'" >{{row.urban && row.urbanType ? row.urbanType : "NA"}}</td>
                               <td data-title="'VLE Name'" sortable="'VLE Name'"> {{row.name}}</td>
                               <td data-title="'CSC ID'" sortable="'CSC ID'"> {{row.cscId}}</td>
                               <td data-title="'Action'">
                                   <div class="btn-group">
-                                      <button type="button" class="btn btn-success" ng-disabled="checkStatus(row.status)" ng-click="changeReturnFileStatus(row._id)" >View More
+                                      <button type="button" class="btn btn-success" ng-disabled="checkStatus(row.status)" ng-click="moreVleDetail(row._id)" >View More
                                       </button>
                                   </div>
-                                  <div class="btn-group">
+                                  <!-- <div class="btn-group">
                                       <button type="button" class="btn btn-success"><a href="" class="option-btn" ui-sref="returnFile-details({'returnFile_id':row._id})"><i class="fa fa-eye"></i></a></button>
-                                  </div>
+                                  </div> -->
                               </td>
                           </tr>
                       </table>

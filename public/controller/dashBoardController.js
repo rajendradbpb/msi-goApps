@@ -1,4 +1,4 @@
-app.controller("DashBoardController",function($scope,$rootScope,$state,NgTableParams,ApiCall,UserModel,$stateParams,Util){
+app.controller("DashBoardController",function($scope,$rootScope,$state,NgTableParams,ApiCall,UserModel,$stateParams,Util,$timeout){
 
   /******** start district *******/
 $scope.getDistrict = function(){

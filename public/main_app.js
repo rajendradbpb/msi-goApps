@@ -50,25 +50,28 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
 
   })
 
-  .state('user-profile', {
-    templateUrl: '/view/profile.html',
-    url: '/user-profile',
-    controller:'User_Controller',
-     resolve: {
-      loggedout: checkLoggedout
-    }
-  })
-  .state('summary', {
-    templateUrl: '/view/summary.html',
-    url: '/summary',
-    controller:'User_Controller',
-     resolve: {
-      loggedout: checkLoggedout
-    }
-  })
+  // .state('user-profile', {
+  //   templateUrl: '/view/profile.html',
+  //   url: '/user-profile',
+  //   controller:'User_Controller',
+  //    resolve: {
+  //     loggedout: checkLoggedout
+  //   }
+  // })
+  // .state('summary', {
+  //   templateUrl: '/view/summary.html',
+  //   url: '/summary',
+  //   controller:'User_Controller',
+  //    resolve: {
+  //     loggedout: checkLoggedout
+  //   }
+  // })
   .state('vle-list', {
     templateUrl: '/view/vle_list.html',
-    url: '/vle-list',
+    url: '/vle-list/:urban',
+    params:{
+      urban:null
+    },
     controller:'User_Controller',
      resolve: {
       loggedout: checkLoggedout

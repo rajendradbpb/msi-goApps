@@ -545,8 +545,9 @@ else{
     })
     .then(function(vleData) {
       var count = 0;
+      responseData.vle.total = vleData.length;
       vleData.filter(function(vle){
-        responseData.vle.total = vle.length;
+        
         vle.urban ? responseData.vle.urban++ : responseData.vle.gp++ ;
         count++;
         // if(count >= vle.length){

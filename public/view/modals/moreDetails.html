@@ -1,7 +1,10 @@
-<section class="content" ng-init="vleRegdInit()">
-
+<div class="modal-info" style="width:150%;" ng-init="getVle()">
+    <div class="modal-header">
+      <h3 class="modal-title">VLE Details</h3>
+  </div>
+  <div class="modal-body vleDetails" ng-init="vleRegdInit()" >
     <div class="row">
-        <div class="col-xs-10 col-md-offset-1">
+        <div class="col-xs-12 col-md-12">
           <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
                 <li ng-class="{'active':active_tab == 'BD'}" ><a ng-click="tabChange('BD')" href="" data-toggle="tab"><b>Basic Details</b></a></li>
@@ -608,4 +611,10 @@
             </div>
         </div>
      </div>
- </section>
+
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="fail()">Submit</button>
+      <button class="btn btn-warning pull-left" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</div>

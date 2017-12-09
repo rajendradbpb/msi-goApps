@@ -1,4 +1,4 @@
-app.controller("User_Controller", function($scope, $rootScope, $state, $localStorage, ApiGenerator, NgTableParams, ApiCall, $timeout, UserModel, Util) {
+app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uibModal,$state, $localStorage, ApiGenerator, NgTableParams, ApiCall, $timeout, UserModel, Util) {
   $scope.vle = {};
   $scope.row = {};
   $scope.filter = {};
@@ -43,16 +43,19 @@ app.controller("User_Controller", function($scope, $rootScope, $state, $localSto
   $scope.getVles = function(type) {
     var loggedIn_user = UserModel.getUser();
     var obj = {};
+    if($stateParams.urban) {
+      obj.urban = $stateParams.urban;
+    }
     if (loggedIn_user && loggedIn_user.role && loggedIn_user.role.type == "district-admin") {
       obj.district = loggedIn_user.district;
     }
     if (type == "urban") {
       obj.urban = true;
     }
-    if (type == "gp") {
-      obj.urban = false;
-    }
-
+    // if (type == "gp") {
+    //   obj.urban = false;
+    // }
+    $scope.exportLink = $scope.setExportLink(obj);
     ApiCall.getVle(obj, function(response) {
       $scope.row = response.data;
       if (obj.urban == true) {
@@ -88,23 +91,7 @@ app.controller("User_Controller", function($scope, $rootScope, $state, $localSto
       obj.district = loggedIn_user.district;
     }
     // update link for the vle update
-    $scope.exportLink = (function(params) {
-      var temp = ApiGenerator.getApi('exportExcel').url + "?";
-      var flag = false;
-      Object.keys(params).forEach(function(key, index) {
-        if (params[key]) {
-          if (!flag) {
-            temp += key + "=" + params[key];
-            flag = true;
-          } else {
-            temp += "&" + key + "=" + params[key];
-          }
-
-        }
-      });
-      return temp;
-
-    })(obj);
+    $scope.exportLink = $scope.setExportLink(obj);
     ApiCall.getVle(obj, function(response) {
       $scope.vleTabledata = new NgTableParams;
       $scope.vleTabledata.settings({
@@ -115,6 +102,26 @@ app.controller("User_Controller", function($scope, $rootScope, $state, $localSto
       console.log(error);
     });
   }
+
+  $scope.setExportLink = function(obj) {
+    var temp = ApiGenerator.getApi('exportExcel').url + "?";
+    var flag = false;
+    Object.keys(obj).forEach(function(key, index) {
+      if (obj[key]) {
+        if (!flag) {
+          temp += key + "=" + obj[key];
+          flag = true;
+        } else {
+          temp += "&" + key + "=" + obj[key];
+        }
+
+      }
+    });
+    return temp;
+
+  }
+
+
   $scope.getDistrict = function(row) {
     var loggedIn_user = UserModel.getUser();
     var obj = {};
@@ -195,4 +202,42 @@ app.controller("User_Controller", function($scope, $rootScope, $state, $localSto
 
     });
   }
+  $scope.moreVleDetail = function(vleId){
+    $scope.modalInstance = $uibModal.open({
+      animation : true,
+      templateUrl : 'view/modals/moreDetails.html',
+      controller : 'VleDetailsModalCtrl',
+      size: 'md',
+      resolve:{
+        vleData : function(){
+            return vleId
+          }
+        }
+
+   })
+  }
+});
+// ************************************************************************************************//
+//*************************************************************************************************//
+app.controller('VleDetailsModalCtrl',function($scope, $state, $uibModalInstance,ApiCall,vleData){
+  var obj = {
+    _id:vleData
+  }
+  ApiCall.getVle(obj,function(response) {
+    $scope.vle = response.data[0];
+  },function(err){
+
+  })
+  $scope.failTransaction = {};
+  $scope.active_tab = 'BD';
+  $scope.tabChange = function(tab){
+    $scope.active_tab = tab;
+  }
+  $scope.fail = function () {
+    sendFailMessage($scope.failTransaction);
+    $uibModalInstance.close();
+  };
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
 });

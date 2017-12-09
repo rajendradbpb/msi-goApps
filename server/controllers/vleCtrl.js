@@ -113,11 +113,14 @@ exports.exportVle = function(req,res){
     var params = {
       isDelete:false,
     };
-    if(req.query.distinct == "district"){
-      distinct = 'district';
+    if(req.query.district == "district"){
+      params.district = req.query.district;
     }
-    if(req.query.distinct == "gp"){
-      distinct = 'gp';
+    if(req.query.block){
+      params.block = req.query.block;
+    }
+    if(req.query.gp){
+      params.gp = req.query.gp;
     }
     if(req.query.distinct == "Municipality"){
       params['urbanType'] = req.query.urbanType;
@@ -133,6 +136,7 @@ exports.exportVle = function(req,res){
         obj.block = data[i].block ? data[i].block.name : "NA";
         obj.gp = data[i].gp ? data[i].gp.name : "NA";
         obj.name = data[i].name ? data[i].name : "NA";
+        obj.urbanType = data[i].urbanType ? data[i].urbanType : "NA";
         dataArr.push(obj);
         };
 

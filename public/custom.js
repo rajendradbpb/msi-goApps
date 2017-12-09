@@ -51,26 +51,12 @@ app.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", function($s
     }
 
   })
-
-  .state('user-profile', {
-    templateUrl: '/view/profile.html',
-    url: '/user-profile',
-    controller:'User_Controller',
-     resolve: {
-      loggedout: checkLoggedout
-    }
-  })
-  .state('summary', {
-    templateUrl: '/view/summary.html',
-    url: '/summary',
-    controller:'User_Controller',
-     resolve: {
-      loggedout: checkLoggedout
-    }
-  })
   .state('vle-list', {
     templateUrl: '/view/vle_list.html',
-    url: '/vle-list',
+    url: '/vle-list/:urban',
+    params:{
+      urban:null
+    },
     controller:'User_Controller',
      resolve: {
       loggedout: checkLoggedout
@@ -444,7 +430,7 @@ app.filter('capitalize', function() {
   }
   return userModel;
 })
-;app.controller("DashBoardController",["$scope", "$rootScope", "$state", "NgTableParams", "ApiCall", "UserModel", "$stateParams", "Util", function($scope,$rootScope,$state,NgTableParams,ApiCall,UserModel,$stateParams,Util){
+;app.controller("DashBoardController",["$scope", "$rootScope", "$state", "NgTableParams", "ApiCall", "UserModel", "$stateParams", "Util", "$timeout", function($scope,$rootScope,$state,NgTableParams,ApiCall,UserModel,$stateParams,Util,$timeout){
 $scope.getDistrict = function(){
 
   var obj = {};
@@ -577,6 +563,8 @@ app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStora
       }
       return  $scope.stateAdmin;
   }
+
+
   $scope.getUserDetails = function(){
     var loggedIn_user = UserModel.getUser();
     var obj = {
@@ -587,6 +575,9 @@ app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStora
         },function(error){
         });
       }
+
+
+
  }]);
 app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
         $scope.today = function() {
@@ -626,7 +617,7 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
 
     }
 ]);
-;app.controller("User_Controller", ["$scope", "$rootScope", "$state", "$localStorage", "ApiGenerator", "NgTableParams", "ApiCall", "$timeout", "UserModel", "Util", function($scope, $rootScope, $state, $localStorage, ApiGenerator, NgTableParams, ApiCall, $timeout, UserModel, Util) {
+;app.controller("User_Controller", ["$scope", "$stateParams", "$rootScope", "$uibModal", "$state", "$localStorage", "ApiGenerator", "NgTableParams", "ApiCall", "$timeout", "UserModel", "Util", function($scope, $stateParams,$rootScope, $uibModal,$state, $localStorage, ApiGenerator, NgTableParams, ApiCall, $timeout, UserModel, Util) {
   $scope.vle = {};
   $scope.row = {};
   $scope.filter = {};
@@ -669,16 +660,16 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
   $scope.getVles = function(type) {
     var loggedIn_user = UserModel.getUser();
     var obj = {};
+    if($stateParams.urban) {
+      obj.urban = $stateParams.urban;
+    }
     if (loggedIn_user && loggedIn_user.role && loggedIn_user.role.type == "district-admin") {
       obj.district = loggedIn_user.district;
     }
     if (type == "urban") {
       obj.urban = true;
     }
-    if (type == "gp") {
-      obj.urban = false;
-    }
-
+    $scope.exportLink = $scope.setExportLink(obj);
     ApiCall.getVle(obj, function(response) {
       $scope.row = response.data;
       if (obj.urban == true) {
@@ -712,23 +703,7 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
     if (loggedIn_user.role.type == "district-admin") {
       obj.district = loggedIn_user.district;
     }
-    $scope.exportLink = (function(params) {
-      var temp = ApiGenerator.getApi('exportExcel').url + "?";
-      var flag = false;
-      Object.keys(params).forEach(function(key, index) {
-        if (params[key]) {
-          if (!flag) {
-            temp += key + "=" + params[key];
-            flag = true;
-          } else {
-            temp += "&" + key + "=" + params[key];
-          }
-
-        }
-      });
-      return temp;
-
-    })(obj);
+    $scope.exportLink = $scope.setExportLink(obj);
     ApiCall.getVle(obj, function(response) {
       $scope.vleTabledata = new NgTableParams;
       $scope.vleTabledata.settings({
@@ -739,6 +714,26 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
       console.log(error);
     });
   }
+
+  $scope.setExportLink = function(obj) {
+    var temp = ApiGenerator.getApi('exportExcel').url + "?";
+    var flag = false;
+    Object.keys(obj).forEach(function(key, index) {
+      if (obj[key]) {
+        if (!flag) {
+          temp += key + "=" + obj[key];
+          flag = true;
+        } else {
+          temp += "&" + key + "=" + obj[key];
+        }
+
+      }
+    });
+    return temp;
+
+  }
+
+
   $scope.getDistrict = function(row) {
     var loggedIn_user = UserModel.getUser();
     var obj = {};
@@ -812,6 +807,42 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
 
     });
   }
+  $scope.moreVleDetail = function(vleId){
+    $scope.modalInstance = $uibModal.open({
+      animation : true,
+      templateUrl : 'view/modals/moreDetails.html',
+      controller : 'VleDetailsModalCtrl',
+      size: 'md',
+      resolve:{
+        vleData : function(){
+            return vleId
+          }
+        }
+
+   })
+  }
+}]);
+app.controller('VleDetailsModalCtrl',["$scope", "$state", "$uibModalInstance", "ApiCall", "vleData", function($scope, $state, $uibModalInstance,ApiCall,vleData){
+  var obj = {
+    _id:vleData
+  }
+  ApiCall.getVle(obj,function(response) {
+    $scope.vle = response.data[0];
+  },function(err){
+
+  })
+  $scope.failTransaction = {};
+  $scope.active_tab = 'BD';
+  $scope.tabChange = function(tab){
+    $scope.active_tab = tab;
+  }
+  $scope.fail = function () {
+    sendFailMessage($scope.failTransaction);
+    $uibModalInstance.close();
+  };
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
 }]);
 ;app.directive('fileModell', ['$parse', function ($parse) {
     return {

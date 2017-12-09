@@ -5215,4 +5215,7 @@ table.text-center th {
 a {
     color: #fff;
 }
+.control-label{
+  color:#000 !important;
+}
 /*overriding header starts*/
