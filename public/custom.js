@@ -627,6 +627,18 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
   $scope.vleList = {};
   $scope.gpVleList = {};
   $scope.municipalityList = {};
+  $scope.vleExportProperties = [
+    "role","name","mobile", "altMobile", "email" ,"digiMail" ,"cscId" ,"religion", "state", "block" ,
+    "village", "urban", "urbanType", "gp" ,"ward" ,"dob" ,"gender" ,"caste", "pan", "adhar", "plotNo", "lane",
+    "at", "po" , "city"  ,"dist",  "country" ,"pin", "matricBoard", "matricInstitute" ,"matricPassout",
+    "matricPercent", "interBoard" ,"interInstitute" ,"interPassout" ,"interPercent" ,"gradBoard" ,
+    "gradInstitute", "gradPassout", "gradPercent" ,"pgBoard", "pgInstitute", "pgPassout", "pgPercent",
+    "otherQualification", "cscBuildingArea" ,"personEngaged" ,"webCamera" ,  "furnitureDetails" ,
+    "vsatBbDcNofn" ,"pmgDishaId" , "kit" , "providingInsurance" , "eWallet"  ,  "censusCode",
+    "cscLattitude", "buildingOwnership"   ,"noOfLaptop", "noOfPrinters", "bioMetric", "commonBranding",
+    "powerBackUp" ,"tab", "ProvidingEDistrictServices" , "cscLocation" ,"ownership" ,"cscLongitude" ,
+    "cscPin", "status", "isDelete"
+  ]
   $scope.initVleList = function() {
     $scope.getDistrict();
     $scope.getVles();
@@ -715,6 +727,31 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
     });
   }
 
+  $scope.exportVle = function(exportProperties,filter){
+    exportProperties = exportProperties.toString();
+    var obj = {
+      exportProperties:exportProperties
+    }
+    window.open($scope.setExportLink(obj));
+  }
+  $scope.exportVleModal = function(){
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'view/modals/exportVleModal.html',
+      controller: 'exportVleModalCtrl',
+      size: 'sm',
+      resolve: {
+        vleExportProperties: function () {
+          return $scope.vleExportProperties;
+        },
+        exportVle: function () {
+          return $scope.exportVle;
+        }
+
+      }
+    });
+
+  }
   $scope.setExportLink = function(obj) {
     var temp = ApiGenerator.getApi('exportExcel').url + "?";
     var flag = false;
@@ -729,6 +766,7 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
 
       }
     });
+    console.log("#####  "+temp+" ########");
     return temp;
 
   }
@@ -839,6 +877,30 @@ app.controller('VleDetailsModalCtrl',["$scope", "$state", "$uibModalInstance", "
   $scope.fail = function () {
     sendFailMessage($scope.failTransaction);
     $uibModalInstance.close();
+  };
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+}]);
+app.controller('exportVleModalCtrl',["$scope", "$state", "$uibModalInstance", "ApiCall", "vleExportProperties", "exportVle", function($scope, $state, $uibModalInstance,ApiCall,vleExportProperties,exportVle){
+  $scope.vleExportProperties = vleExportProperties;
+  $scope.vleExport = {};
+  $scope.ok = function () {
+    console.log($scope.vleExport);
+    var exportProperties = [];
+    var count = 0;
+    var limit = Object.keys($scope.vleExport).length;
+    angular.forEach($scope.vleExport, function(value, key) {
+      count++;
+      if(value){
+        exportProperties.push(key);
+      }
+      if(count >= limit){
+        exportVle(exportProperties);
+        $uibModalInstance.close();
+      }
+    });
+
   };
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');

@@ -8,6 +8,18 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
   $scope.vleList = {};
   $scope.gpVleList = {};
   $scope.municipalityList = {};
+  $scope.vleExportProperties = [
+    "role","name","mobile", "altMobile", "email" ,"digiMail" ,"cscId" ,"religion", "state", "block" ,
+    "village", "urban", "urbanType", "gp" ,"ward" ,"dob" ,"gender" ,"caste", "pan", "adhar", "plotNo", "lane",
+    "at", "po" , "city"  ,"dist",  "country" ,"pin", "matricBoard", "matricInstitute" ,"matricPassout",
+    "matricPercent", "interBoard" ,"interInstitute" ,"interPassout" ,"interPercent" ,"gradBoard" ,
+    "gradInstitute", "gradPassout", "gradPercent" ,"pgBoard", "pgInstitute", "pgPassout", "pgPercent",
+    "otherQualification", "cscBuildingArea" ,"personEngaged" ,"webCamera" ,  "furnitureDetails" ,
+    "vsatBbDcNofn" ,"pmgDishaId" , "kit" , "providingInsurance" , "eWallet"  ,  "censusCode",
+    "cscLattitude", "buildingOwnership"   ,"noOfLaptop", "noOfPrinters", "bioMetric", "commonBranding",
+    "powerBackUp" ,"tab", "ProvidingEDistrictServices" , "cscLocation" ,"ownership" ,"cscLongitude" ,
+    "cscPin", "status", "isDelete"
+  ]
   $scope.initVleList = function() {
     // get district list
     $scope.getDistrict();
@@ -103,6 +115,32 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
     });
   }
 
+  $scope.exportVle = function(exportProperties,filter){
+    exportProperties = exportProperties.toString();
+    var obj = {
+      exportProperties:exportProperties
+    }
+    window.open($scope.setExportLink(obj));
+  }
+  $scope.exportVleModal = function(){
+    //window.open('http://localhost/vle/exportExcel?district=5a219ba7b89e890484c216ad');
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'view/modals/exportVleModal.html',
+      controller: 'exportVleModalCtrl',
+      size: 'sm',
+      resolve: {
+        vleExportProperties: function () {
+          return $scope.vleExportProperties;
+        },
+        exportVle: function () {
+          return $scope.exportVle;
+        }
+
+      }
+    });
+
+  }
   $scope.setExportLink = function(obj) {
     var temp = ApiGenerator.getApi('exportExcel').url + "?";
     var flag = false;
@@ -117,6 +155,7 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
 
       }
     });
+    console.log("#####  "+temp+" ########");
     return temp;
 
   }
@@ -236,6 +275,31 @@ app.controller('VleDetailsModalCtrl',function($scope, $state, $uibModalInstance,
   $scope.fail = function () {
     sendFailMessage($scope.failTransaction);
     $uibModalInstance.close();
+  };
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+app.controller('exportVleModalCtrl',function($scope, $state, $uibModalInstance,ApiCall,vleExportProperties,exportVle){
+  $scope.vleExportProperties = vleExportProperties;
+  $scope.vleExport = {};
+  $scope.ok = function () {
+    console.log($scope.vleExport);
+    // make api call
+    var exportProperties = [];
+    var count = 0;
+    var limit = Object.keys($scope.vleExport).length;
+    angular.forEach($scope.vleExport, function(value, key) {
+      count++;
+      if(value){
+        exportProperties.push(key);
+      }
+      if(count >= limit){
+        exportVle(exportProperties);
+        $uibModalInstance.close();
+      }
+    });
+
   };
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');

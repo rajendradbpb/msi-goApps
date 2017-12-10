@@ -1,5 +1,6 @@
 /node_modules
 /built
+/doc/private-key=gsg-pwd=gsg123.ppk
 /public/custom.js
 /public/libs.js
 /public/ng-libs.js
