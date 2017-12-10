@@ -1,0 +1,19 @@
+<div class="modal-info" style="width:150%;" ng-init="getVle()">
+    <div class="modal-header">
+      <h3 class="modal-title">Export VLE Details</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="checkbox col-lg-6 col-md-6 col-sm-6" ng-repeat="prop in vleExportProperties">
+        <label>
+          <input type="checkbox" ng-model="vleExport[prop]"> {{prop}}
+        </label>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="ok()">Submit</button>
+      <button class="btn btn-warning pull-left" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</div>
