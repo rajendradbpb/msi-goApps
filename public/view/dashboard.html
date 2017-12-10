@@ -11,13 +11,15 @@
         <div class="inner">
           <div class="row">
             <div class="col-xs-6">
-              <a ui-sref="district">
+              <!-- <a ui-sref="district">  add in list-->
+              <a href="">
                 <h3>{{dashboardDetails.district.total.length}}</h3>
                 <p>Total No of Districts</p>
               </a>
             </div>
             <div class="col-xs-6">
-              <a ui-sref="district({isCover:'true'})">
+              <!-- <a ui-sref="district({isCover:'true'})"> -->
+              <a href="#" ng-click="exportVleSummary({covertype:false})">
                 <h3>{{dashboardDetails.district.covered.length}}</h3>
                 <p>Districts Covered</p>
               </a>
@@ -35,13 +37,15 @@
         <div class="inner">
           <div class="row">
             <div class="col-xs-6">
-              <a ui-sref="gp">
+              <!-- <a ui-sref="gp"> -->
+              <a href="">
                 <h3>{{dashboardDetails.gp.total.length}}</h3>
                 <p>Total No of GPs</p>
               </a>
             </div>
             <div class="col-xs-6">
-              <a ui-sref="gp({isCover:'true'})">
+              <!-- <a ui-sref="gp({isCover:'true'})"> -->
+              <a href="#" ng-click="exportVleSummary({covertype:'gp'})">
                 <h3>{{dashboardDetails.gp.covered.length}}</h3>
                 <p>GPs Covered</p>
               </a>
@@ -58,13 +62,15 @@
         <div class="inner">
           <div class="row">
             <div class="col-xs-6">
-              <a ui-sref="block">
+              <!-- <a ui-sref="block"> -->
+              <a href="#">
                 <h3>{{dashboardDetails.block.total.length}}</h3>
                 <p>Total No of Blocks</p>
               </a>
             </div>
             <div class="col-xs-6">
-              <a ui-sref="block({isCover:'true'})">
+              <!-- <a ui-sref="block({isCover:'true'})"> -->
+              <a href="#" ng-click="exportVleSummary({covertype:'block'})">
                 <h3>{{dashboardDetails.block.covered.length}}</h3>
                 <p>Blocks Covered</p>
               </a>
@@ -81,7 +87,8 @@
     <div class="col-md-4 col-sm-4 col-xs-12">
       <div class="small-box bg-blue">
         <div class="inner">
-          <a ui-sref="vle-list">
+          <!-- <a ui-sref="vle-list"> -->
+          <a href="#">
           <h3>{{dashboardDetails.vle.total}}</h3>
 
           <p> Total VLEs registered</p>
@@ -100,7 +107,8 @@
     <div class="col-md-4 col-sm-4 col-xs-12">
       <div class="small-box bg-blue">
         <div class="inner">
-            <a ui-sref="vle-list({urban:false})">
+            <!-- <a ui-sref="vle-list({urban:false})"> -->
+            <a href="#" ng-click="exportVleSummary({covertype:'gp'})">
           <h3>{{dashboardDetails.vle.gp}}</h3>
 
           <p>Total VLEs registered in GP area</p>
@@ -117,7 +125,8 @@
     <div class="col-md-4 col-sm-4 col-xs-12">
       <div class="small-box bg-blue">
         <div class="inner">
-          <a ui-sref="vle-list({urban:true})">
+          <!-- <a ui-sref="vle-list({urban:true})"> -->
+          <a href="#" ng-click="exportVleSummary({covertype:'urban'})">
           <h3>{{dashboardDetails.vle.urban}}</h3>
 
           <p>Total VLEs registered in Urban area</p>

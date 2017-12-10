@@ -121,10 +121,14 @@ angular.module('WebService', [])
     },
     exportExcel: {
         url: "/vle/exportExcel",
-        method: "POST",
+        method: "GET",
         "headers": {
-            // 'Content-Type': 'application/json',
-            // 'Accept': 'application/json'
+        },
+    },
+    exportVleSummary: {
+        url: "/vle/exportVleSummary",
+        method: "GET",
+        "headers": {
         },
     },
   }
@@ -143,6 +147,7 @@ angular.module('WebService', [])
     getAreatCount:     ApiGenerator.getApi('getAreatCount'),
     getGPs:     ApiGenerator.getApi('getGPs'),
     exportExcel:     ApiGenerator.getApi('exportExcel'),
+    exportVleSummary:     ApiGenerator.getApi('exportVleSummary'),
     getDashboard:     ApiGenerator.getApi('getDashboard'),
   })
 })

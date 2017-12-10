@@ -8,9 +8,10 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
   $scope.vleList = {};
   $scope.gpVleList = {};
   $scope.municipalityList = {};
+  $scope.vleFilter = {}; // global object to filter vle
   $scope.vleExportProperties = [
-    "role","name","mobile", "altMobile", "email" ,"digiMail" ,"cscId" ,"religion", "state", "block" ,
-    "village", "urban", "urbanType", "gp" ,"ward" ,"dob" ,"gender" ,"caste", "pan", "adhar", "plotNo", "lane",
+    "role","name","mobile", "altMobile", "email" ,"digiMail" ,"cscId" ,"religion", "state","district", "block" ,"gp" ,
+    "village", "urban", "urbanType","ward" ,"dob" ,"gender" ,"caste", "pan", "adhar", "plotNo", "lane",
     "at", "po" , "city"  ,"dist",  "country" ,"pin", "matricBoard", "matricInstitute" ,"matricPassout",
     "matricPercent", "interBoard" ,"interInstitute" ,"interPassout" ,"interPercent" ,"gradBoard" ,
     "gradInstitute", "gradPassout", "gradPercent" ,"pgBoard", "pgInstitute", "pgPassout", "pgPercent",
@@ -21,6 +22,7 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
     "cscPin", "status", "isDelete"
   ]
   $scope.initVleList = function() {
+    $scope.vleFilter = {};
     // get district list
     $scope.getDistrict();
     $scope.getVles();
@@ -43,7 +45,26 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
       $rootScope.showProloader = false;
     });
   }
+  $scope.exportVleSummary = function(filter){
+    $scope.vleFilter = Object.assign($scope.vleFilter,filter);
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'view/modals/exportVleModal.html',
+      controller: 'exportVleModalCtrl',
+      size: 'sm',
+      resolve: {
+        vleExportProperties: function () {
+          return $scope.vleExportProperties;
+        },
+        exportVle: function () {
+          return $scope.exportVle;
+        }
+
+      }
+    });
+  }
   $scope.dashboardInit = function() {
+    $scope.vleFilter = {};
     $rootScope.showProloader = true;
     ApiCall.getDashboard(function(response) {
       $rootScope.showProloader = false;
@@ -69,6 +90,7 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
     // }
     $scope.exportLink = $scope.setExportLink(obj);
     ApiCall.getVle(obj, function(response) {
+      // $scope.vleFilter = {}; // reset filter
       $scope.row = response.data;
       if (obj.urban == true) {
         $scope.urbanVleList = $scope.row;
@@ -105,6 +127,7 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
     // update link for the vle update
     $scope.exportLink = $scope.setExportLink(obj);
     ApiCall.getVle(obj, function(response) {
+      // $scope.vleFilter = {}; // reset filter
       $scope.vleTabledata = new NgTableParams;
       $scope.vleTabledata.settings({
         dataset: response.data
@@ -115,7 +138,7 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
     });
   }
 
-  $scope.exportVle = function(exportProperties,filter){
+  $scope.exportVle = function(exportProperties){
     exportProperties = exportProperties.toString();
     var obj = {
       exportProperties:exportProperties
@@ -142,15 +165,21 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
 
   }
   $scope.setExportLink = function(obj) {
-    var temp = ApiGenerator.getApi('exportExcel').url + "?";
+    var loggedIn_user = UserModel.getUser();
+    if(loggedIn_user.role.type == "district-admin"){
+      obj.district = loggedIn_user.district;
+    }
+    $scope.vleFilter = Object.assign($scope.vleFilter,obj);
+
+    var temp = $state.current.name == "dashboard"  ? ApiGenerator.getApi('exportVleSummary').url + "?" : ApiGenerator.getApi('exportExcel').url + "?";
     var flag = false;
-    Object.keys(obj).forEach(function(key, index) {
-      if (obj[key]) {
+    Object.keys($scope.vleFilter).forEach(function(key, index) {
+      if ($scope.vleFilter[key]) {
         if (!flag) {
-          temp += key + "=" + obj[key];
+          temp += key + "=" + $scope.vleFilter[key];
           flag = true;
         } else {
-          temp += "&" + key + "=" + obj[key];
+          temp += "&" + key + "=" + $scope.vleFilter[key];
         }
 
       }
@@ -263,6 +292,7 @@ app.controller('VleDetailsModalCtrl',function($scope, $state, $uibModalInstance,
     _id:vleData
   }
   ApiCall.getVle(obj,function(response) {
+    // $scope.vleFilter = {}; // reset filter
     $scope.vle = response.data[0];
   },function(err){
 

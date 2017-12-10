@@ -1,5 +1,5 @@
 app.constant("Constants", {
-        "debug":true,
+        "debug":false,
         "storagePrefix": "goAppAccount$",
         "getTokenKey" : function() {return this.storagePrefix + "token";},
         "getLoggedIn" : function() {return this.storagePrefix + "loggedin";},

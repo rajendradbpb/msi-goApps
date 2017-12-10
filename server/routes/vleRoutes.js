@@ -33,5 +33,8 @@ router.get('/exportExcel', function(req, res, next) {
   controllers.vleCtrl.exportVle(req, res);
   //component.utility.downloadXls(res,req.body.data,null,'vleList','vle');
 });
+router.get('/exportVleSummary', function(req, res, next) {
+  controllers.vleCtrl.exportVleSummary(req, res);
+});
 
 module.exports = router;
