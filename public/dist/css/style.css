@@ -52,6 +52,7 @@ body {
   min-height: 100%;
   position: relative;
   overflow: hidden;
+  background-image: url(/assets/di.jpg);
 }
 .wrapper:before,
 .wrapper:after {
@@ -134,6 +135,10 @@ margin-top: 11px;
 }
 .wrapper1{
   background-color: #ecf0f5;
+  background-image: url(/assets/di.jpg);
+}
+.opacity-8{
+  opacity: 0.9;
 }
 /* Fixed layout */
 .fixed .main-header,
