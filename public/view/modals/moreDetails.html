@@ -15,7 +15,7 @@
                 <form class="form-horizontal" name="basic">
                 <div class="box box-info">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Please Enter Your Basic Details</h3>
+                    <!-- <h3 class="box-title">Please Enter Your Basic Details</h3> -->
                   </div>
                   <div class="box-body">
                     <div class="row">
@@ -23,11 +23,7 @@
                         <div class="form-group p-l-20" ng-class="{'has-error':basic.district.$touched && basic.district.$invalid}">
                             <label for="uname" class="control-label col-sm-4">District:</label>
                             <div class="col-xs-8">
-                              <select class="form-control" name="district" ng-model="vle.district" ng-change="getBlocks(vle.district)" required>
-                                  <option value=""><i class="fa fa-sort-desc">District</i></option>
-                                <option ng-value="districts._id" ng-repeat="districts in districtList">{{districts.name}}</option>
-                              </select>
-                              <span class="help-block" ng-show="basic.district.$error.required && basic.district.$touched">Please choose a district</span>
+                                <input type="text" class="form-control" readonly name="district"  ng-model="vle.district.name" />
                             </div>
                         </div>
                         <div class="form-group has-feedback" ng-class="{'has-error':basic.vleName.$touched && basic.vleName.$invalid}">
@@ -84,30 +80,21 @@
                         </div>
                       </div>
                       <div class="col-xs-6">
-                        <div class="checkbox col-xs-10">
+                        <!-- <div class="checkbox col-xs-10">
                           <label >
                             <input type="checkbox" name="urban" ng-model="vle.urban"> I belong to Urban area
-                          </label>
-                        </div>
+                          </label> 
+                        </div> -->
                         <div class="form-group m-l-20" ng-class="{'has-error':basic.block.$touched && basic.block.$invalid}" ng-hide="vle.urban">
                             <label for="uname" class="control-label col-xs-4 pull-left">Block:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="block" ng-model="vle.block" ng-change="getGps(vle.block)" required>
-                                  <option value=""><i class="fa fa-sort-desc">Block</i></option>
-                                  <option ng-value="blocks._id" ng-repeat="blocks in blockList" >{{blocks.name}}</option>
-                                </select>
-                                <span class="help-block" ng-show="basic.block.$error.required && basic.block.$touched">Choose your block</span>
+                                <input type="text" class="form-control" readonly name="black"  ng-model="vle.block.name" />
                             </div>
                         </div>
                         <div class="form-group m-l-20" ng-class="{'has-error':basic.GP.$touched && basic.GP.$invalid}" ng-hide="vle.urban">
                         <label for="uname" class="control-label col-xs-4 pull-left">Gram Panchayat</label>
                           <div class="col-xs-8">
-                            <select class="form-control" name="GP" ng-model="vle.gp" required>
-                                <option value=""><i class="fa fa-sort-desc">Gram Panchayat</i></option>
-                              <option ng-value="gps._id" ng-repeat="gps in gpList">{{gps.name}}</option>
-                              <span class="help-block" ng-show="basic.GP.$error.required && basic.GP.$touched">Choose your gram panchayat</span>
-
-                            </select>
+                              <input type="text" class="form-control" readonly name="gp"  ng-model="vle.gp.name" />
                           </div>
                         </div>
                         <div class="form-group m-l-20" ng-class="{'has-error':basic.village.$touched && basic.village.$invalid}" ng-hide="vle.urban">
@@ -366,11 +353,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box-footer">
+                    <!-- <div class="box-footer">
                       <button type="submit" class="btn btn-default" ui-sref="homepage">Back</button>
                       <button type="submit"  ng-click="tabChange('OD')" class="btn btn-info pull-right">Next</button>
 
-                    </div>
+                    </div> -->
                   </div>
                 </form>
                 </div>
@@ -599,11 +586,11 @@
                           </div>
                         </div>
                      </div>
-                      <div class="box-footer">
+                      <!-- <div class="box-footer">
                       <button type="submit" class="btn btn-default" ng-click="tabChange('BD')">Back</button>
                       <button type="submit"  ng-click="registerVle()" class="btn btn-info pull-right">Submit</button>
 
-                    </div>
+                    </div> -->
                   </div>
                 </form>
                 </div>
@@ -614,7 +601,7 @@
 
   </div>
   <div class="modal-footer">
-      <button class="btn btn-primary" type="button" ng-click="fail()">Submit</button>
+      <button class="btn btn-primary" type="button" ng-click="cancel()">Okay</button>
       <button class="btn btn-warning pull-left" type="button" ng-click="cancel()">Cancel</button>
   </div>
 </div>

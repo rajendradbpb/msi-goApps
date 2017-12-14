@@ -11,6 +11,7 @@ app.controller("Login_Controller",function($scope,$rootScope,$rootScope,$state,$
   }
   $scope.userLogin = function(){
      $rootScope.showPreloader = true;
+
      //$scope.user.password = UserModel.decode($scope.user.password);
     ApiCall.userLogin($scope.user ,function(response){
       if($scope.user.rememberMe)
@@ -31,4 +32,5 @@ app.controller("Login_Controller",function($scope,$rootScope,$rootScope,$state,$
       Util.alertMessage('danger',"Invalid username and password");
     })
   }
+ 
 });
