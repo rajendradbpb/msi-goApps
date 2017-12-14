@@ -273,7 +273,7 @@ th {
     content: "\e006";
 }
 input[type=checkbox].glyphicon{
-     visibility: hidden;        
+     visibility: hidden;
 }
 .glyphicon {
   position: relative;
@@ -1803,7 +1803,7 @@ pre code {
   .col-sm-8 {
     width: 66.66666667%;
   }
- 
+
 .col-sm-8 {
     width: 66.66666667%;
     padding-bottom: 3px;
@@ -2804,13 +2804,14 @@ select[multiple].input-lg {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 2;
+  z-index: 999;
   display: block;
   width: 34px;
   height: 34px;
   line-height: 34px;
   text-align: center;
-  pointer-events: none;
+  cursor: pointer;
+  /*pointer-events: none;*/
 }
 .input-lg + .form-control-feedback,
 .input-group-lg + .form-control-feedback,
@@ -3036,7 +3037,7 @@ select[multiple].input-lg {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
-  
+
 }
 .btn:focus,
 .btn:active:focus,

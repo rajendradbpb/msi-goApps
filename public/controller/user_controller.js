@@ -9,6 +9,7 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
   $scope.gpVleList = {};
   $scope.municipalityList = {};
   $scope.vleFilter = {}; // global object to filter vle
+  $scope.selectAll = false;
   $scope.vleExportProperties = [
     "role","name","mobile", "altMobile", "email" ,"digiMail" ,"cscId" ,"religion", "state","district", "block" ,"gp" ,
     "village", "urban", "urbanType","ward" ,"dob" ,"gender" ,"caste", "pan", "adhar", "plotNo", "lane",
@@ -311,6 +312,27 @@ app.controller('VleDetailsModalCtrl',function($scope, $state, $uibModalInstance,
   };
 });
 app.controller('exportVleModalCtrl',function($scope, $state, $uibModalInstance,ApiCall,vleExportProperties,exportVle){
+  $scope.modalInit = function(){
+    $scope.selectAll = false;
+    $scope.vleExport = {};
+    for(var i in vleExportProperties){
+      $scope.vleExport[vleExportProperties[i]] = false;
+    }
+
+  }
+  $scope.changeSelectAll = function(){
+    console.log($scope.selectAll);
+    if($scope.selectAll){
+      angular.forEach($scope.vleExport, function(value, key) {
+        $scope.vleExport[key] = true;
+      });
+    }
+    else{
+      angular.forEach($scope.vleExport, function(value, key) {
+        $scope.vleExport[key] = false;
+      });
+    }
+  }
   $scope.vleExportProperties = vleExportProperties;
   $scope.vleExport = {};
   $scope.ok = function () {
@@ -325,8 +347,14 @@ app.controller('exportVleModalCtrl',function($scope, $state, $uibModalInstance,A
         exportProperties.push(key);
       }
       if(count >= limit){
-        exportVle(exportProperties);
-        $uibModalInstance.close();
+        if(!exportProperties.length){
+          alert("No item selected");
+        }
+        else{
+          exportVle(exportProperties);
+          $uibModalInstance.close();
+
+        }
       }
     });
 

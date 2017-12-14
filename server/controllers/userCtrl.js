@@ -311,13 +311,7 @@ exports.deleteUser = function(req, res) {
 exports.changePassword = function(req, res) {
   try {
     component.utility.validateNull(req, res, "body", "oldPassword", "newPassword");
-    userModel.findOne({
-      $or: [{
-        "email": req.user._doc.email
-      }, {
-        'mobile': req.user._doc.mobile
-      }]
-    }).populate('role').exec(function(err, user) {
+    userModel.findOne({"username": req.user._doc.username}).populate('role').exec(function(err, user) {
       if (err) {
         logger.error("changePassword  " + err);
         return done(err);
@@ -547,7 +541,7 @@ else{
       var count = 0;
       responseData.vle.total = vleData.length;
       vleData.filter(function(vle){
-        
+
         vle.urban ? responseData.vle.urban++ : responseData.vle.gp++ ;
         count++;
         // if(count >= vle.length){

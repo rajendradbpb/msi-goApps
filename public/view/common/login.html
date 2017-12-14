@@ -12,8 +12,10 @@
           <!-- <span class="help-block" ng-show="login.uname.$error.pattern && login.uname.$touched">Email/Mobile Should be atleast 6 characters and special characters not allowed</span> -->
       </div>
       <div class="form-group has-feedback" ng-class="{'has-error':login.password.$touched && login.password.$invalid}">
-        <input type="password" class="form-control" placeholder="Password" ng-model="user.password" name="password" required ng-pattern="/^(?=.*?[a-zA-Z0-9])(?=.*?[#?!@$%^&*-]).{4,}$/">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <input type="password" class="form-control" ng-if="!viewPassword" placeholder="Password" ng-model="user.password" name="password" required ng-pattern="/^(?=.*?[a-zA-Z0-9])(?=.*?[#?!@$%^&*-]).{4,}$/">
+        <input type="text" class="form-control" ng-if="viewPassword" placeholder="Password" ng-model="user.password" name="passwordtext" required ng-pattern="/^(?=.*?[a-zA-Z0-9])(?=.*?[#?!@$%^&*-]).{4,}$/">
+        <span class="glyphicon form-control-feedback" ng-if="viewPassword" ng-click="isViewPassword()"><i class="fa fa-unlock" ></i></span>
+        <span class="glyphicon form-control-feedback" ng-if="!viewPassword" ng-click="isViewPassword()"><i class="fa fa-lock" ></i></span>
         <span class="help-block" ng-show="login.password.$error.required && login.password.$touched">Password is required</span>
           <span class="help-block" ng-show="login.password.$error.pattern && login.password .$touched">Password must be 4 characters long having atleast one special character</span>
       </div>

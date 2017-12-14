@@ -112,6 +112,14 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
     //   loggedout: checkLoggedout
     // }
   })
+  .state('change-password', {
+     templateUrl: 'view/change_password.html',
+     url: '/change-password',
+     controller:'User_Controller',
+     resolve: {
+       loggedout: checkLoggedout
+     }
+   })
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {
     var deferred = $q.defer();

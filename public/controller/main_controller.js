@@ -19,6 +19,35 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
     UserModel.unsetUser();
     $state.go('login');
   }
+  /*******************************************************/
+  /*********FUNCTION IS USED TO CHECK PASSOWORD***********/
+  /*******************************************************/
+  $scope.checkPassword = function(password, confirmPassword) {
+    if (password != confirmPassword) {
+      $scope.showPasswordMisMatch = true;
+    }
+    if (password == confirmPassword) {
+      $scope.showPasswordMisMatch = false;
+    }
+  }
+ /*******************************************************/
+  /*********FUNCTION IS USED TO CHANGE PASSOWORD***********/
+  /*******************************************************/
+  $scope.changePassword = function(changePass){
+    $rootScope.showPreloader = true;
+    ApiCall.changePassword(changePass, function(response) {
+      console.log(response);
+      $rootScope.showPreloader = false;
+      LOG.info(response.message);
+      $state.go('user-profile', {'user_id': loggedIn_user._id});
+    },function(error){
+      $rootScope.showPreloader = false;
+       if(error.data.statusCode == 401){
+        LOG.error(error.data.message);
+       }
+    });
+
+  }
   $scope.checkStateAdmin = function(){
     $scope.stateAdmin = false;
       var loggedIn_user = UserModel.getUser();

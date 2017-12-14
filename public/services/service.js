@@ -1,6 +1,6 @@
 app.service('LoginService',function($q,$http){
 	return{
-		
+
 		jsonLogin : function(user){
 			var deffered = $q.defer();
 			$http.get('local.json').then(function successCallback(response) {
@@ -9,13 +9,13 @@ app.service('LoginService',function($q,$http){
 					console.log(response);
 					if(item.user_name == user.username && item.password == user.password){
 						deffered.resolve(item);
-					
+
 
 					}
-					
+
 				})
 	        }, function errorCallback(errorResponse) {
-	        
+
 	            deffered.reject(errorResponse);
 	        });
 	        return deffered.promise;
