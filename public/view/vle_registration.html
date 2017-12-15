@@ -46,7 +46,7 @@
                         <div class="form-group has-feedback" ng-controller="DatePickerCtrl">
                           <label for="lname" class="col-sm-4 control-label">DOB:</label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control" name="dob" placeholder="01 Jan, 2017" ng-model="vle.dob" datepicker-popup="dd MMM, yyyy" datepicker-options="dateOptions"  is-open="opened"  max-date="dt"  ng-click="open1($event)" close-text="Close"/>
+                              <input type="text" class="form-control" numbersOnly name="dob" placeholder="01 Jan, 2017" ng-model="vle.dob" datepicker-popup="dd MMM, yyyy" datepicker-options="dateOptions"  is-open="opened"  max-date="dt"  ng-click="open1($event)" close-text="Close"/>
                             </div>
                         </div>
                         <div class="form-group p-l-20" ng-class="{'has-error':basic.religion.$touched && basic.religion.$invalid}">
@@ -89,14 +89,14 @@
                         <div class="form-group m-l-20" ng-class="{'has-error':basic.block.$touched && basic.block.$invalid}" ng-hide="vle.urban">
                             <label for="uname" class="control-label col-xs-4 pull-left">Block:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="block" ng-model="vle.block" ng-change="getGps(vle.block)" required>
+                                <select class="form-control" name="block" ng-model="vle.block" ng-change="getGps(vle.block)" ng-required="(vle.urban == true || vle.urban == 'true')?false:true">
                                   <option value=""><i class="fa fa-sort-desc">Block</i></option>
                                   <option ng-value="blocks._id" ng-repeat="blocks in blockList" >{{blocks.name}}</option>
                                 </select>
                                 <span class="help-block" ng-show="basic.block.$error.required && basic.block.$touched">Choose your block</span>
                             </div>
                         </div>
-                        <div class="form-group m-l-20" ng-class="{'has-error':basic.GP.$touched && basic.GP.$invalid}" ng-hide="vle.urban">
+                        <div class="form-group m-l-20" ng-class="{'has-error':basic.GP.$touched && basic.GP.$invalid}" ng-hide="vle.urban" ng-required="(vle.urban == true || vle.urban == 'true')?false:true">
                         <label for="uname" class="control-label col-xs-4 pull-left">Gram Panchayat</label>
                           <div class="col-xs-8">
                             <select class="form-control" name="GP" ng-model="vle.gp" required>
@@ -123,7 +123,7 @@
                         <div class="form-group m-l-20" ng-class="{'has-error':basic.municipalityOrnac.$touched && basic.municipalityOrnac.$invalid}" ng-show="vle.urban">
                         <label for="uname" class="control-label col-xs-4 pull-left">Municipality/NAC</label>
                           <div class="col-xs-8">
-                            <select class="form-control" name="municipalityOrnac" ng-model="vle.urbanType" required>
+                            <select class="form-control" name="municipalityOrnac" ng-model="vle.urbanType" ng-required="(vle.urban == true || vle.urban == 'true') ? true : false">
                               <option value=""><i class="fa fa-sort-desc">Municipality/NAC</i></option>
                               <option value="Municipality">Municipality</option>
                               <option value="NAC">NAC</option>
@@ -365,7 +365,7 @@
                     </div>
                     <div class="box-footer">
                       <button type="submit" class="btn btn-default" ui-sref="homepage">Back</button>
-                      <button type="submit"  ng-click="tabChange('OD')" class="btn btn-info pull-right">Next</button>
+                      <button type="submit"  ng-click="tabChange('OD')" ng-disabled="basic.$invalid" class="btn btn-info pull-right">Next</button>
 
                     </div>
                   </div>
@@ -543,6 +543,7 @@
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                           </select>
+                           <span class="help-block" ng-show="other.tab.$error.required && other.tab.$touched">Select an option</span>
                         </div>
                       </div>
                       <div class="form-group m-l-20" ng-class="{'has-error':other.ProvidingEDistrictServices.$touched && other.ProvidingEDistrictServices.$invalid}">
@@ -598,7 +599,7 @@
                      </div>
                       <div class="box-footer">
                       <button type="submit" class="btn btn-default" ng-click="tabChange('BD')">Back</button>
-                      <button type="submit"  ng-click="registerVle()" class="btn btn-info pull-right">Submit</button>
+                      <button type="submit"  ng-click="registerVle()" ng-disabled="other.$invalid" class="btn btn-info pull-right">Submit</button>
 
                     </div>
                   </div>

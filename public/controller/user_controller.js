@@ -272,6 +272,7 @@ app.controller("User_Controller", function($scope, $stateParams,$rootScope, $uib
     });
   }
   $scope.moreVleDetail = function(vleId){
+    console.log(vleId);
     $scope.modalInstance = $uibModal.open({
       animation : true,
       templateUrl : 'view/modals/moreDetails.html',
@@ -293,20 +294,18 @@ app.controller('VleDetailsModalCtrl',function($scope, $state, $uibModalInstance,
     _id:vleData
   }
   ApiCall.getVle(obj,function(response) {
+    console.log(response);
     // $scope.vleFilter = {}; // reset filter
     $scope.vle = response.data[0];
   },function(err){
 
   })
-  $scope.failTransaction = {};
+  
   $scope.active_tab = 'BD';
   $scope.tabChange = function(tab){
     $scope.active_tab = tab;
   }
-  $scope.fail = function () {
-    sendFailMessage($scope.failTransaction);
-    $uibModalInstance.close();
-  };
+ 
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };

@@ -39,7 +39,7 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
       console.log(response);
       $rootScope.showPreloader = false;
       LOG.info(response.message);
-      $state.go('user-profile', {'user_id': loggedIn_user._id});
+      $state.go('dashboard');
     },function(error){
       $rootScope.showPreloader = false;
        if(error.data.statusCode == 401){

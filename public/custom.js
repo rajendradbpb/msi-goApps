@@ -94,14 +94,16 @@ app.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", function($s
     url: '/registration-complete',
     controller:'User_Controller',
   })
+
   .state('change-password', {
      templateUrl: 'view/change_password.html',
      url: '/change-password',
-     controller:'User_Controller',
+     controller:'Main_Controller',
      resolve: {
        loggedout: checkLoggedout
      }
    })
+
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {
     var deferred = $q.defer();
@@ -565,6 +567,7 @@ $scope.getDistrict = function(){
       Util.alertMessage('danger',"Invalid username and password");
     })
   }
+ 
 }]);
 ;/*****************************************************************************************************************/
 app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStorage", "NgTableParams", "ApiCall", "UserModel", "$uibModal", "$stateParams", "Util", "$timeout", function($scope,$rootScope,$state,$localStorage,NgTableParams,ApiCall,UserModel,$uibModal,$stateParams,Util,$timeout){
@@ -593,7 +596,7 @@ app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStora
       console.log(response);
       $rootScope.showPreloader = false;
       LOG.info(response.message);
-      $state.go('user-profile', {'user_id': loggedIn_user._id});
+      $state.go('dashboard');
     },function(error){
       $rootScope.showPreloader = false;
        if(error.data.statusCode == 401){
@@ -924,6 +927,7 @@ app.controller('DatePickerCtrl' , ['$scope', function ($scope) {
     });
   }
   $scope.moreVleDetail = function(vleId){
+    console.log(vleId);
     $scope.modalInstance = $uibModal.open({
       animation : true,
       templateUrl : 'view/modals/moreDetails.html',
@@ -943,19 +947,17 @@ app.controller('VleDetailsModalCtrl',["$scope", "$state", "$uibModalInstance", "
     _id:vleData
   }
   ApiCall.getVle(obj,function(response) {
+    console.log(response);
     $scope.vle = response.data[0];
   },function(err){
 
   })
-  $scope.failTransaction = {};
+  
   $scope.active_tab = 'BD';
   $scope.tabChange = function(tab){
     $scope.active_tab = tab;
   }
-  $scope.fail = function () {
-    sendFailMessage($scope.failTransaction);
-    $uibModalInstance.close();
-  };
+ 
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };
