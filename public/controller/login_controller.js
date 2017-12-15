@@ -6,7 +6,6 @@ app.controller("Login_Controller",function($scope,$rootScope,$rootScope,$state,$
   /*********FUNCTION IS USED TO SIGN IN PROFILE***********/
   /*******************************************************/
   $scope.isViewPassword = function(){
-    alert($scope.viewPassword);
     $scope.viewPassword = !$scope.viewPassword;
   }
   $scope.userLogin = function(){

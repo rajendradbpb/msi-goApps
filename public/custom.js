@@ -544,7 +544,6 @@ $scope.getDistrict = function(){
   $scope.user.username = ($localStorage.user) ? $localStorage.user.uname : "";
   $scope.user.password = ($localStorage.user) ? UserModel.decode($localStorage.user.password) : "";
   $scope.isViewPassword = function(){
-    alert($scope.viewPassword);
     $scope.viewPassword = !$scope.viewPassword;
   }
   $scope.userLogin = function(){

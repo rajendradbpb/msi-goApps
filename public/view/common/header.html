@@ -1,12 +1,14 @@
 <header class="main-header" ng-init="getUserDetails()" ng-controller="Main_Controller" >
   <a ui-sref="dashboard" class="logo">
     <span class="logo-mini"><b>M</b><b>S</b><b>I</b></span>
-    <span class="logo-lg">MIS</span>
+    <!-- <span class="logo-lg">MIS</span> -->
+    <img src="assets/logo.jpg"  style="height:60px;width: 100%;"/>
   </a>
   <nav class="navbar navbar-static-top">
     <a href="" class="sidebar-toggle" data-toggle="offcanvas" role="button">
       <span class="sr-only">Toggle navigation</span>
     </a>
+
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
          <li class="contact-us pull-left" ng-if="!is_loggedin" ui-sref="login">
