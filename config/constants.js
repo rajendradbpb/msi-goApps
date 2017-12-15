@@ -8,6 +8,7 @@ var constants = {
   messages:{
     errors:{
       //global
+      "changePassword" : "Error in change password",
       "saveJob"   : "save Job Failure",
       "saveData"   :"save Data Error",
       "getData"   :"Get Data Error",
@@ -22,6 +23,7 @@ var constants = {
       },
     success:{
       //global
+      "changePassword" : "password change success",
       "saveJob"   : "save Job Success",
       "saveData"   :"save Data Success",
       "getData"   :"Get Data Success",

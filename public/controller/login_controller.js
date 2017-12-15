@@ -13,11 +13,16 @@ app.controller("Login_Controller",function($scope,$rootScope,$rootScope,$state,$
 
      //$scope.user.password = UserModel.decode($scope.user.password);
     ApiCall.userLogin($scope.user ,function(response){
-      if($scope.user.rememberMe)
+      if($scope.user.rememberMe){
         $localStorage.user = {
           "uname":$scope.user.username,
           "password":UserModel.encode($scope.user.password)
         }
+
+      }
+      else{
+        $localStorage.user = null;
+      }
         UserModel.setUser(response.data.user);
         //emit user logged in
       //$scope.$emit("LOGGED_IN");

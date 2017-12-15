@@ -115,6 +115,7 @@ passport.use('token',new BearerStrategy(
       }
       else {
          // console.log("yes  token  ",decoded);
+         console.log("token true");
         return done(null, decoded);
       }
      });

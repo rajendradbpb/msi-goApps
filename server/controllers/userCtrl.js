@@ -310,7 +310,9 @@ exports.deleteUser = function(req, res) {
 
 exports.changePassword = function(req, res) {
   try {
+    console.log("inside change passowrd  ");
     component.utility.validateNull(req, res, "body", "oldPassword", "newPassword");
+    console.log(">>>>>>>>>> change passowrd  ");
     userModel.findOne({"username": req.user._doc.username}).populate('role').exec(function(err, user) {
       if (err) {
         logger.error("changePassword  " + err);
@@ -342,7 +344,7 @@ exports.changePassword = function(req, res) {
                 logger.error("changePassword  " + error);
                 response.sendResponse(res, 500, "error", constants.messages.errors.changePassword, err);
               } else {
-                response.sendResponse(res, 200, "success", constants.messages.success.changePasswordSuccess);
+                response.sendResponse(res, 200, "success", constants.messages.success.changePassword);
               }
             });
 

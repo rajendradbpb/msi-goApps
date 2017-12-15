@@ -1,7 +1,7 @@
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
-app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage,NgTableParams,ApiCall,UserModel,$uibModal,$stateParams,Util,$timeout){
+app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage,LOG,NgTableParams,ApiCall,UserModel,$uibModal,$stateParams,Util,$timeout){
 
   //$scope.dashboard = {};
    var loggedIn_user = UserModel.getUser();
@@ -22,7 +22,12 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
   /*******************************************************/
   /*********FUNCTION IS USED TO CHECK PASSOWORD***********/
   /*******************************************************/
+  $scope.changePass = {
+    newPassword:"",
+    Repassword:""
+  }
   $scope.checkPassword = function(password, confirmPassword) {
+    console.log("checkPassword   ",password,confirmPassword);
     if (password != confirmPassword) {
       $scope.showPasswordMisMatch = true;
     }
@@ -43,7 +48,7 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
     },function(error){
       $rootScope.showPreloader = false;
        if(error.data.statusCode == 401){
-        LOG.error(error.data.message);
+        LOG.error(error.message);
        }
     });
 
@@ -63,6 +68,7 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
 
   $scope.getUserDetails = function(){
     var loggedIn_user = UserModel.getUser();
+    if(!loggedIn_user) return;
     var obj = {
         '_id' : loggedIn_user._id,
       }
