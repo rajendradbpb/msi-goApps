@@ -13,10 +13,10 @@
     "uploadPath":"./public/upload"
   },
   "prod":{
-    "baseUrl":"http://ec2-52-23-158-141.compute-1.amazonaws.com",
-    "hostName":"ec2-52-23-158-141.compute-1.amazonaws.com",
+    "baseUrl":"http://101.53.136.144",
+    "hostName":"http://101.53.136.144",
     "port":":27017",
-    "db":"msi-goApps-prod",
+    "db":"msi-goApps-dev",
     "dbserver":"mongodb://",
     "logPath":"./logs/server.log",
     "uploadPath":"./public/upload"

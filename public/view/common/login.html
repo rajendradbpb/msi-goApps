@@ -1,9 +1,9 @@
 <div class="login-box">
   <div class="login-logo">
-    <h2>MIS</h2>
+    <img src="assets/logo.jpg" />
   </div>
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <!-- <p class="login-box-msg">Sign in to start your session</p> -->
     <form name="login" class="m-b-30">
       <div class="form-group has-feedback" ng-class="{'has-error':login.uname.$touched && login.uname.$invalid}">
         <input type="text" class="form-control" placeholder="Enter email / Mobile" name="uname" ng-model="user.username" required ng-pattern=" ">
@@ -25,9 +25,21 @@
             <input type="checkbox" ng-model="user.rememberMe"> Remember Me
           </label>
         </div>
-        <div class="col-xs-12">
+        <!-- <div class="col-xs-12">
           <button ng-click="userLogin()" ng-disabled="login.$invalid" class="btn btn-primary btn-block btn-flat">
             Sign In
+          </button>
+        </div> -->
+      </div>
+      <div class="row">
+        <div class="col-xs-4 col-md-4 col-sm-4">
+          <button ng-click="userLogin()" ng-disabled="login.$invalid" class="btn btn-primary btn-block btn-flat">
+            Sign In
+          </button>
+        </div>
+        <div class="col-xs-6 col-md-6 col-sm-6 pull-right">
+          <button  class="btn btn-primary btn-block btn-flat">
+            <a ui-sref="vle" >Vle Registration</a>
           </button>
         </div>
       </div>
@@ -38,7 +50,7 @@
         Google+</a>
     </div> -->
     <!-- <a  ui-sref="forgot-password" href="">I forgot my password</a><br><hr> -->
-    <a ui-sref="sign-up" href="" class="text-center">Register a new membership</a><br>
-     <a ui-sref="forgot-password" href="" class="text-center">Forgot Your Password?</a>
+    <!-- <a ui-sref="sign-up" href="" class="text-center">Register a new membership</a><br>
+     <a ui-sref="forgot-password" href="" class="text-center">Forgot Your Password?</a> -->
   </div>
 </div>

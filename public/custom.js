@@ -213,8 +213,8 @@ app.filter('capitalize', function() {
             "appPath"  :"http://localhost",
           },
           "prod" : {
-            "basePath" :"http://ec2-52-23-158-141.compute-1.amazonaws.com",
-            "appPath"  :"http://ec2-52-23-158-141.compute-1.amazonaws.com",
+            "basePath" :"http://101.53.136.144",
+            "appPath"  :"http://101.53.136.144",
           }
         },
 });
