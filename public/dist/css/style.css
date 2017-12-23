@@ -3250,7 +3250,7 @@ table.text-center th {
 .register-page {
   background: #d2d6de;
   background-image: url(/assets/di.jpg);
-  background-blend-mode: color-burn;
+  
 }
 .login-box,
 .register-box {
