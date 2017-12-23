@@ -121,7 +121,14 @@ app.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
        loggedout: checkLoggedout
      }
    })
-
+   .state('summary', {
+    templateUrl: 'view/summary.html',
+    url: '/summary',
+    controller:'Main_Controller',
+    resolve: {
+      loggedout: checkLoggedout
+    }
+  })
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {
     var deferred = $q.defer();

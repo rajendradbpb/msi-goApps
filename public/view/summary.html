@@ -1,0 +1,50 @@
+<section class="content-header m-b-40" ng-init="initVleList()">
+    <h1 class="pull-left">
+        Summary
+</section>
+      <section ng-init="getSummary()">
+            <div class="row">
+                <form  class="form-horizontal"  name="filter">
+                    <div class="col-xs-12 col-md-10 col-md-offset-1">
+                       <div class="col-xs-2 pull-right">
+                                <!-- <a href="{{exportLink}}" target="blank" class="btn btn-success">Export</a> -->
+                                <a href="{{exportSummaryLink}}" class="btn btn-success">Export VLE</a>    
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                    <div class="col-xs-12 col-md-10 col-md-offset-1">
+                        <div class="box box-info">
+                            <!-- <div class="box-header">
+                                <h4><b>Vle Lists</b></h4>
+                          </div> -->
+                          <div class="box-body">
+                              <div class="table-responsive">
+                              <table ng-table="summaryData" class="table table-bordered table-hover">
+                                  <tr   ng-repeat="row in $data">
+                                      <td data-title="'Sl No'">{{ $index + 1}}</td>
+                                      <td data-title="' District'" sortable="'District'">{{row.district}}</td>
+                                      <td data-title="' Block'" sortable="'Block'" >{{row.blockCount}}</td>
+                                      <td data-title="' GP'" sortable="'GP'" >{{row.gpCount}}</td>
+                                      <td data-title="' Urban'" sortable="'Urban'" >{{row.urbanCount}}</td>
+                                      <!-- <td data-title="'VLE Name'" sortable="'VLE Name'"> {{row.name}}</td>
+                                      <td data-title="'CSC ID'" sortable="'CSC ID'"> {{row.cscId}}</td>
+                                      <td data-title="'Action'">
+                                          <div class="btn-group">
+                                              <button type="button" class="btn btn-success" ng-disabled="checkStatus(row.status)" ng-click="moreVleDetail(row._id)" >View More
+                                              </button>
+                                          </div>
+                                           <div class="btn-group">
+                                              <button type="button" class="btn btn-success"><a href="" class="option-btn" ui-sref="returnFile-details({'returnFile_id':row._id})"><i class="fa fa-eye"></i></a></button>
+                                          </div>
+                                      </td> -->
+                                  </tr>
+                              </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+      </section>
+    

@@ -36,5 +36,8 @@ router.get('/exportExcel', function(req, res, next) {
 router.get('/exportVleSummary', function(req, res, next) {
   controllers.vleCtrl.exportVleSummary(req, res);
 });
+router.get('/exportSummary', function(req, res, next) {
+  controllers.vleCtrl.exportSummary(req, res);
+});
 
 module.exports = router;

@@ -1,7 +1,7 @@
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
-app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage,LOG,NgTableParams,ApiCall,UserModel,$uibModal,$stateParams,Util,$timeout){
+app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage,LOG,NgTableParams,ApiCall,EnvService,UserModel,$uibModal,$stateParams,Util,$timeout){
 
   //$scope.dashboard = {};
    var loggedIn_user = UserModel.getUser();
@@ -9,7 +9,26 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
    $scope.tabChange = function(tab){
     $scope.active_tab = tab;
    }
-
+   $scope.validateUser = function(role) {
+    var loggedIn_user = UserModel.getUser();
+    return (loggedIn_user.role.type == role ? true :false);
+   }
+   $scope.getSummary = function() {
+    $scope.exportSummaryLink = EnvService.getBasePath()+"/vle/exportSummary?download=true";
+     $scope.summaryList = [];
+     ApiCall.getSummary(function(data) {
+      console.log(data);
+      $scope.summaryList = data.data;
+      $scope.summaryData = new NgTableParams;
+      console.log($scope.summaryList);
+      $scope.summaryData.settings({
+        dataset:$scope.summaryList
+      })
+     },function(error) {
+       Util.alertMessage('warning',"Error in summary data");
+       console.error("Error  ",error)
+     })
+   }
   /*******************************************************/
   /*********FUNCTION IS USED TO SIGN OUT PROFILE**********/
   /*******************************************************/

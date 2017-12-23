@@ -465,3 +465,67 @@ exports.exportVleSummary = function(req, res) {
       return response.sendResponse(res, 500, "error", constants.messages.errors.getData, error);
     })
 }
+
+
+
+exports.exportSummary = function(req, res) {
+  // var exportProperties = [];
+  // models.vleModel.find(params).populate("district block gp").exec()
+  //   .then(function(data) {
+      
+  //     component.utility.downloadXls(res, dataArr, null, 'vleList', 'vle');
+  //   })
+  //   .catch(function(error) {
+  //     return response.sendResponse(res, 500, "error", constants.messages.errors.getData, error);
+  //   })
+
+    //////
+    var summaryArr = [];
+   models.districtModel.find().exec()
+   .then(function(districts) {
+   var summaryArr = [];
+   var count = 0;
+
+      createSummary(res,summaryArr,districts,count)
+   })
+   .catch(function(err) {
+    return response.sendResponse(res, 500, "error 1", constants.messages.errors.getData,err);
+   })
+
+   function createSummary(res,summaryArr,districts,count){
+     console.log(districts.length +"---------"+count);
+     if(count >= districts.length){
+      console.log("summaryArr ",summaryArr);
+      //  return summaryArr; // break recurssion
+      if(req.query.download == "true" || req.query.download == true){
+        component.utility.downloadXls(res, summaryArr, null, 'summary', 'summary');
+        return;
+      }
+      else{
+        return response.sendResponse(res, 200, "success", constants.messages.success.getData,summaryArr);
+      }
+     }
+      var districtObj = {};
+      districtObj.district = districts[count].name;
+      models.vleModel.find({district:districts[count]}).distinct("block").count().exec()
+      .then(function(blockCount) {
+        console.log("got block count ",blockCount,districts[count].name);
+        districtObj.blockCount = blockCount;
+        // get gps 
+        models.vleModel.find({district:districts[count]}).distinct("gp").count().exec(function(err,gpCount){
+          console.log("gpCount",gpCount,districts[count].name);
+          districtObj.gpCount = gpCount;
+          models.vleModel.find({district:districts[count],isUrban:true}).count().exec(function(err,urbanCount) {
+            console.log("urbanCount",urbanCount,districts[count].name);
+            districtObj.urbanCount = urbanCount;
+            summaryArr.push(districtObj);
+            // call to next recurssion
+            createSummary(res,summaryArr,districts,++count);
+          });
+        })
+      })
+      .catch(function(err) {
+        return response.sendResponse(res, 500, "error2", constants.messages.errors.getData,err);
+      })
+   }
+}

@@ -36,6 +36,11 @@
           <i class="fa fa-user"></i> <span>VLE list</span>
         </a>
       </li>
+      <li class="treeview" ng-class="{'active':stateName == 'summary'}" ng-if="validateUser('state-admin')">
+          <a href="" ui-sref="summary">
+            <i class="fa fa-user"></i> <span>Summary</span>
+          </a>
+        </li>
     </ul>
   </section>
 </aside>

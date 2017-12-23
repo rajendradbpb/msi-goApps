@@ -103,7 +103,14 @@ app.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", function($s
        loggedout: checkLoggedout
      }
    })
-
+   .state('summary', {
+    templateUrl: 'view/summary.html',
+    url: '/summary',
+    controller:'Main_Controller',
+    resolve: {
+      loggedout: checkLoggedout
+    }
+  })
 
   function checkLoggedout($q, $timeout, $rootScope, $state,$http, $localStorage,UserModel) {
     var deferred = $q.defer();
@@ -367,6 +374,14 @@ app.filter('capitalize', function() {
         "headers": {
         },
     },
+    getSummary: {
+      url: "/vle/exportSummary",
+      method: "GET",
+      "headers": {
+        'Content-Type': 'application/json',
+            'Accept': 'application/json'
+      },
+  },
     exportVleSummary: {
         url: "/vle/exportVleSummary",
         method: "GET",
@@ -391,6 +406,7 @@ app.filter('capitalize', function() {
     exportExcel:     ApiGenerator.getApi('exportExcel'),
     exportVleSummary:     ApiGenerator.getApi('exportVleSummary'),
     getDashboard:     ApiGenerator.getApi('getDashboard'),
+    getSummary:     ApiGenerator.getApi('getSummary'),
   })
 }])
 
@@ -575,11 +591,31 @@ $scope.getDistrict = function(){
  
 }]);
 ;/*****************************************************************************************************************/
-app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStorage", "LOG", "NgTableParams", "ApiCall", "UserModel", "$uibModal", "$stateParams", "Util", "$timeout", function($scope,$rootScope,$state,$localStorage,LOG,NgTableParams,ApiCall,UserModel,$uibModal,$stateParams,Util,$timeout){
+app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStorage", "LOG", "NgTableParams", "ApiCall", "EnvService", "UserModel", "$uibModal", "$stateParams", "Util", "$timeout", function($scope,$rootScope,$state,$localStorage,LOG,NgTableParams,ApiCall,EnvService,UserModel,$uibModal,$stateParams,Util,$timeout){
    var loggedIn_user = UserModel.getUser();
    $scope.active_tab = 'BD';
    $scope.tabChange = function(tab){
     $scope.active_tab = tab;
+   }
+   $scope.validateUser = function(role) {
+    var loggedIn_user = UserModel.getUser();
+    return (loggedIn_user.role.type == role ? true :false);
+   }
+   $scope.getSummary = function() {
+    $scope.exportSummaryLink = EnvService.getBasePath()+"/vle/exportSummary?download=true";
+     $scope.summaryList = [];
+     ApiCall.getSummary(function(data) {
+      console.log(data);
+      $scope.summaryList = data.data;
+      $scope.summaryData = new NgTableParams;
+      console.log($scope.summaryList);
+      $scope.summaryData.settings({
+        dataset:$scope.summaryList
+      })
+     },function(error) {
+       Util.alertMessage('warning',"Error in summary data");
+       console.error("Error  ",error)
+     })
    }
   $scope.signOut = function(){
     delete $localStorage.token;

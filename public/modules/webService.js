@@ -125,6 +125,14 @@ angular.module('WebService', [])
         "headers": {
         },
     },
+    getSummary: {
+      url: "/vle/exportSummary",
+      method: "GET",
+      "headers": {
+        'Content-Type': 'application/json',
+            'Accept': 'application/json'
+      },
+  },
     exportVleSummary: {
         url: "/vle/exportVleSummary",
         method: "GET",
@@ -149,6 +157,7 @@ angular.module('WebService', [])
     exportExcel:     ApiGenerator.getApi('exportExcel'),
     exportVleSummary:     ApiGenerator.getApi('exportVleSummary'),
     getDashboard:     ApiGenerator.getApi('getDashboard'),
+    getSummary:     ApiGenerator.getApi('getSummary'),
   })
 })
 

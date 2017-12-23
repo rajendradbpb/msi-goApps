@@ -14,7 +14,7 @@ var createConnection = function() {
   // dbserver, hostName, port, dbName
   try {
     global.connection = mongoose.connect(config.get(config.get("env")+".dbserver")+config.get(config.get("env")+".hostName")+config.get(config.get("env")+".port")+"/"+config.get(config.get("env")+".db"));
-    console.log("connection created ");
+    console.log("connection created ",config.get(config.get("env")+".dbserver")+config.get(config.get("env")+".hostName")+config.get(config.get("env")+".port")+"/"+config.get(config.get("env")+".db"));
   } catch (e) {
     console.log("error in getConnection ",e);
   }
