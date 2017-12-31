@@ -57,6 +57,18 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
  /*******************************************************/
   /*********FUNCTION IS USED TO CHANGE PASSOWORD***********/
   /*******************************************************/
+  $scope.isViewPassword = function(iconId,inputId){
+    // $scope.viewPassword = !$scope.viewPassword;
+    if($("#"+iconId).hasClass("fa-lock")){
+      // show password , add unlock
+      $("#"+iconId).removeClass("fa-lock").addClass("fa-unlock");
+      $("#"+inputId).attr("type","text");
+    }
+    else{
+      $("#"+iconId).removeClass("fa-unlock").addClass("fa-lock");
+      $("#"+inputId).attr("type","password");
+    }
+  }
   $scope.changePassword = function(changePass){
     $rootScope.showPreloader = true;
     ApiCall.changePassword(changePass, function(response) {
@@ -66,9 +78,7 @@ app.controller("Main_Controller",function($scope,$rootScope,$state,$localStorage
       $state.go('dashboard');
     },function(error){
       $rootScope.showPreloader = false;
-       if(error.data.statusCode == 401){
-        LOG.error(error.message);
-       }
+       LOG.error(error.data.message);
     });
 
   }

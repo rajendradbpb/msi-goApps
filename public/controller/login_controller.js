@@ -5,9 +5,7 @@ app.controller("Login_Controller",function($scope,$rootScope,$rootScope,$state,$
   /*******************************************************/
   /*********FUNCTION IS USED TO SIGN IN PROFILE***********/
   /*******************************************************/
-  $scope.isViewPassword = function(){
-    $scope.viewPassword = !$scope.viewPassword;
-  }
+  
   $scope.userLogin = function(){
      $rootScope.showPreloader = true;
 
@@ -36,5 +34,5 @@ app.controller("Login_Controller",function($scope,$rootScope,$rootScope,$state,$
       Util.alertMessage('danger',"Invalid username and password");
     })
   }
- 
+
 });

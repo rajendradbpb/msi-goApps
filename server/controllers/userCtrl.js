@@ -316,10 +316,10 @@ exports.changePassword = function(req, res) {
     userModel.findOne({"username": req.user._doc.username}).populate('role').exec(function(err, user) {
       if (err) {
         logger.error("changePassword  " + err);
-        return done(err);
+        return response.sendResponse(res, 402, "error", constants.messages.errors.changePassword, err);
       }
       if (!user) {
-        return done(null, false);
+        return response.sendResponse(res, 401, "error", constants.messages.errors.changePassword, err);
       }
       passwordHash(req.body.oldPassword).verifyAgainst(user.password, function(error, verified) {
         console.log("after verification ", error, user);
@@ -329,7 +329,7 @@ exports.changePassword = function(req, res) {
           response.sendResponse(res, 500, "error", constants.messages.errors.changePassword, err);
         } else if (!verified) {
           // password not matched
-          response.sendResponse(res, 401, "error", constants.messages.errors.oldPasswordError);
+          response.sendResponse(res, 401, "error", constants.messages.errors.changePassword);
         } else {
           // update new password
           password(req.body.newPassword).hash(function(error, hash) {

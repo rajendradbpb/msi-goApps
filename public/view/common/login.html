@@ -3,19 +3,15 @@
     <img src="assets/logo.jpg"/>
   </div>
   <div class="login-box-body">
-    <!-- <p class="login-box-msg">Sign in to start your session</p> -->
     <form name="login" class="m-b-30">
       <div class="form-group has-feedback" ng-class="{'has-error':login.uname.$touched && login.uname.$invalid}">
         <input type="text" class="form-control" placeholder="Enter email / Mobile" name="uname" ng-model="user.username" required ng-pattern=" ">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         <span class="help-block" ng-show="login.uname.$error.required && login.uname.$touched">Username not found</span>
-          <!-- <span class="help-block" ng-show="login.uname.$error.pattern && login.uname.$touched">Email/Mobile Should be atleast 6 characters and special characters not allowed</span> -->
       </div>
       <div class="form-group has-feedback" ng-class="{'has-error':login.password.$touched && login.password.$invalid}">
-        <input type="password" class="form-control" ng-if="!viewPassword" placeholder="Password" ng-model="user.password" name="password" required ng-pattern="/^(?=.*?[a-zA-Z0-9])(?=.*?[#?!@$%^&*-]).{4,}$/">
-        <input type="text" class="form-control" ng-if="viewPassword" placeholder="Password" ng-model="user.password" name="passwordtext" required ng-pattern="/^(?=.*?[a-zA-Z0-9])(?=.*?[#?!@$%^&*-]).{4,}$/">
-        <span class="glyphicon form-control-feedback" ng-if="viewPassword" ng-click="isViewPassword()"><i class="fa fa-unlock" ></i></span>
-        <span class="glyphicon form-control-feedback" ng-if="!viewPassword" ng-click="isViewPassword()"><i class="fa fa-lock" ></i></span>
+        <input type="password" class="form-control"  placeholder="Password" ng-model="user.password" id="password" name="password" required ng-pattern="/^(?=.*?[a-zA-Z0-9])(?=.*?[#?!@$%^&*-]).{4,}$/">
+        <span class="glyphicon form-control-feedback"  ng-click="isViewPassword('pwLock','password')"><i id="pwLock" class="fa fa-lock" ></i></span>
         <span class="help-block" ng-show="login.password.$error.required && login.password.$touched">Password is required</span>
           <span class="help-block" ng-show="login.password.$error.pattern && login.password .$touched">Password must be 4 characters long having atleast one special character</span>
       </div>
@@ -25,11 +21,6 @@
             <input type="checkbox" ng-model="user.rememberMe"> Remember Me
           </label>
         </div>
-        <!-- <div class="col-xs-12">
-          <button ng-click="userLogin()" ng-disabled="login.$invalid" class="btn btn-primary btn-block btn-flat">
-            Sign In
-          </button>
-        </div> -->
       </div>
       <div class="row">
         <div class="col-xs-4 col-md-4 col-sm-4">

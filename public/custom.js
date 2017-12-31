@@ -561,9 +561,7 @@ $scope.getDistrict = function(){
   $scope.user = {};
   $scope.user.username = ($localStorage.user) ? $localStorage.user.uname : "";
   $scope.user.password = ($localStorage.user) ? UserModel.decode($localStorage.user.password) : "";
-  $scope.isViewPassword = function(){
-    $scope.viewPassword = !$scope.viewPassword;
-  }
+  
   $scope.userLogin = function(){
      $rootScope.showPreloader = true;
     ApiCall.userLogin($scope.user ,function(response){
@@ -588,7 +586,7 @@ $scope.getDistrict = function(){
       Util.alertMessage('danger',"Invalid username and password");
     })
   }
- 
+
 }]);
 ;/*****************************************************************************************************************/
 app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStorage", "LOG", "NgTableParams", "ApiCall", "EnvService", "UserModel", "$uibModal", "$stateParams", "Util", "$timeout", function($scope,$rootScope,$state,$localStorage,LOG,NgTableParams,ApiCall,EnvService,UserModel,$uibModal,$stateParams,Util,$timeout){
@@ -636,6 +634,16 @@ app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStora
       $scope.showPasswordMisMatch = false;
     }
   }
+  $scope.isViewPassword = function(iconId,inputId){
+    if($("#"+iconId).hasClass("fa-lock")){
+      $("#"+iconId).removeClass("fa-lock").addClass("fa-unlock");
+      $("#"+inputId).attr("type","text");
+    }
+    else{
+      $("#"+iconId).removeClass("fa-unlock").addClass("fa-lock");
+      $("#"+inputId).attr("type","password");
+    }
+  }
   $scope.changePassword = function(changePass){
     $rootScope.showPreloader = true;
     ApiCall.changePassword(changePass, function(response) {
@@ -645,9 +653,7 @@ app.controller("Main_Controller",["$scope", "$rootScope", "$state", "$localStora
       $state.go('dashboard');
     },function(error){
       $rootScope.showPreloader = false;
-       if(error.data.statusCode == 401){
-        LOG.error(error.message);
-       }
+       LOG.error(error.data.message);
     });
 
   }
