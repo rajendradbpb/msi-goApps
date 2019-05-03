@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -15,19 +17,19 @@
     "cookie-parser": "^1.4.3",
     "debug": "^2.6.9",
     "excel": "^0.1.7",
-    "express": "^4.15.5",
+    "express": "^4.16.0",
     "express-session": "^1.15.6",
     "jade": "^1.11.0",
-    "jsonwebtoken": "^5.5.4",
-    "jwt-simple": "^0.4.1",
-    "log4js": "^2.3.11",
+    "jsonwebtoken": "^7.4.1",
+    "jwt-simple": "^0.5.3",
+    "log4js": "^2.6.0",
     "make-unique": "^1.0.4",
-    "moment": "^2.19.2",
-    "mongoose": "^4.13.1",
+    "moment": "^2.19.3",
+    "mongoose": "^4.13.17",
     "mongoose-dateonly": "^1.0.4",
     "mongoose-deep-populate": "^3.0.0",
     "mongoose-unique-validator": "^1.0.6",
-    "morgan": "^1.9.0",
+    "morgan": "^1.9.1",
     "node-excel-export": "^1.4.2",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
@@ -37,7 +39,8 @@
     "promise": "^8.0.1",
     "q": "^1.5.1",
     "serve-favicon": "^2.4.5",
-    "validator": "^9.1.1"
+    "validator": "^9.4.1",
+    "snyk": "^1.161.1"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
@@ -53,5 +56,6 @@
     "grunt-nodemon": "^0.4.2",
     "grunt-notify": "^0.4.5",
     "grunt-stripcomments": "^0.7.2"
-  }
+  },
+  "snyk": true
 }

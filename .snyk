@@ -1,0 +1,36 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.3
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:hoek:20180212':
+    - excel > libxmljs > node-pre-gyp > request > hawk > boom > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - log4js > loggly > request > hawk > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - excel > libxmljs > node-pre-gyp > hawk > boom > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - log4js > loggly > request > hawk > boom > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - excel > libxmljs > node-pre-gyp > hawk > sntp > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - log4js > loggly > request > hawk > sntp > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - excel > libxmljs > node-pre-gyp > request > hawk > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - excel > libxmljs > node-pre-gyp > hawk > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - excel > libxmljs > node-pre-gyp > request > hawk > sntp > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - log4js > loggly > request > hawk > cryptiles > boom > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - excel > libxmljs > node-pre-gyp > hawk > cryptiles > boom > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+    - excel > libxmljs > node-pre-gyp > request > hawk > cryptiles > boom > hoek:
+        patched: '2019-05-03T21:10:57.245Z'
+  'npm:tunnel-agent:20170305':
+    - log4js > loggly > request > tunnel-agent:
+        patched: '2019-05-03T21:10:57.245Z'
+  'npm:uglify-js:20151024':
+    - jade > transformers > uglify-js:
+        patched: '2019-05-03T21:10:57.245Z'
