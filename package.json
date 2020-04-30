@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -37,7 +39,8 @@
     "promise": "^8.0.1",
     "q": "^1.5.1",
     "serve-favicon": "^2.4.5",
-    "validator": "^9.1.1"
+    "validator": "^9.1.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
@@ -53,5 +56,6 @@
     "grunt-nodemon": "^0.4.2",
     "grunt-notify": "^0.4.5",
     "grunt-stripcomments": "^0.7.2"
-  }
+  },
+  "snyk": true
 }
