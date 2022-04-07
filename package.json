@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "async": "^2.6.0",
+    "async": "^3.2.2",
     "async-waterfall": "^0.1.5",
     "body-parser": "^1.18.2",
     "color": "^2.0.1",
@@ -23,7 +23,7 @@
     "log4js": "^2.3.11",
     "make-unique": "^1.0.4",
     "moment": "^2.19.2",
-    "mongoose": "^4.13.1",
+    "mongoose": "^5.7.3",
     "mongoose-dateonly": "^1.0.4",
     "mongoose-deep-populate": "^3.0.0",
     "mongoose-unique-validator": "^1.0.6",
