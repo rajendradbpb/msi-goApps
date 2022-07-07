@@ -22,7 +22,7 @@
     "jwt-simple": "^0.4.1",
     "log4js": "^2.3.11",
     "make-unique": "^1.0.4",
-    "moment": "^2.19.2",
+    "moment": "^2.29.4",
     "mongoose": "^4.13.1",
     "mongoose-dateonly": "^1.0.4",
     "mongoose-deep-populate": "^3.0.0",
