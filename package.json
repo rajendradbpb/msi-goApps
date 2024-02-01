@@ -20,7 +20,7 @@
     "jade": "^1.11.0",
     "jsonwebtoken": "^5.5.4",
     "jwt-simple": "^0.4.1",
-    "log4js": "^2.3.11",
+    "log4js": "^6.0.0",
     "make-unique": "^1.0.4",
     "moment": "^2.19.2",
     "mongoose": "^4.13.1",
