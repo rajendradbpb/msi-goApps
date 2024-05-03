@@ -14,7 +14,7 @@
     "connect-mongodb-session": "^1.4.0",
     "cookie-parser": "^1.4.3",
     "debug": "^2.6.9",
-    "excel": "^0.1.7",
+    "excel": "^1.0.1",
     "express": "^4.15.5",
     "express-session": "^1.15.6",
     "jade": "^1.11.0",
